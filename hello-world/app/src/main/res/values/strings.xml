@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">Hello World</string>
-    <string name="hello_world_message">Hello World!</string>
+    <string name="hello_world_message">ciao World!</string>
     <string name="send_message">caCCa message</string>
     <string name="change_text">Change text</string>
 </resources>
