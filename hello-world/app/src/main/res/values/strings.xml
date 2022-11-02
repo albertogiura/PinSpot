@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">Hello World</string>
     <string name="hello_world_message">ciaoatutti World!</string>
+    <string name="cose">cosebelle</string>
     <string name="send_message">delfino message</string>
     <string name="change_text">Change text</string>
 </resources>
