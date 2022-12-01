@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="hello_world_message">Ciao Mondo!</string>
-    <string name="send_message">Invia messaggio</string>
-    <string name="cose">peppino ita</string>
-    <string name="change_text">Cambia testo</string>
-</resources>

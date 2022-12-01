@@ -1,4 +1,0 @@
-# PinSpot
-
-eieieieieie
-odio githubbe
