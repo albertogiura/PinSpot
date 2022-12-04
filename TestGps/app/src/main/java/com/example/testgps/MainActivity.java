@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityResultLauncher<String> singlePermissionLauncher;
     private ActivityResultContracts.RequestPermission singlePermissionContract;
 
-
+/*
     private ActivityResultLauncher<String[]> multiplePermissionLauncher;
     private ActivityResultContracts.RequestMultiplePermissions multiplePermissionsContract;
 
@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION
     };
+*/
     private FusedLocationProviderClient fusedLocationClient;
 
 
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView latText;
     private TextView longText;
 
-    public LatLng mypos ;
+    public LatLng mypos = new LatLng(0,0);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         singlePermissionContract = new ActivityResultContracts.RequestPermission();
-        multiplePermissionsContract = new ActivityResultContracts.RequestMultiplePermissions();
+        //multiplePermissionsContract = new ActivityResultContracts.RequestMultiplePermissions();
 
         singlePermissionLauncher = registerForActivityResult(singlePermissionContract, isGranted -> {
             if (isGranted) {
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Single permission has not been granted");
             }
         });
-        multiplePermissionLauncher = registerForActivityResult(multiplePermissionsContract, isGranted -> {
+      /*  multiplePermissionLauncher = registerForActivityResult(multiplePermissionsContract, isGranted -> {
             for(Map.Entry<String, Boolean> set : isGranted.entrySet()) {
                 Log.d(TAG, set.getKey() + " " + set.getValue());
             }
@@ -77,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 getLocation();
             }
         });
-
+*/
         bottone = findViewById(R.id.button);
         latText = findViewById(R.id.textView);
         longText = findViewById(R.id.textView2);
@@ -86,8 +87,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 getLocation();
                 if(mypos!=null){
-                    latText.setText((int) mypos.longitude);
-                    longText.setText((int) mypos.longitude);
+                    int i = 1;
+                    latText.setText(Integer.toString((int) mypos.longitude));
+                    //longText.setText((int) mypos.longitude);
                 }
 
             }
@@ -96,15 +98,15 @@ public class MainActivity extends AppCompatActivity {
     private void getLocation() {
 
         boolean singlePermissionsStatus =
-                ActivityCompat.checkSelfPermission(this,
+               ActivityCompat.checkSelfPermission(this,
                         Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-
+/*
         boolean multiplePermissionsStatus =
                 ActivityCompat.checkSelfPermission(this,
                         Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                         ActivityCompat.checkSelfPermission(this,
                                 Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-
+*/
         // Use multiplePermissionsStatus if you want to try the logic
         // of requesting more than one permission
         if (singlePermissionsStatus) {
@@ -126,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "One or more permissions have not been granted");
             // Use multiplePermissionLauncher and PERMISSIONS variable as argument of method launch
             // if you want to try the logic of requesting more than one permission
-            singlePermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION);
+            singlePermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION);
             //multiplePermissionLauncher.launch(PERMISSIONS);
         }
 
