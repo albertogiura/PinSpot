@@ -72,7 +72,7 @@ public class LoginFragment extends Fragment {
         final Button buttonLogin = view.findViewById(R.id.login_button);
 
         buttonLogin.setOnClickListener(view1 -> {
-            Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_mapFragment);
+            Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_mainActivity);
         });
     }
 

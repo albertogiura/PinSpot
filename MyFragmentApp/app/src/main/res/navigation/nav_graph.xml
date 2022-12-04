@@ -6,22 +6,17 @@
     app:startDestination="@id/loginFragment">
 
     <fragment
-        android:id="@+id/favPlacesFragment"
-        android:name="com.example.myfragmentapp.FavPlacesFragment"
-        android:label="fragment_fav_places"
-        tools:layout="@layout/fragment_fav_places" />
-    <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.myfragmentapp.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_loginFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
+            android:id="@+id/action_loginFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
     </fragment>
-    <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.example.myfragmentapp.MapFragment"
-        android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.myfragmentapp.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 </navigation>
