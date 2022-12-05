@@ -88,8 +88,8 @@ public class MainActivity extends AppCompatActivity {
                 getLocation();
                 if(mypos!=null){
                     //int i = 1;
-                    latText.setText(Integer.toString((int) mypos.latitude));
-                    longText.setText(Integer.toString((int) mypos.longitude));
+                    latText.setText(String.valueOf(mypos.latitude));
+                    longText.setText(String.valueOf(mypos.longitude));
                 }
 
             }
@@ -117,10 +117,11 @@ public class MainActivity extends AppCompatActivity {
                         public void onSuccess(Location location) {
                             if (location != null) {
                                 Log.d(TAG, location.getLatitude() + " " + location.getLongitude());
-                                LatLng milano = new LatLng(location.getLatitude(), location.getLongitude());
+                                LatLng currentPos = new LatLng(location.getLatitude(), location.getLongitude());
 
-                                mypos = milano;
-                                //int i = 1;
+                                mypos = currentPos;
+                                latText.setText(String.valueOf(mypos.latitude));
+                                longText.setText(String.valueOf(mypos.longitude));
                             }
                         }
                     });
