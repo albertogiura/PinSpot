@@ -1,0 +1,2 @@
+git config --global user.name "CavaleriMatteo"
+git config --global user.email "m.cavaleri2@campus.unimib.it"
