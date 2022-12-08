@@ -13,19 +13,19 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private Button signUp;
+    private Button bottone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "è stato chiamato il metodo onCreate()");
-        signUp.findViewById(R.id.signUp);
-        signUp.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Intent intent = new Intent(this, sign_up.class);
-                startActivity(intent);
+        bottone = findViewById(R.id.signUp);
+        //Button signUp =  findViewById(R.id.signUp);
 
-            }
+        bottone.setOnClickListener(view -> {
+            Intent intent = new Intent(this, sign_up.class);
+            startActivity(intent);
+
         });
     }
 
