@@ -5,15 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".MapFragment">
 
-    <!--<TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="mappa" />-->
 
     <com.google.android.gms.maps.MapView
+        android:id="@+id/mapv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/mapv"
-        android:contentDescription="@string/app_name"/>
+        android:contentDescription="@string/app_name" />
 
 </FrameLayout>
