@@ -21,12 +21,19 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "è stato chiamato il metodo onCreate()");
         bottone = findViewById(R.id.signUp);
         //Button signUp =  findViewById(R.id.signUp);
-
-        bottone.setOnClickListener(view -> {
+        bottone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            Intent intent = new Intent(MainActivity.this, sign_up.class);
+            startActivity(intent);
+            }
+        });
+    }
+    /*    bottone.setOnClickListener(view -> {
             Intent intent = new Intent(this, sign_up.class);
             startActivity(intent);
 
-        });
+        });*/
     }
 
 
