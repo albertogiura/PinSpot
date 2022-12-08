@@ -14,7 +14,9 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    private static final int REQUEST_CODE=22;
+    private ImageView myImage1;
+    private Button button1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
