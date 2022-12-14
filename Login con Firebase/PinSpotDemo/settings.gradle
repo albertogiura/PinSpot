@@ -1,0 +1,18 @@
+import org.gradle.api.initialization.resolve.RepositoriesMode
+
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)   //cambiato a PREFER_PROJECT altrimenti Gradle non esegue la build
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = "PinSpotDemo"
+include ':app'
