@@ -3,6 +3,8 @@ package com.blackbox.pinspotdemo;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import com.blackbox.pinspotdemo.databinding.ActivityMainBinding;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,7 +44,13 @@ public class MainActivity extends AppCompatActivity {
             String uid = user.getUid();
             binding.textViewUserId.setText(uid);
 
-
+            binding.buttonUserLogout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FirebaseAuth.getInstance().signOut();
+                    Toast.makeText(MainActivity.this, "Disconnessione effettuata", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
     }
