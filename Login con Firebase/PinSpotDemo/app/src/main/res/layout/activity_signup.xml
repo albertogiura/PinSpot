@@ -33,7 +33,6 @@
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="232dp"
-        android:hint="Email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
@@ -41,6 +40,8 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtEmailSignup"
+            android:inputType="textEmailAddress"
+            android:hint="Email"
             android:layout_width="357dp"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -74,7 +75,8 @@
             android:id="@+id/edtPasswordSignup"
             android:layout_width="357dp"
             android:layout_height="wrap_content"
-            android:hint="Password" />
+            android:inputType="textPassword"
+            android:hint="Choose a password" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
