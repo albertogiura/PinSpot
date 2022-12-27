@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.example.myapplication.app-mergeDebugResources-27:/values-it-rIT/values-it-rIT.xml",
+            "map": [
+                {
+                    "source": "/Users/matteogamba/Documents/GitHub/PinSpot/bug clamoroso/MyApplication/app/src/main/res/values-it-rIT/strings.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "56",
+                        "endOffsets": "107"
+                    }
+                }
+            ]
+        }
+    ]
+}

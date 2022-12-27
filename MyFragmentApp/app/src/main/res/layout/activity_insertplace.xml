@@ -9,26 +9,30 @@
     <ImageView
         android:id="@+id/myImage"
 
-        android:layout_width="284dp"
-        android:layout_height="426dp"
+        android:layout_width="218dp"
+        android:layout_height="192dp"
         android:layout_marginBottom="200dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.457" />
+        app:layout_constraintVertical_bias="0.125" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="256dp"
-        android:layout_height="66dp"
-        android:text="TextView"
+
+    <Button
+        android:id="@+id/gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="424dp"
+        android:text="Scegli dalla Galleria"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myImage"
-        app:layout_constraintVertical_bias="0.141"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="77dp" />
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/buttonHome"
@@ -37,10 +41,10 @@
         android:text="Inserisci"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.789"
+        app:layout_constraintHorizontal_bias="0.848"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myImage"
-        app:layout_constraintVertical_bias="0.732"
+        app:layout_constraintVertical_bias="0.717"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -49,9 +53,11 @@
         android:layout_height="wrap_content"
         android:text="Download"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.116"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myImage"
-        app:layout_constraintVertical_bias="0.732"
-        tools:layout_editor_absoluteX="63dp" />
+        app:layout_constraintVertical_bias="0.717" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
