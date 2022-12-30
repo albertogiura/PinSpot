@@ -1,17 +1,29 @@
 package com.blackbox.pinspotdemo.model;
 
-public class User {
-    private String email;
-    private String username;
-    private boolean isNotificationEnabled;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    public User() {
+import com.google.firebase.database.Exclude;
+
+// Definisco la struttura di un Utente attraverso questa classe
+
+public class User implements Parcelable {
+    private String name;
+    private String email;
+    private String idToken;
+
+    public User(String name, String email, String idToken) {
+        this.name = name;
+        this.email = email;
+        this.idToken = idToken;
     }
 
-    public User(String email, String username, boolean isNotificationEnabled) {
-        this.email = email;
-        this.username = username;
-        this.isNotificationEnabled = isNotificationEnabled;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -22,19 +34,57 @@ public class User {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    @Exclude
+    public String getIdToken() {
+        return idToken;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setIdToken(String idToken) {
+        this.idToken = idToken;
     }
 
-    public boolean isNotificationEnabled() {
-        return isNotificationEnabled;
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", idToken='" + idToken + '\'' +
+                '}';
     }
 
-    public void setNotificationEnabled(boolean notificationEnabled) {
-        isNotificationEnabled = notificationEnabled;
+    @Override
+    public int describeContents() {
+        return 0;
     }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(this.email);
+        dest.writeString(this.idToken);
+    }
+
+    public void readFromParcel(Parcel source) {
+        this.name = source.readString();
+        this.email = source.readString();
+        this.idToken = source.readString();
+    }
+
+    protected User(Parcel in) {
+        this.name = in.readString();
+        this.email = in.readString();
+        this.idToken = in.readString();
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 }

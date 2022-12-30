@@ -1,10 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">PinSpotDemo</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error_password">Password is not valid</string>
     <string name="error_user_collision_message">There is no user record corresponding to this identifier</string>
-    <string name="unexpected_error">Unexpected error</string>
     <string name="error_email">Insert a valid email address</string>
     <string name="error_login_password_message">The password is invalid</string>
     <string name="error_login_user_message">There is no user record corresponding to this identifier</string>
