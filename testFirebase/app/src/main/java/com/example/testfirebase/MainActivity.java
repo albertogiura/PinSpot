@@ -4,7 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,8 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
-
 import java.io.ByteArrayOutputStream;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,14 +40,14 @@ public class MainActivity extends AppCompatActivity {
     private StorageReference everestRef = storageRef.child("everest.jpeg");
     private StorageReference everestImageRef = storageRef.child("images/everest.jpeg");
     private ImageView imageView;
+    private StorageReference pathReference = storageRef.child("images/mare.jpg");
+    // Create a reference to a file from a Google Cloud Storage URI
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //create();
-        // Write a message to the database
-
        /* myRef = database.getReference("messagi");//key
         myRef.setValue("Hello, World!");//value
         myRef = database.getReference("messagi1");
@@ -70,11 +72,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                  //create();
-
+                final long ONE_MEGABYTE = 1024 * 1024;
+                pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                    @Override
+                    public void onSuccess(byte[] bytes) {
+                        Bitmap decodedByte = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        imageView.setImageBitmap(decodedByte);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
                 ValueEventListener postListener = new ValueEventListener() {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
                         // Get Post object and use the values to update the UI
                         result = dataSnapshot.getValue(Pin.class);
                         Pin prova=result;
@@ -99,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         // Getting Post failed, log a message

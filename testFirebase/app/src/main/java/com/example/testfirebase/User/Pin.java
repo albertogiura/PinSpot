@@ -8,7 +8,7 @@ public class Pin {
     private LatitudeLongitude position;
     private String title, link;
     private int likes;
-
+    // to do aggiungere linke altre robe utili
     // constructors
 
     public Pin() {
