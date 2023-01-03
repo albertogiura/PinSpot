@@ -27,51 +27,57 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String URL = "https://pinspot-demo-default-rtdb.europe-west1.firebasedatabase.app/";
+    private static final String DBREALTIME = "https://pinspot-demo-default-rtdb.europe-west1.firebasedatabase.app/";
     private static final String DBIMAGES = "gs://pinspot-demo.appspot.com/";
-    private Button bottone;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance(URL);
-    private  DatabaseReference myRef;
-    private TextView textVieww;
-    private FirebaseStorage storage = FirebaseStorage.getInstance(DBIMAGES);
-    private StorageReference storageRef = storage.getReference();
-    private StorageReference everestRef = storageRef.child("everest.jpeg");
-    private StorageReference everestImageRef = storageRef.child("images/everest.jpeg");
+
+    private Button button;
+    private TextView textView;
     private ImageView imageView;
-    private StorageReference pathReference = storageRef.child("images/mare.jpg");
+
+    private FirebaseDatabase realTime = FirebaseDatabase.getInstance(DBREALTIME);  //connecting to real-time DB
+    private DatabaseReference myRefRealTime;  //reference to real-time DB
+
+    private FirebaseStorage storage = FirebaseStorage.getInstance(DBIMAGES); //connecting to storage DB
+    private StorageReference myRefStorage = storage.getReference();  // creating reference to storage DB
+    private StorageReference everestRef = myRefStorage.child("everest.jpeg"); // creating reference to image
+    private StorageReference everestImageRef = myRefStorage.child("images/everest.jpeg"); //creating reference to image path's
+
+    private StorageReference pathReference = myRefStorage.child("images/mare.jpg");
     // Create a reference to a file from a Google Cloud Storage URI
 
+    public void createObjects(){
+        // initialize UI's object and DB utilities
+        button = findViewById(R.id.button2);
+        imageView = findViewById(R.id.everest);
+        textView = findViewById(R.id.textView);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //create();
-       /* myRef = database.getReference("messagi");//key
-        myRef.setValue("Hello, World!");//value
-        myRef = database.getReference("messagi1");
-        myRef.setValue("Hello, World!");myRef = database.getReference("messagi2");
+        createObjects();
 
-        myRef = database.getReference("messadgi");
-        myRef.setValue("Hello, Wofirebased!");*/
-        myRef = database.getReference("istanza");
+        myRefRealTime = realTime.getReference("istanza"); //key
+
+        //initializing object
+        String key = realTime.getReference("istanza").push().getKey();
         LatitudeLongitude l=new LatitudeLongitude(55.0,55.0);
-        myRef = database.getReference("istanzo");
         l=new LatitudeLongitude(55.0,55.0);
-        Pin pin = new Pin(l,"io","èièèo",-5);
-        myRef.setValue(pin);
+        Pin pin = new Pin(l,"title", key,10); //data
 
-        imageView = findViewById(R.id.everest);
-        textVieww = findViewById(R.id.textView);
+        // uploading data key-value into real-time DB
+        myRefRealTime.setValue(pin);
 
-        bottone = findViewById(R.id.button2);
-        bottone.setOnClickListener(new View.OnClickListener(){
+        button.setOnClickListener(new View.OnClickListener(){
             String data = null;
             Pin result = new Pin();
             @Override
             public void onClick(View view){
-                 //create();
+
+                //downloading sea picture from storage DB
                 final long ONE_MEGABYTE = 1024 * 1024;
                 pathReference.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
                     @Override
@@ -85,22 +91,23 @@ public class MainActivity extends AppCompatActivity {
                         // Handle any errors
                     }
                 });
+
                 ValueEventListener postListener = new ValueEventListener() {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
 
-                        // Get Post object and use the values to update the UI
+                        // downloading object(s) from real-time DB
                         result = dataSnapshot.getValue(Pin.class);
-                        Pin prova=result;
-                        textVieww.setText(result.toString());
-                        // ..
+                        textView.setText(result.toString());
+
+                        // uploading everest picture to storage DB
                         Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
                         ByteArrayOutputStream baos = new ByteArrayOutputStream();
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                         byte[] data = baos.toByteArray();
 
-                        UploadTask uploadTask = everestRef.putBytes(data);
+                        UploadTask uploadTask = everestRef.putBytes(data); // uploading here
                         uploadTask.addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception exception) {
@@ -120,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                       //  Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
                     }
                 };
-                myRef.addValueEventListener(postListener);
+                myRefRealTime.addValueEventListener(postListener);
 
             }
 
