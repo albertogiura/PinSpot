@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
@@ -106,6 +107,7 @@ public class InsertPlaceActivity extends AppCompatActivity {
        try {
             BitmapDrawable bitmapDrawable= (BitmapDrawable) image.getDrawable();
             Bitmap bitmap=bitmapDrawable.getBitmap();
+            bitmap=getResizedBitmap(bitmap,8192,8192,true);
 
             OutputStream outputStream= contentResolver.openOutputStream((Uri) Objects.requireNonNull(uri));
             bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
@@ -129,5 +131,23 @@ public class InsertPlaceActivity extends AppCompatActivity {
             Uri uri= data.getData();
             image.setImageURI(uri);
         }
+    }
+
+    private static Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight, boolean isNecessaryToKeepOrig) {
+        int width = bm.getWidth();
+        int height = bm.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // CREATE A MATRIX FOR THE MANIPULATION
+        Matrix matrix = new Matrix();
+        // RESIZE THE BIT MAP
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        // "RECREATE" THE NEW BITMAP
+        Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+        if(!isNecessaryToKeepOrig){
+            bm.recycle();
+        }
+        return resizedBitmap;
     }
 }
