@@ -81,6 +81,7 @@ public class SignUpFragment extends Fragment {
                                     saveLoginData(email, password, user.getIdToken());
                                     userViewModel.setAuthenticationError(false);
                                     Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_mainActivity);
+                                    requireActivity().finish();
                                     //retrieveUserInformationAndStartActivity(user, R.id.action_loginFragment_to_mainActivity);
                                 } else {
                                     userViewModel.setAuthenticationError(true);
