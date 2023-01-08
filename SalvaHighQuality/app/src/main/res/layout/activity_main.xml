@@ -28,7 +28,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu"
-        app:labelVisibilityMode="labeled" />
+        app:labelVisibilityMode="labeled"
+        app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"/>
 
     <Button
         android:id="@+id/button"
