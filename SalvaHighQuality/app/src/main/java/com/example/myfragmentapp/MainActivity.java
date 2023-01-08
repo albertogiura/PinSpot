@@ -19,6 +19,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.myfragmentapp.util.Permission;
@@ -27,6 +28,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import com.example.myfragmentapp.User.LatitudeLongitude;
+import com.example.myfragmentapp.User.Pin;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
     private Button button1;
     private ImageView myImage1;
     private String currentPhotoPath;
+
+
+    private Button button;
+    private TextView textView;
+    private ImageView imageView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
