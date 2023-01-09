@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         myRefRealTime.setValue(pin);
 
         button.setOnClickListener(new View.OnClickListener(){
-            String data = null;
+            //String data = null;
             Pin result = new Pin();
             @Override
             public void onClick(View view){
