@@ -162,6 +162,7 @@ public class InsertPlaceActivity extends AppCompatActivity {
                         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                         byte[] data = baos.toByteArray();
 
+                        everestRef = myRefStorage.child(pin.getLink()+".jpeg");
                         UploadTask uploadTask = everestRef.putBytes(data); // uploading here
                         uploadTask.addOnFailureListener(new OnFailureListener() {
                             @Override
