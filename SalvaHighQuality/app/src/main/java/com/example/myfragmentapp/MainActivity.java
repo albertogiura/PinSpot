@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String filename="photo";
+                /*String filename="photo";
                 File storageDirectory=getExternalFilesDir(Environment.DIRECTORY_PICTURES);
                 try {
                     File imageFile= File.createTempFile(filename, ".jpeg", storageDirectory);
@@ -82,32 +82,35 @@ public class MainActivity extends AppCompatActivity {
                     startActivityForResult(cameraIntent, REQUEST_CODE);
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
+                }*/
 
 
+                Intent openInsertPlace = new Intent(MainActivity.this, InsertPlaceActivity.class);
+                startActivity(openInsertPlace);
 
             }
         });
     }
-    @Override
+   /* @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
 
-        Bitmap photo= BitmapFactory.decodeFile(currentPhotoPath);
+        /*Bitmap photo= BitmapFactory.decodeFile(currentPhotoPath);
 
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);
 
 
-        byte[] byteArray = stream.toByteArray();
-        Intent openInsertPlace = new Intent(MainActivity.this, InsertPlaceActivity.class);
-        openInsertPlace.putExtra("picture", byteArray);
-        startActivity(openInsertPlace);
+        byte[] byteArray = stream.toByteArray();*/
+        //Intent openInsertPlace = new Intent(MainActivity.this, provainsertplace.class);
+        //openInsertPlace.putExtra("picture", byteArray);
+        //startActivity(openInsertPlace);
 
 
 
-        }
+        //}
+
 
 
 

@@ -20,17 +20,41 @@
         app:layout_constraintVertical_bias="0.125" />
 
 
+    <EditText
+        android:id="@+id/Nome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:hint="Nome"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myImage"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="-3dp" />
+
+    <EditText
+        android:id="@+id/Descrizione"
+        android:layout_width="418dp"
+        android:layout_height="106dp"
+        android:layout_marginTop="40dp"
+        android:hint="Descrizione"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Nome"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-4dp" />
+
     <Button
         android:id="@+id/gallery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="300dp"
+        android:layout_width="180dp"
+        android:layout_height="44dp"
+        android:layout_marginBottom="50dp"
         android:text="Scegli dalla Galleria"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.932"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myImage"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.952"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -40,10 +64,10 @@
         android:text="Inserisci"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.848"
+        app:layout_constraintHorizontal_bias="0.902"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myImage"
-        app:layout_constraintVertical_bias="0.717"
+        app:layout_constraintVertical_bias="0.654"
         tools:ignore="MissingConstraints" />
 
     <Button
@@ -53,10 +77,22 @@
         android:text="Download"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.116"
+        app:layout_constraintHorizontal_bias="0.117"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myImage"
-        app:layout_constraintVertical_bias="0.717" />
+        app:layout_constraintVertical_bias="0.654" />
+
+    <Button
+        android:id="@+id/camera"
+        android:layout_width="108dp"
+        android:layout_height="49dp"
+        android:text="Camera"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.118"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myImage"
+        app:layout_constraintVertical_bias="0.846" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
