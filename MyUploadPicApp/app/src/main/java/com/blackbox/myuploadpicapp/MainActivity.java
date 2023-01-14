@@ -9,20 +9,25 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.blackbox.myuploadpicapp.model.user.LatitudeLongitude;
 import com.blackbox.myuploadpicapp.model.user.Pin;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class MainActivity extends AppCompatActivity {
 
-    //public static final String DBFIRESTORE = "";
-
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Button uploadButton;
+    Button downloadPinButton;
+    TextView pinFromDBTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         uploadButton = findViewById(R.id.uploadButton);
+        downloadPinButton = findViewById(R.id.buttonGetPinFromDB);
+        pinFromDBTextView = findViewById(R.id.pinFromDB_textview);
 
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,5 +60,29 @@ public class MainActivity extends AppCompatActivity {
                         });
             }
         });
+
+        downloadPinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db.collection("pins")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                String result = "";
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        Log.d(TAG, document.getId() + " => " + document.getData());
+                                        result += document.getData();
+                                    }
+                                    pinFromDBTextView.setText(result);
+                                } else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+            }
+        });
+
     }
 }
