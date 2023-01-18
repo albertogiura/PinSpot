@@ -13,14 +13,28 @@ import android.widget.TextView;
 
 import com.blackbox.myuploadpicapp.model.user.LatitudeLongitude;
 import com.blackbox.myuploadpicapp.model.user.Pin;
+import com.firebase.geofire.GeoQueryBounds;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+//inizio import random copiaincollati
+//RIMUOVERE TUTTI QUELLI INUTILI
+import com.firebase.geofire.GeoFireUtils;
+import com.firebase.geofire.GeoLocation;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -46,15 +60,39 @@ public class MainActivity extends AppCompatActivity {
         uploadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LatitudeLongitude l= new LatitudeLongitude(55.0,55.0);
-                Pin pin = new Pin(l, "title", "pippo",10);
 
-                db.collection("pins")
+
+                //copia incolla brutale della doc
+                double lat = 55.5074;
+                double lng = 9.1279;
+                String hash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(lat, lng));
+/*
+                Map<String, Object> updates = new HashMap<>();
+                updates.put("geohash", hash);
+                updates.put("lat", lat);
+                updates.put("lng", lng);
+
+                DocumentReference londonRef = db.collection("cities").document("ON");
+                londonRef.update(updates)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                // ...
+                            }
+                        });
+               //*/
+                //fine brutalità
+                LatitudeLongitude l= new LatitudeLongitude(55.0,55.0);
+                Pin pin = new Pin(lat,lng, hash,"title", "pippo",10);
+
+                db.collection("pins3")
                         .add(pin)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -69,7 +107,54 @@ public class MainActivity extends AppCompatActivity {
         downloadPinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                db.collection("pins")
+                final GeoLocation center = new GeoLocation(55.5074, 9.127);
+                final double radiusInM = 5 * 1000;
+
+// Each item in 'bounds' represents a startAt/endAt pair. We have to issue
+// a separate query for each pair. There can be up to 9 pairs of bounds
+// depending on overlap, but in most cases there are 4.
+
+                List<GeoQueryBounds> bounds = GeoFireUtils.getGeoHashQueryBounds(center, radiusInM);
+                final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
+                for (GeoQueryBounds b : bounds) {
+                    Query q = db.collection("pins3")
+                            .orderBy("geoHash")
+                            .startAt(b.startHash)
+                            .endAt(b.endHash);
+
+                    tasks.add(q.get());
+                }
+
+                // Collect all the query results together into a single list
+                Tasks.whenAllComplete(tasks)
+                        .addOnCompleteListener(new OnCompleteListener<List<Task<?>>>() {
+                            @Override
+                            public void onComplete(@NonNull Task<List<Task<?>>> t) {
+                                List<DocumentSnapshot> matchingDocs = new ArrayList<>();
+
+                                for (Task<QuerySnapshot> task : tasks) {
+                                    QuerySnapshot snap = task.getResult();
+                                    for (DocumentSnapshot doc : snap.getDocuments()) {
+                                        double lat = doc.getDouble("lat");
+                                        double lng = doc.getDouble("lon");
+
+                                        // We have to filter out a few false positives due to GeoHash
+                                        // accuracy, but most will match
+                                        GeoLocation docLocation = new GeoLocation(lat, lng);
+                                        double distanceInM = GeoFireUtils.getDistanceBetween(docLocation, center);
+                                        if (distanceInM <= radiusInM) {
+                                            matchingDocs.add(doc);
+                                        }
+                                    }
+                                }
+                                 int i =  matchingDocs.size();
+                                String ss = Integer.toString(i);
+                                pinTitles.setText(ss);
+
+                            }
+                        });
+/*
+                db.collection("pins2")
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -91,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                                     Log.d(TAG, "Error getting documents: ", task.getException());
                                 }
                             }
-                        });
+                        });*/
             }
         });
 
