@@ -80,7 +80,6 @@ public class InsertPinActivity extends AppCompatActivity {
             if (!isGranted.containsValue(false)) {
                 Log.d(TAG, "All permission have been granted");
                 takePicture();
-                // getLocation(); Eventualmente qui è possibile inserire chiamate a metodi da essere eseguiti una volta avuto il permesso
             }
         });
 
@@ -89,13 +88,22 @@ public class InsertPinActivity extends AppCompatActivity {
 
         mTakePicture = registerForActivityResult(new ActivityResultContracts.TakePicture(),
                 result -> {
-                    binding.imageView.setImageURI(null); // This seems necessary for the image to change if the photo is taken again
-                    binding.imageView.setImageURI(tempImageUri);
+
+                    if (result) {
+                        binding.imageView.setImageURI(null); // This seems necessary for the image to change if the photo is taken again
+                        binding.imageView.setImageURI(tempImageUri);
 
 
-                    BitmapDrawable drawable = (BitmapDrawable) binding.imageView.getDrawable();
-                    Bitmap bmp = drawable.getBitmap();
-                    saveImageToExternalStorage(UUID.randomUUID().toString(),bmp);
+                        BitmapDrawable drawable = (BitmapDrawable) binding.imageView.getDrawable();
+                        Bitmap bmp = drawable.getBitmap();
+                        saveImageToExternalStorage(UUID.randomUUID().toString(),bmp);
+                    }
+                    else
+                    {
+                        Toast.makeText(this,"Operation cancelled",Toast.LENGTH_SHORT).show();
+                    }
+
+
                 });
 
         /*binding.takePicButton.setOnClickListener(new View.OnClickListener() {
@@ -152,7 +160,7 @@ public class InsertPinActivity extends AppCompatActivity {
     }*/
 
     private void takePicture() {
-        // Usa una variabile booleana per stabilire se si possiede o meno il permesso
+        // Using a boolean variable to determine if permissions have been granted
         boolean multiplePermissionsStatus =
                 ActivityCompat.checkSelfPermission(this,
                         Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED &&
@@ -160,10 +168,8 @@ public class InsertPinActivity extends AppCompatActivity {
                                 Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
 
         if (multiplePermissionsStatus) {
-            Log.d(TAG, "getLocation(): All permissions have been granted");
-            // Se i permessi sono stati concessi, eseguire la logica inserita qui
-
-
+            Log.d(TAG, "All permissions needed to take a picture have been granted");
+            // If all permissions have been granted, execute the following logic
 
             mTakePicture.launch(tempImageUri);
 
@@ -174,7 +180,7 @@ public class InsertPinActivity extends AppCompatActivity {
 
         } else {
             Log.d(TAG, "One or more permissions have not been granted");
-            // Altrimenti richiedi all'utente di concedere i multipli permessi necessari
+            // Notify the user with a new permission request
             multiplePermissionLauncher.launch(PERMISSIONS);
 
         }
