@@ -33,7 +33,14 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.blackbox.myuploadpicapp.databinding.ActivityInsertPinBinding;
+import com.google.android.gms.auth.api.signin.internal.Storage;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -57,6 +64,11 @@ public class InsertPinActivity extends AppCompatActivity {
 
     private ActivityResultLauncher<Uri> mTakePicture;
     Uri tempImageUri;
+
+    // Firebase Storage
+    private static final String DBIMAGES = "gs://pinspot-demo.appspot.com/";
+    private FirebaseStorage storage = FirebaseStorage.getInstance(DBIMAGES);
+    private StorageReference storageRef = storage.getReference();
 
     private final String[] PERMISSIONS = {
             Manifest.permission.CAMERA,
@@ -97,6 +109,9 @@ public class InsertPinActivity extends AppCompatActivity {
                         BitmapDrawable drawable = (BitmapDrawable) binding.imageView.getDrawable();
                         Bitmap bmp = drawable.getBitmap();
                         saveImageToExternalStorage(UUID.randomUUID().toString(), bmp);
+
+                        // Enable upload button
+                        binding.uploadPicButton.setEnabled(true);
                     }
                     else
                     {
@@ -136,6 +151,49 @@ public class InsertPinActivity extends AppCompatActivity {
                 });
          */
 
+        binding.uploadPicButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(binding.imageView.getDrawable() != null){
+                    //Toast.makeText(InsertPinActivity.this,"Yes", Toast.LENGTH_SHORT).show();
+                    binding.uploadProgressBar.setVisibility(View.VISIBLE);
+                    uploadPicture();
+                }
+                else{
+                    Toast.makeText(InsertPinActivity.this,"No photo to upload", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+    private void uploadPicture(){
+        // uploading everest picture to storage DB
+        Bitmap bitmap = ((BitmapDrawable) binding.imageView.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        //takenPhotoRef = storageRef.child(pin.getLink()+".jpeg"); TODO
+
+        StorageReference takenPhotoRef = storageRef.child("caricata.jpeg");
+        UploadTask uploadTask = takenPhotoRef.putBytes(data); // uploading here
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+                Toast.makeText(InsertPinActivity.this,"Upload error", Toast.LENGTH_SHORT).show();
+
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+                binding.uploadProgressBar.setVisibility(View.GONE);
+                Toast.makeText(InsertPinActivity.this,"Upload completed", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
