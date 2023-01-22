@@ -154,14 +154,8 @@ public class InsertPinActivity extends AppCompatActivity {
         binding.uploadPicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(binding.imageView.getDrawable() != null){
-                    //Toast.makeText(InsertPinActivity.this,"Yes", Toast.LENGTH_SHORT).show();
-                    binding.uploadProgressBar.setVisibility(View.VISIBLE);
-                    uploadPicture();
-                }
-                else{
-                    Toast.makeText(InsertPinActivity.this,"No photo to upload", Toast.LENGTH_SHORT).show();
-                }
+                binding.uploadProgressBar.setVisibility(View.VISIBLE);
+                uploadPicture();
             }
         });
 
