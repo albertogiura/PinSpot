@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
@@ -70,6 +71,9 @@ public class InsertPinActivity extends AppCompatActivity {
     private FirebaseStorage storage = FirebaseStorage.getInstance(DBIMAGES);
     private StorageReference storageRef = storage.getReference();
 
+    // Image picker
+    private ActivityResultLauncher<String> openLocalPhoto;
+
     private final String[] PERMISSIONS = {
             Manifest.permission.CAMERA,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -122,6 +126,17 @@ public class InsertPinActivity extends AppCompatActivity {
 
                 });
 
+        openLocalPhoto = registerForActivityResult(new ActivityResultContracts.GetContent(),
+                result -> {
+                    binding.imageView.setImageURI(result);
+                    if(result != null){
+                        binding.uploadPicButton.setEnabled(true);
+                    }else{
+                        Toast.makeText(this,"Operation cancelled", Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+
         /*binding.takePicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -156,6 +171,22 @@ public class InsertPinActivity extends AppCompatActivity {
             public void onClick(View view) {
                 binding.uploadProgressBar.setVisibility(View.VISIBLE);
                 uploadPicture();
+            }
+        });
+
+        binding.choosePicFromLocalButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // TODO Determine if read permission need to be asked explicitly in order to support older Android builds
+                if(ContextCompat.checkSelfPermission(InsertPinActivity.this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
+
+                    openLocalPhoto.launch("image/*");
+
+                }else{
+                    Toast.makeText(InsertPinActivity.this,"Read permission not granted",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
