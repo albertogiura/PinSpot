@@ -91,16 +91,17 @@ public class InsertPinActivity extends AppCompatActivity {
 
                     if (result) {
                         binding.imageView.setImageURI(null); // This seems necessary for the image to change if the photo is taken again
-                        binding.imageView.setImageURI(tempImageUri);
+                        binding.imageView.setImageURI(tempImageUri); // Retrieve the image contained in the specified URI as new picture for the imageView
 
-
+                        // Retrieve taken photo from imageView, put it in a Bitmap and save picture locally
                         BitmapDrawable drawable = (BitmapDrawable) binding.imageView.getDrawable();
                         Bitmap bmp = drawable.getBitmap();
-                        saveImageToExternalStorage(UUID.randomUUID().toString(),bmp);
+                        saveImageToExternalStorage(UUID.randomUUID().toString(), bmp);
                     }
                     else
                     {
-                        Toast.makeText(this,"Operation cancelled",Toast.LENGTH_SHORT).show();
+                        // Just in case the user ended up not taking a photo
+                        Toast.makeText(this,"Operation cancelled", Toast.LENGTH_SHORT).show();
                     }
 
 
@@ -139,6 +140,7 @@ public class InsertPinActivity extends AppCompatActivity {
     }
 
     private Uri initTempUri(){
+        // Setup a temporary file to save taken picture
         File tempImagesDir = new File(getApplicationContext().getFilesDir(), "temp_images");
         if(!tempImagesDir.exists()){
             tempImagesDir.mkdir();
@@ -171,7 +173,7 @@ public class InsertPinActivity extends AppCompatActivity {
             Log.d(TAG, "All permissions needed to take a picture have been granted");
             // If all permissions have been granted, execute the following logic
 
-            mTakePicture.launch(tempImageUri);
+            mTakePicture.launch(tempImageUri); // Call smartphone camera with the file path that has to be used to save the picture
 
             /*mTakePicture = registerForActivityResult(new ActivityResultContracts.TakePicture(),
                     result -> {
@@ -191,6 +193,7 @@ public class InsertPinActivity extends AppCompatActivity {
         Uri ImageCollection = null;
         ContentResolver resolver = getContentResolver();
 
+        // Determine correct path to be used according to the current Android SDK build version
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
 
             ImageCollection = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
@@ -200,27 +203,28 @@ public class InsertPinActivity extends AppCompatActivity {
             ImageCollection = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
         }
 
+        // Getting ready a new file to save the bitmap image in the smartphone gallery
         ContentValues contentValues = new ContentValues();
         contentValues.put(MediaStore.Images.Media.DISPLAY_NAME, imgName + ".jpg");
-        contentValues.put(MediaStore.Images.Media.MIME_TYPE,"image/jpeg");
+        contentValues.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
         Uri imageUri = resolver.insert(ImageCollection, contentValues);
 
         try {
-
+            // Put bitmap image into the file without losing quality
             OutputStream outputStream = resolver.openOutputStream(Objects.requireNonNull(imageUri));
             //Bitmap bmp = BitmapFactory.decodeFile(String.valueOf(imgPath));
             //BitmapDrawable drawable = (BitmapDrawable) binding.imageView.getDrawable();
             //Bitmap bmp = drawable.getBitmap();
-            bmp.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
+            bmp.compress(Bitmap.CompressFormat.JPEG,100, outputStream);
             Objects.requireNonNull(outputStream);
             outputStream.close();
-            Toast.makeText(this,"Image saved",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Image saved", Toast.LENGTH_SHORT).show();
             return true;
 
         }
         catch (Exception e){
 
-            Toast.makeText(this,"Image not saved: \n" + e,Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Image not saved: \n" + e, Toast.LENGTH_SHORT).show();
             e.printStackTrace();
 
         }
