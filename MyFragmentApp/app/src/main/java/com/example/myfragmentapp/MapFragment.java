@@ -27,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -151,6 +152,28 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
 
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                MarkerOptions marker = new MarkerOptions().position(
+                                latLng)
+                        .title("Hello Maps ");
+                marker.icon(BitmapDescriptorFactory
+                        .defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+                googleMap.addMarker(marker);
+            }
+
+        });
+        googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+            @Override public void onCameraChange(CameraPosition cameraPosition) {
+                // camera change can occur programmatically.
+                if (isResumed()) {
+                    Toast.makeText(requireActivity(),
+                                    " MISTOMUOVENDO" ,
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         //googleMap.setMaxZoomPreference(20.0f);
         //googleMap.setMinZoomPreference(14.0f);
