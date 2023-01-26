@@ -30,7 +30,18 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -50,6 +61,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     private FusedLocationProviderClient fusedLocationClient;
     public LatLng mypos = new LatLng(0,0);
+    private double lat =0;
+    private  double lon =0;
+
+    public ArrayList<myMarker> markerlist = new ArrayList<myMarker>();
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -135,10 +150,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-        LatLng milano = new LatLng(45, 9);
 
-        googleMap.setMaxZoomPreference(20.0f);
-        googleMap.setMinZoomPreference(14.0f);
+
+        //googleMap.setMaxZoomPreference(20.0f);
+        //googleMap.setMinZoomPreference(14.0f);
 
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -156,16 +171,28 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         getLocation(googleMap);
         googleMap.setMyLocationEnabled(true);
-        marker = googleMap.addMarker(new MarkerOptions()
-                .position(milano)
-                .title("Marker")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))//cambio colore IMPORT NECESSARIO
-                //BitmapDescriptorFactory.fromResource(R.drawable.arrow) cosi possiamo mettere la mappa
-                .alpha(0.9f)//cambio opacità
-                .flat(true)//In teoria dovremmo averlo così ma bho non cambia nulla a prima vista
-        );
-        marker.setTag(0);
-        googleMap.setOnMarkerClickListener(this); //importante settare il listener NON DIMENTICARE
+
+
+        markerlist.add(new myMarker(45.01, 9, "pin1", "id1"));
+        markerlist.add(new myMarker(45.02, 9, "pin2", "id2"));
+        markerlist.add(new myMarker(45.03, 9, "pin3", "id3"));
+        int size =  markerlist.size();
+        for(int i =0 ;i<size;++i) {
+            //POSSIBILE INIZIO METODO ISTANZIAZIONE MARKER
+
+            LatLng markerpos = new LatLng(markerlist.get(i).getLat(),markerlist.get(i).getLon());
+            marker = googleMap.addMarker(new MarkerOptions()
+                    .position(markerpos)
+                    .title(markerlist.get(i).getTitle())
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))//cambio colore IMPORT NECESSARIO
+                    //BitmapDescriptorFactory.fromResource(R.drawable.arrow) cosi possiamo mettere la mappa
+                    .alpha(0.9f)//cambio opacità
+                    .flat(true)//In teoria dovremmo averlo così ma bho non cambia nulla a prima vista
+            );
+            //marker.setTag(i);
+            marker.setTag(markerlist.get(i).getIdPin());
+            googleMap.setOnMarkerClickListener(this);
+        }//importante settare il listener NON DIMENTICARE
        /* Location myLocation = googleMap.getMyLocation();//è deprecato, chiedere a ginelli se va bene
        LatLng myLatLng = new LatLng(myLocation.getLatitude(),
               myLocation.getLongitude());
@@ -178,6 +205,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
+       /*
         //qui è la logica del click, faccio solo un toast per ora nulla di che, ma qui si carica il fragment
         // Retrieve the data from the marker.
         Integer clickCount = (Integer) marker.getTag();//questo è un tag che gli viene aggiunto come prorietà del marker
@@ -188,14 +216,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             marker.setTag(clickCount);
             Toast.makeText(requireActivity(),
                     marker.getTitle() +
-                            " has been clicked " + clickCount + " times.",
+                            " has been clicked " + clickCount + " times."
+                    +"idmarker: ",
                     Toast.LENGTH_SHORT).show();
         }
-
+*/
         // Return false to indicate that we have not consumed the event and that we wish
         // for the default behavior to occur (which is for the camera to move such that the
         // marker is centered and for the marker's info window to open, if it has one).
 
+        //ON CLICK ALTERNATIVO
+        String idpin = (String) marker.getTag();
+
+        Toast.makeText(requireActivity(),
+                marker.getTitle() +
+                        " pintag: " + idpin,
+                Toast.LENGTH_SHORT).show();
+        //Da qui accediamo al pin con il tag del pin
         return false;
     }
     private void getLocation(GoogleMap map) {

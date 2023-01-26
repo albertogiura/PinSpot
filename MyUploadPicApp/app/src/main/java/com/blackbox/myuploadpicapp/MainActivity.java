@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.blackbox.myuploadpicapp.model.user.LatitudeLongitude;
+import com.blackbox.myuploadpicapp.model.user.Marker;
 import com.blackbox.myuploadpicapp.model.user.Pin;
 import com.firebase.geofire.GeoQueryBounds;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,6 +39,7 @@ import java.util.Map;
 
 
 public class MainActivity extends AppCompatActivity {
+
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Button uploadButton;
@@ -107,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         downloadPinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //METODO GET MARKERLIST
                 final GeoLocation center = new GeoLocation(55.5074, 9.127);
                 final double radiusInM = 5 * 1000;
 
@@ -147,12 +150,28 @@ public class MainActivity extends AppCompatActivity {
                                         }
                                     }
                                 }
-                                 int i =  matchingDocs.size();
-                                String ss = Integer.toString(i);
-                                pinTitles.setText(ss);
+                                 int size =  matchingDocs.size();
+                                ArrayList<Marker> markerlist = new ArrayList<Marker>();
+                                for(int i =0 ;i<size;++i){
+                                    double lat =  matchingDocs.get(i).getDouble("lat");
+                                    double lon =  matchingDocs.get(i).getDouble("lon");
+                                    String title = matchingDocs.get(i).getString("title");
+                                    String idpin = matchingDocs.get(i).getId();
+
+                                    markerlist.add(new Marker(lat, lon, title, idpin ));
+                                }
+                                String testo = "";
+                                for(int i =0 ;i<size;++i){
+                                    testo = testo + markerlist.get(i).toString();
+
+                                }
+
+                                pinTitles.setText(testo);
+                                //pinTitles.setText(Integer.toString(i));
 
                             }
                         });
+                //METODO GETPIN
 /*
                 db.collection("pins2")
                         .get()
