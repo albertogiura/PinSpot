@@ -18,7 +18,6 @@
         android:drawableStart="@drawable/ic_search"
         android:drawablePadding="16dp"
         android:gravity="center_vertical"
-        android:hint="cerca"
         android:inputType="textUri|numberSigned|textMultiLine|textNoSuggestions"
         android:padding="16dp"
         android:textColorHint="#757575" />

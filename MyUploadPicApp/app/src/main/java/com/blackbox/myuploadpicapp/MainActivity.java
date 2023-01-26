@@ -113,9 +113,9 @@ public class MainActivity extends AppCompatActivity {
                 final GeoLocation center = new GeoLocation(55.5074, 9.127);
                 final double radiusInM = 5 * 1000;
 
-// Each item in 'bounds' represents a startAt/endAt pair. We have to issue
-// a separate query for each pair. There can be up to 9 pairs of bounds
-// depending on overlap, but in most cases there are 4.
+                // Each item in 'bounds' represents a startAt/endAt pair. We have to issue
+                // a separate query for each pair. There can be up to 9 pairs of bounds
+                // depending on overlap, but in most cases there are 4.
 
                 List<GeoQueryBounds> bounds = GeoFireUtils.getGeoHashQueryBounds(center, radiusInM);
                 final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
