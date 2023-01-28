@@ -18,7 +18,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login);
 
 
-        TextView username =(TextView) findViewById(R.id.username);
+       /* TextView username =(TextView) findViewById(R.id.username);
         TextView password =(TextView) findViewById(R.id.password);
 
         Button loginbtn = findViewById(R.id.loginButton);
@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
                     //incorrect
                     Toast.makeText(LoginActivity.this,"LOGIN FAILED !!!",Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
 
     }

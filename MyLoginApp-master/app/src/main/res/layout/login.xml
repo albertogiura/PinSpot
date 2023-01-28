@@ -17,7 +17,7 @@
         android:layout_margin="30dp"
         app:cardCornerRadius="30dp"
         app:cardElevation="20dp"
-        android:background="@drawable/button_bg">
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -48,7 +48,7 @@
                 android:hint="Username"
                 android:padding="8dp"
                 android:textColor="@color/white"
-                android:textColorHint="#01579B" />
+                android:textColorHint="@color/white" />
 
             <EditText
                 android:id="@+id/password"
@@ -63,7 +63,7 @@
                 android:padding="8dp"
                 android:textColor="@color/black"
                 android:textColorHighlight="@color/cardview_dark_background"
-                android:textColorHint="#01579B" />
+                android:textColorHint="@color/white" />
 
             <Button
                 android:id="@+id/loginButton"
