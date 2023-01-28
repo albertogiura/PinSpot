@@ -9,7 +9,11 @@
         android:id="@+id/mapFragment"
         android:name="com.blackbox.pinspot.ui.main.MapFragment"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_pinInfoFragment"
+            app:destination="@id/pinInfoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.blackbox.pinspot.ui.main.ProfileFragment"
@@ -19,5 +23,19 @@
         android:id="@+id/favPlacesFragment"
         android:name="com.blackbox.pinspot.ui.main.FavPlacesFragment"
         android:label="fragment_fav_places"
-        tools:layout="@layout/fragment_fav_places" />
+        tools:layout="@layout/fragment_fav_places" >
+        <action
+            android:id="@+id/action_favPlacesFragment_to_pinInfoFragment"
+            app:destination="@id/pinInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pinInfoFragment"
+        android:name="com.blackbox.pinspot.ui.main.PinInfoFragment"
+        android:label="fragment_pin_info"
+        tools:layout="@layout/fragment_pin_info" >
+        <argument
+            android:name="PinID"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
 </navigation>

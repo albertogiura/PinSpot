@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'androidx.navigation.safeargs'
 }
 
 android {
@@ -37,6 +38,8 @@ android {
 
 dependencies {
 
+    implementation 'com.google.firebase:firebase-firestore:24.4.2'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
     def nav_version = "2.5.3"
     def room_version = "2.4.3"
 
@@ -72,4 +75,7 @@ dependencies {
 
     // Google Maps API dependencies
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
+
+    // Firestore Geoqueries dependencies
+    implementation 'com.firebase:geofire-android-common:3.1.0'
 }
