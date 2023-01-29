@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.blackbox.pinspot.R;
 import com.blackbox.pinspot.databinding.FragmentMapBinding;
@@ -175,7 +176,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             //marker.setTag(i);*/
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final GeoLocation center = new GeoLocation(55.5074, 9.127);
+        final GeoLocation center = new GeoLocation(45.830308, 8.645078);
         final double radiusInM = 5 * 1000;
 
         // Each item in 'bounds' represents a startAt/endAt pair. We have to issue
@@ -185,7 +186,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         List<GeoQueryBounds> bounds = GeoFireUtils.getGeoHashQueryBounds(center, radiusInM);
         final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
         for (GeoQueryBounds b : bounds) {
-            Query q = db.collection("pins3")
+            Query q = db.collection("pins4")
                     .orderBy("geoHash")
                     .startAt(b.startHash)
                     .endAt(b.endHash);
@@ -276,6 +277,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
+
+        if (marker.getTag() == null){
+            Toast.makeText(requireActivity(), "Vuoto", Toast.LENGTH_SHORT).show();
+        } else {
+            MapFragmentDirections.ActionMapFragmentToPinInfoFragment action =
+                    MapFragmentDirections.
+                            actionMapFragmentToPinInfoFragment(marker.getTag().toString());
+            Navigation.findNavController(requireView()).navigate(action);
+        }
+
         return false;
     }
 
