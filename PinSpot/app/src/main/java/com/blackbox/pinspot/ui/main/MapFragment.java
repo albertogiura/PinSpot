@@ -33,6 +33,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -52,7 +53,12 @@ import java.util.Map;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
-
+    Double startLat =0.0;
+    Double startLon =0.0;
+    Double currCameraLat =0.0;
+    Double currCameraLon =0.0;
+    Double lastUpdateLat = 0.0;
+    Double lastUpdateLon = 0.0;
     private FragmentMapBinding fragmentMapBinding;
 
     private ActivityResultLauncher<String[]> multiplePermissionLauncher;
@@ -156,6 +162,39 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         getDeviceLocation(googleMap);
         googleMap.setMyLocationEnabled(true);
 
+        /*googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+            @Override public void onCameraChange(CameraPosition cameraPosition) {
+                // camera change can occur programmatically.
+                if (isResumed()) {
+                    Toast.makeText(requireActivity(),
+                            " MISTOMUOVENDO" ,
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });*/
+
+        googleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+            @Override
+            public void onCameraIdle() {
+                currCameraLat = googleMap.getCameraPosition().target.latitude;
+                currCameraLon = googleMap.getCameraPosition().target.longitude;
+                if(((currCameraLat - lastUpdateLat)>= 0.01) || ((currCameraLon - lastUpdateLon)>= 0.01)){
+                    lastUpdateLat = currCameraLat;
+                    lastUpdateLon = currCameraLon;
+                    Toast.makeText(requireActivity(),
+                            " MISTOMUOVENDO" ,
+                            Toast.LENGTH_SHORT).show();
+                    if (isResumed()) {
+                        if (googleMap != null) {
+                            googleMap.clear();
+                            updatePin(googleMap,currCameraLat, currCameraLon);
+                        }
+
+                    }
+                }
+
+            }
+        });
 
         /*markerlist.add(new myMarker(45.01, 9, "pin1", "id1"));
         markerlist.add(new myMarker(45.02, 9, "pin2", "id2"));
@@ -175,73 +214,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             );
             //marker.setTag(i);*/
 
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final GeoLocation center = new GeoLocation(45.830308, 8.645078);
-        final double radiusInM = 5 * 1000;
 
-        // Each item in 'bounds' represents a startAt/endAt pair. We have to issue
-        // a separate query for each pair. There can be up to 9 pairs of bounds
-        // depending on overlap, but in most cases there are 4.
-
-        List<GeoQueryBounds> bounds = GeoFireUtils.getGeoHashQueryBounds(center, radiusInM);
-        final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
-        for (GeoQueryBounds b : bounds) {
-            Query q = db.collection("pins4")
-                    .orderBy("geoHash")
-                    .startAt(b.startHash)
-                    .endAt(b.endHash);
-
-            tasks.add(q.get());
-        }
-
-        // Collect all the query results together into a single list
-        Tasks.whenAllComplete(tasks)
-                .addOnCompleteListener(new OnCompleteListener<List<Task<?>>>() {
-                    @Override
-                    public void onComplete(@NonNull Task<List<Task<?>>> t) {
-                        List<DocumentSnapshot> matchingDocs = new ArrayList<>();
-
-                        for (Task<QuerySnapshot> task : tasks) {
-                            QuerySnapshot snap = task.getResult();
-                            for (DocumentSnapshot doc : snap.getDocuments()) {
-                                double lat = doc.getDouble("lat");
-                                double lng = doc.getDouble("lon");
-
-                                // We have to filter out a few false positives due to GeoHash
-                                // accuracy, but most will match
-                                GeoLocation docLocation = new GeoLocation(lat, lng);
-                                double distanceInM = GeoFireUtils.getDistanceBetween(docLocation, center);
-                                if (distanceInM <= radiusInM) {
-                                    matchingDocs.add(doc);
-                                }
-                            }
-                        }
-                        int size = matchingDocs.size();
-
-                        String s = "I risultati sono: "+Integer.toString(size);
-                        Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show();
-
-                        for(int i = 0 ;i<size;++i){
-                            double lat =  matchingDocs.get(i).getDouble("lat");
-                            double lon =  matchingDocs.get(i).getDouble("lon");
-                            String title = matchingDocs.get(i).getString("title");
-                            String idpin = matchingDocs.get(i).getId();
-
-                            markerlist.add(new myMarker(lat, lon, title, idpin));
-
-                            //Put pins on map
-                            marker = googleMap.addMarker(new MarkerOptions()
-                                    .position(new LatLng(lat, lon))
-                                    .title(markerlist.get(i).getTitle())
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))//cambio colore IMPORT NECESSARIO
-                                    //BitmapDescriptorFactory.fromResource(R.drawable.arrow) cosi possiamo mettere la mappa
-                                    .alpha(0.9f)//cambio opacità
-                                    .flat(true)//In teoria dovremmo averlo così ma bho non cambia nulla a prima vista
-                            );
-                            marker.setTag(markerlist.get(i).getIdPin());
-                        }
-                    }
-                });
 
         //markerlist.add(new myMarker(45.01, 9, "pin1", "id1"));
 
@@ -307,7 +280,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                                 if (location != null) {
                                     Log.d(TAG, location.getLatitude() + " " + location.getLongitude());
                                     LatLng currentPos = new LatLng(location.getLatitude(), location.getLongitude());
-
+                                    startLat = currentPos.latitude;
+                                    startLon = currentPos.longitude;
+                                    updatePin(googleMap, startLat, startLon);
                                     mypos = currentPos;
                                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(mypos, 14.0f));
                                     map.setMyLocationEnabled(true);
@@ -342,5 +317,77 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage(), e);
         }
+    }
+
+
+    public void updatePin(GoogleMap map, Double radiusLat, Double radiusLon){
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        //final GeoLocation center = new GeoLocation(45.830308, 8.645078);
+        final GeoLocation center = new GeoLocation(radiusLat, radiusLon);
+        final double radiusInM = 5 * 1000;
+
+        // Each item in 'bounds' represents a startAt/endAt pair. We have to issue
+        // a separate query for each pair. There can be up to 9 pairs of bounds
+        // depending on overlap, but in most cases there are 4.
+
+        List<GeoQueryBounds> bounds = GeoFireUtils.getGeoHashQueryBounds(center, radiusInM);
+        final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
+        for (GeoQueryBounds b : bounds) {
+            Query q = db.collection("pins4")
+                    .orderBy("geoHash")
+                    .startAt(b.startHash)
+                    .endAt(b.endHash);
+
+            tasks.add(q.get());
+        }
+
+        // Collect all the query results together into a single list
+        Tasks.whenAllComplete(tasks)
+                .addOnCompleteListener(new OnCompleteListener<List<Task<?>>>() {
+                    @Override
+                    public void onComplete(@NonNull Task<List<Task<?>>> t) {
+                        List<DocumentSnapshot> matchingDocs = new ArrayList<>();
+
+                        for (Task<QuerySnapshot> task : tasks) {
+                            QuerySnapshot snap = task.getResult();
+                            for (DocumentSnapshot doc : snap.getDocuments()) {
+                                double lat = doc.getDouble("lat");
+                                double lng = doc.getDouble("lon");
+
+                                // We have to filter out a few false positives due to GeoHash
+                                // accuracy, but most will match
+                                GeoLocation docLocation = new GeoLocation(lat, lng);
+                                double distanceInM = GeoFireUtils.getDistanceBetween(docLocation, center);
+                                if (distanceInM <= radiusInM) {
+                                    matchingDocs.add(doc);
+                                }
+                            }
+                        }
+                        int size = matchingDocs.size();
+
+                        String s = "I risultati sono: "+Integer.toString(size);
+                        Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show();
+
+                        for(int i = 0 ;i<size;++i){
+                            double lat =  matchingDocs.get(i).getDouble("lat");
+                            double lon =  matchingDocs.get(i).getDouble("lon");
+                            String title = matchingDocs.get(i).getString("title");
+                            String idpin = matchingDocs.get(i).getId();
+
+                            markerlist.add(new myMarker(lat, lon, title, idpin));
+
+                            //Put pins on map
+                            marker = map.addMarker(new MarkerOptions()
+                                    .position(new LatLng(lat, lon))
+                                    .title(markerlist.get(i).getTitle())
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))//cambio colore IMPORT NECESSARIO
+                                    //BitmapDescriptorFactory.fromResource(R.drawable.arrow) cosi possiamo mettere la mappa
+                                    .alpha(0.9f)//cambio opacità
+                                    .flat(true)//In teoria dovremmo averlo così ma bho non cambia nulla a prima vista
+                            );
+                            marker.setTag(markerlist.get(i).getIdPin());
+                        }
+                    }
+                });
     }
 }
