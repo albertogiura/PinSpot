@@ -78,4 +78,9 @@ dependencies {
 
     // Firestore Geoqueries dependencies
     implementation 'com.firebase:geofire-android-common:3.1.0'
+
+    // Room dependencies
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    androidTestImplementation "androidx.room:room-testing:$room_version"
 }
