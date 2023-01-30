@@ -2,6 +2,8 @@ package com.blackbox.pinspot.ui.main;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -141,7 +143,16 @@ public class PinInfoFragment extends Fragment {
                                     String description2 = weather[0].getMain();
 
                                     Integer temperature = (int) (temp - 273.15);
-                                    fragmentPinInfoBinding.temperatura.setText(String.valueOf(temperature) + " °C");
+                                    Context context = getActivity();
+                                    SharedPreferences sharedPref = context.getSharedPreferences(
+                                            "settings", Context.MODE_PRIVATE); //DAMETTEREINUNACOSTANTE
+                                    Boolean celsiusSettings = sharedPref.getBoolean("celsius", true);
+                                    if(celsiusSettings == true){
+                                        fragmentPinInfoBinding.temperatura.setText(String.valueOf(temperature) + " °C");
+                                    }else{
+                                        fragmentPinInfoBinding.temperatura.setText(String.valueOf(celsToFar(temperature)) + " °F");
+                                    }
+
                                     fragmentPinInfoBinding.meteo.setText(description);
                                     // descrizione2.setText(description2);
                                 }
@@ -191,5 +202,8 @@ public class PinInfoFragment extends Fragment {
         } else{
             fragmentPinInfoBinding.loginText.setText("NULL");
         }
+    }
+    int celsToFar(int c){
+        return (int) ((c * 1.8) + 32);
     }
 }
