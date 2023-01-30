@@ -1,5 +1,8 @@
 package com.blackbox.pinspot.model;
 
+import com.firebase.geofire.GeoFireUtils;
+import com.firebase.geofire.GeoLocation;
+
 import java.util.Objects;
 
 public class Pin {
@@ -17,10 +20,20 @@ public class Pin {
         this.likes = 0;*/
     }
 
+
     public Pin(double lat, double lon, String geoHash, String title, String link, int likes) {
         this.lat = lat;
         this.lon = lon;
         this.geoHash = geoHash;
+        this.title = title;
+        this.link = link;
+        this.likes = likes;
+    }
+
+    public Pin(double lat, double lon, String title, String link, int likes) {
+        this.lat = lat;
+        this.lon = lon;
+        this.geoHash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(lat, lon));
         this.title = title;
         this.link = link;
         this.likes = likes;
