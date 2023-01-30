@@ -89,4 +89,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     androidTestImplementation "androidx.room:room-testing:$room_version"
+
+    //places
+    implementation 'com.google.android.libraries.places:places:3.0.0'
 }
