@@ -138,6 +138,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.googleMap = googleMap;
+
         googleMap.setOnMarkerClickListener(this);
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -161,17 +162,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         getDeviceLocation(googleMap);
         googleMap.setMyLocationEnabled(true);
-
-        /*googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
-            @Override public void onCameraChange(CameraPosition cameraPosition) {
-                // camera change can occur programmatically.
-                if (isResumed()) {
-                    Toast.makeText(requireActivity(),
-                            " MISTOMUOVENDO" ,
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });*/
+        /*
+        googleMap.setMaxZoomPreference(20.0f);
+        googleMap.setMinZoomPreference(14.0f);
+        */
 
         googleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
@@ -321,73 +315,73 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
 
     public void updatePin(GoogleMap map, Double radiusLat, Double radiusLon){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        //final GeoLocation center = new GeoLocation(45.830308, 8.645078);
-        final GeoLocation center = new GeoLocation(radiusLat, radiusLon);
-        final double radiusInM = 5 * 1000;
+        if (map != null) {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            //final GeoLocation center = new GeoLocation(45.830308, 8.645078);
+            final GeoLocation center = new GeoLocation(radiusLat, radiusLon);
+            final double radiusInM = 5 * 1000;
 
-        // Each item in 'bounds' represents a startAt/endAt pair. We have to issue
-        // a separate query for each pair. There can be up to 9 pairs of bounds
-        // depending on overlap, but in most cases there are 4.
+            // Each item in 'bounds' represents a startAt/endAt pair. We have to issue
+            // a separate query for each pair. There can be up to 9 pairs of bounds
+            // depending on overlap, but in most cases there are 4.
 
-        List<GeoQueryBounds> bounds = GeoFireUtils.getGeoHashQueryBounds(center, radiusInM);
-        final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
-        for (GeoQueryBounds b : bounds) {
-            Query q = db.collection("pins4")
-                    .orderBy("geoHash")
-                    .startAt(b.startHash)
-                    .endAt(b.endHash);
+            List<GeoQueryBounds> bounds = GeoFireUtils.getGeoHashQueryBounds(center, radiusInM);
+            final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
+            for (GeoQueryBounds b : bounds) {
+                Query q = db.collection("pins4")
+                        .orderBy("geoHash")
+                        .startAt(b.startHash)
+                        .endAt(b.endHash);
 
-            tasks.add(q.get());
-        }
+                tasks.add(q.get());
+            }
 
-        // Collect all the query results together into a single list
-        Tasks.whenAllComplete(tasks)
-                .addOnCompleteListener(new OnCompleteListener<List<Task<?>>>() {
-                    @Override
-                    public void onComplete(@NonNull Task<List<Task<?>>> t) {
-                        List<DocumentSnapshot> matchingDocs = new ArrayList<>();
+            // Collect all the query results together into a single list
+            Tasks.whenAllComplete(tasks)
+                    .addOnCompleteListener(new OnCompleteListener<List<Task<?>>>() {
+                        @Override
+                        public void onComplete(@NonNull Task<List<Task<?>>> t) {
+                            List<DocumentSnapshot> matchingDocs = new ArrayList<>();
 
-                        for (Task<QuerySnapshot> task : tasks) {
-                            QuerySnapshot snap = task.getResult();
-                            for (DocumentSnapshot doc : snap.getDocuments()) {
-                                double lat = doc.getDouble("lat");
-                                double lng = doc.getDouble("lon");
+                            for (Task<QuerySnapshot> task : tasks) {
+                                QuerySnapshot snap = task.getResult();
+                                for (DocumentSnapshot doc : snap.getDocuments()) {
+                                    double lat = doc.getDouble("lat");
+                                    double lng = doc.getDouble("lon");
 
-                                // We have to filter out a few false positives due to GeoHash
-                                // accuracy, but most will match
-                                GeoLocation docLocation = new GeoLocation(lat, lng);
-                                double distanceInM = GeoFireUtils.getDistanceBetween(docLocation, center);
-                                if (distanceInM <= radiusInM) {
-                                    matchingDocs.add(doc);
+                                    // We have to filter out a few false positives due to GeoHash
+                                    // accuracy, but most will match
+                                    GeoLocation docLocation = new GeoLocation(lat, lng);
+                                    double distanceInM = GeoFireUtils.getDistanceBetween(docLocation, center);
+                                    if (distanceInM <= radiusInM) {
+                                        matchingDocs.add(doc);
+                                    }
                                 }
                             }
+                            int size = matchingDocs.size();
+
+                            String s = "I risultati sono: " + Integer.toString(size);
+                            Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show();
+
+                            for (int i = 0; i < size; ++i) {
+                                double lat = matchingDocs.get(i).getDouble("lat");
+                                double lon = matchingDocs.get(i).getDouble("lon");
+                                String title = matchingDocs.get(i).getString("title");
+                                String idpin = matchingDocs.get(i).getId();
+
+                                //Put pins on map
+                                marker = map.addMarker(new MarkerOptions()
+                                        .position(new LatLng(lat, lon))
+                                        .title(title)
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))//cambio colore IMPORT NECESSARIO
+                                        //BitmapDescriptorFactory.fromResource(R.drawable.arrow) cosi possiamo mettere la mappa
+                                        .alpha(0.9f)//cambio opacità
+                                        .flat(true)//In teoria dovremmo averlo così ma bho non cambia nulla a prima vista
+                                );
+                                marker.setTag(idpin);
+                            }
                         }
-                        int size = matchingDocs.size();
-
-                        String s = "I risultati sono: "+Integer.toString(size);
-                        Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show();
-
-                        for(int i = 0 ;i<size;++i){
-                            double lat =  matchingDocs.get(i).getDouble("lat");
-                            double lon =  matchingDocs.get(i).getDouble("lon");
-                            String title = matchingDocs.get(i).getString("title");
-                            String idpin = matchingDocs.get(i).getId();
-
-                            markerlist.add(new myMarker(lat, lon, title, idpin));
-
-                            //Put pins on map
-                            marker = map.addMarker(new MarkerOptions()
-                                    .position(new LatLng(lat, lon))
-                                    .title(markerlist.get(i).getTitle())
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))//cambio colore IMPORT NECESSARIO
-                                    //BitmapDescriptorFactory.fromResource(R.drawable.arrow) cosi possiamo mettere la mappa
-                                    .alpha(0.9f)//cambio opacità
-                                    .flat(true)//In teoria dovremmo averlo così ma bho non cambia nulla a prima vista
-                            );
-                            marker.setTag(markerlist.get(i).getIdPin());
-                        }
-                    }
-                });
+                    });
+        }
     }
 }
