@@ -1,17 +1,38 @@
 package com.blackbox.pinspot.model;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.firebase.geofire.GeoFireUtils;
 import com.firebase.geofire.GeoLocation;
 
 import java.util.Objects;
 
+@Entity(tableName = "Pin_table")
 public class Pin {
-    private double lat, lon;
-    private String geoHash;
-    private String title, link;
-    private int likes;
-    // to do aggiungere linke altre robe utili
+
     // constructors
+    @PrimaryKey
+    @NonNull
+    @ColumnInfo()
+    public String link;
+
+    @ColumnInfo()
+    public String title;
+
+    @ColumnInfo()
+    public int likes;
+
+    @ColumnInfo()
+    public String geoHash;
+
+    @ColumnInfo()
+    public double lat;
+
+    @ColumnInfo()
+    public double lon;
 
     public Pin() {
        /* this.position = new LatitudeLongitude(0.0, 0.0);
@@ -21,7 +42,7 @@ public class Pin {
     }
 
 
-    public Pin(double lat, double lon, String geoHash, String title, String link, int likes) {
+    public Pin(double lat, double lon, String geoHash, String title,@NonNull String link, int likes) {
         this.lat = lat;
         this.lon = lon;
         this.geoHash = geoHash;
