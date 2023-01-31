@@ -8,10 +8,12 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.navigation.Navigation;
 
@@ -72,6 +74,7 @@ public class PinInfoFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -97,7 +100,26 @@ public class PinInfoFragment extends Fragment {
                 return false;
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
+        fragmentPinInfoBinding.closeBtn.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+
+               /* OnBackPressedCallback callback = new OnBackPressedCallback(true *//* enabled by default *//*) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        // Handle the back button event
+                    }
+                };
+                requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), callback);*/
+
+                    getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+
+            }
+
+
+        });
         String pinID = PinInfoFragmentArgs.fromBundle(getArguments()).getPinID();
         if (pinID != null){
             fragmentPinInfoBinding.loginText.setText(pinID);
