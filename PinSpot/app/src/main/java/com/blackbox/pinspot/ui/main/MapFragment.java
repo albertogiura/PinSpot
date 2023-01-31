@@ -2,9 +2,18 @@ package com.blackbox.pinspot.ui.main;
 
 import static android.content.ContentValues.TAG;
 
+
 import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,11 +21,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.AppOpsManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -41,6 +54,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -48,6 +65,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.firebase.geofire.GeoLocation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -92,7 +110,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        Toast.makeText(requireActivity(),
+                "connessione: "+Boolean.toString(isOnline()) ,
+                Toast.LENGTH_SHORT).show();
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
 
@@ -128,6 +148,33 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         mapView.onResume();
         mapView.getMapAsync(this);
 
+        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            // There are no request codes
+                            Intent data = result.getData();
+                            Place place = Autocomplete.getPlaceFromIntent(data);
+                            LatLng target = place.getLatLng();
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(target, 14.0f));
+
+                        }
+                    }
+                });
+
+        //COSTANTE AGGIUNGERECOSTANTI IMBECILLI SE NON L'ABBBIAMO ANCORA FATTO
+        Places.initialize(getContext(), "AIzaSyBVzu-lEm7gs-V1AElIWVgwHlNXdaeuVyM");
+        fragmentMapBinding.searchButton.setOnClickListener(v -> {
+            List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
+
+            // Start the autocomplete intent.
+            Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
+                    .build(getContext());
+            someActivityResultLauncher.launch(intent);
+        });
+
         /*fragmentMapBinding.mapv.onCreate(savedInstanceState);
         fragmentMapBinding.mapv.onResume();
         fragmentMapBinding.mapv.getMapAsync(this);*/
@@ -162,10 +209,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         getDeviceLocation(googleMap);
         googleMap.setMyLocationEnabled(true);
-        /*
+
         googleMap.setMaxZoomPreference(20.0f);
-        googleMap.setMinZoomPreference(14.0f);
-        */
+        googleMap.setMinZoomPreference(13.5f);
+
 
         googleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
@@ -384,4 +431,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                     });
         }
     }
+
+    //DOVE VA STO PEZZO IN ARCHI?
+
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+
 }

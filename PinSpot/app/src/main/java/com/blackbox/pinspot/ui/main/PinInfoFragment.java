@@ -2,14 +2,18 @@ package com.blackbox.pinspot.ui.main;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.navigation.Navigation;
 
@@ -70,6 +74,7 @@ public class PinInfoFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,7 +100,26 @@ public class PinInfoFragment extends Fragment {
                 return false;
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
+        fragmentPinInfoBinding.closeBtn.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+
+               /* OnBackPressedCallback callback = new OnBackPressedCallback(true *//* enabled by default *//*) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        // Handle the back button event
+                    }
+                };
+                requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), callback);*/
+
+                    getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+
+            }
+
+
+        });
         String pinID = PinInfoFragmentArgs.fromBundle(getArguments()).getPinID();
         if (pinID != null){
             fragmentPinInfoBinding.loginText.setText(pinID);
@@ -141,7 +165,16 @@ public class PinInfoFragment extends Fragment {
                                     String description2 = weather[0].getMain();
 
                                     Integer temperature = (int) (temp - 273.15);
-                                    fragmentPinInfoBinding.temperatura.setText(String.valueOf(temperature) + " °C");
+                                    Context context = getActivity();
+                                    SharedPreferences sharedPref = context.getSharedPreferences(
+                                            "settings", Context.MODE_PRIVATE); //DAMETTEREINUNACOSTANTE
+                                    Boolean celsiusSettings = sharedPref.getBoolean("celsius", true);
+                                    if(celsiusSettings == true){
+                                        fragmentPinInfoBinding.temperatura.setText(String.valueOf(temperature) + " °C");
+                                    }else{
+                                        fragmentPinInfoBinding.temperatura.setText(String.valueOf(celsToFar(temperature)) + " °F");
+                                    }
+
                                     fragmentPinInfoBinding.meteo.setText(description);
                                     // descrizione2.setText(description2);
                                 }
@@ -191,5 +224,8 @@ public class PinInfoFragment extends Fragment {
         } else{
             fragmentPinInfoBinding.loginText.setText("NULL");
         }
+    }
+    int celsToFar(int c){
+        return (int) ((c * 1.8) + 32);
     }
 }

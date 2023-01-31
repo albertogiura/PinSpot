@@ -1,10 +1,17 @@
 package com.blackbox.pinspot.ui.main;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +32,9 @@ public class ProfileFragment extends Fragment {
     private UserViewModel userViewModel;
     private FragmentProfileBinding binding;
 
+    private RadioButton celsiusRadioButton;
+    private RadioButton fahrenheitRadioButton;
+    private RadioGroup radioGroup;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -38,6 +48,7 @@ public class ProfileFragment extends Fragment {
         userViewModel = new ViewModelProvider(
                 this,
                 new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+
     }
 
     @Override
@@ -50,6 +61,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //onOffSwitch = onOffSwitch.findViewById(R.id.switch1);
 
         binding.textViewUserEmail.setText(userViewModel.getLoggedUser().getEmail());
         binding.textViewUserId.setText(userViewModel.getLoggedUser().getIdToken());
@@ -72,5 +84,31 @@ public class ProfileFragment extends Fragment {
                 }
             });
         });
+        Context context = getActivity();
+        //ATTENZIONE COSTANTE
+        SharedPreferences sharedPref = context.getSharedPreferences(
+                "settings", Context.MODE_PRIVATE); //DAMETTEREINUNACOSTANTE
+      Boolean celsiusSettings = sharedPref.getBoolean("celsius", true);
+        Toast.makeText(requireActivity(),
+                Boolean.toString(celsiusSettings) ,
+                Toast.LENGTH_SHORT).show();
+        binding.switch2.setChecked(celsiusSettings);
+
+
+        binding.switch2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                Context context = getActivity();
+                //ATTENZIONE COSTANTE
+                SharedPreferences sharedPref = context.getSharedPreferences(
+                        "settings", Context.MODE_PRIVATE); //DAMETTEREINUNACOSTANTE
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putBoolean("celsius", isChecked);
+                editor.apply();
+                Toast.makeText(requireActivity(),
+                        Boolean.toString(isChecked) ,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

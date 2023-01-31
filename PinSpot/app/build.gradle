@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.blackbox.pinspot"
-        minSdk 21
+        minSdk 23
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -89,4 +89,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
     androidTestImplementation "androidx.room:room-testing:$room_version"
+
+    //places
+    implementation 'com.google.android.libraries.places:places:3.0.0'
 }
