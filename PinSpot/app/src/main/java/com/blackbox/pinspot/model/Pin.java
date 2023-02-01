@@ -1,9 +1,11 @@
 package com.blackbox.pinspot.model;
 
-import java.util.Objects;
+import com.firebase.geofire.GeoFireUtils;
+import com.firebase.geofire.GeoLocation;
 
 public class Pin {
-    private LatitudeLongitude position;
+    private double lat, lon;
+    private String geoHash;
     private String title, link;
     private int likes;
     // to do aggiungere linke altre robe utili
@@ -16,46 +18,43 @@ public class Pin {
         this.likes = 0;*/
     }
 
-    public Pin(LatitudeLongitude position, String title, String link, int likes) {
-        this.position = position;
+
+    public Pin(double lat, double lon, String geoHash, String title, String link, int likes) {
+        this.lat = lat;
+        this.lon = lon;
+        this.geoHash = geoHash;
         this.title = title;
         this.link = link;
         this.likes = likes;
     }
 
-    // toString() & hashCode() & equals()
-
-    @Override
-    public String toString() {
-        return "Pin{" +
-                "position=" + position.toString() +
-                ", title='" + title + '\'' +
-                ", link='" + link + '\'' +
-                ", likes=" + likes +
-                '}';
+    public Pin(double lat, double lon, String title, String link, int likes) {
+        this(lat, lon, GeoFireUtils.getGeoHashForLocation(new GeoLocation(lat, lon)), title, link, likes);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Pin pin = (Pin) o;
-        return likes == pin.likes && Objects.equals(position, pin.position) && Objects.equals(title, pin.title) && Objects.equals(link, pin.link);
+
+    public double getLat() {
+        return lat;
     }
 
-    // getter and setter
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(position, title, link, likes);
+    public void setLat(double lat) {
+        this.lat = lat;
     }
 
-    public LatitudeLongitude getPosition() {
-        return position;
+    public double getLon() {
+        return lon;
     }
 
-    public void setPosition(LatitudeLongitude position) {
-        this.position = position;
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
+
+    public String getGeoHash() {
+        return geoHash;
+    }
+
+    public void setGeoHash(String geoHash) {
+        this.geoHash = geoHash;
     }
 
     public String getTitle() {

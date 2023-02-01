@@ -3,11 +3,9 @@ package com.blackbox.pinspot.ui.welcome;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.blackbox.pinspot.data.repository.user.IUserRepository;
 import com.blackbox.pinspot.model.Result;
 import com.blackbox.pinspot.model.User;
-import com.blackbox.pinspot.repository.user.IUserRepository;
-
-import java.util.Set;
 
 public class UserViewModel extends ViewModel {
     private static final String TAG = UserViewModel.class.getSimpleName();

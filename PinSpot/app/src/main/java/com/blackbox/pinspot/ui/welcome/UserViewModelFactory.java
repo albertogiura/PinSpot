@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.blackbox.pinspot.repository.user.IUserRepository;
+import com.blackbox.pinspot.data.repository.user.IUserRepository;
 
 public class UserViewModelFactory implements ViewModelProvider.Factory {
 

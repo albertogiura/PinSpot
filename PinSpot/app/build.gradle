@@ -10,8 +10,8 @@ android {
 
     defaultConfig {
         applicationId "com.blackbox.pinspot"
-        minSdk 23
-        targetSdk 33
+        minSdk 21
+        targetSdk 32
         versionCode 1
         versionName "1.0"
 
@@ -38,7 +38,6 @@ android {
 
 dependencies {
 
-    implementation 'com.google.firebase:firebase-firestore:24.4.2'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
     def nav_version = "2.5.3"
     def room_version = "2.4.3"
@@ -58,7 +57,6 @@ dependencies {
     // Firebase Realtime Database dependencies
     implementation 'com.google.firebase:firebase-database'
 
-
     // Email Validator dependencies
     implementation group: 'commons-validator', name: 'commons-validator', version: '1.7'
 
@@ -77,11 +75,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
 
-    // Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-
-
     // Firestore Geoqueries dependencies
     implementation 'com.firebase:geofire-android-common:3.1.0'
 
@@ -90,6 +83,16 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     androidTestImplementation "androidx.room:room-testing:$room_version"
 
-    //places
+    // Firebase Storage dependencies
+    implementation 'com.google.firebase:firebase-storage:20.1.0'
+
+    // Firebase Firestore
+    implementation 'com.google.firebase:firebase-firestore:24.4.2'
+
+    // Places dependencies
     implementation 'com.google.android.libraries.places:places:3.0.0'
+
+    // Retrofit dependencies
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 }

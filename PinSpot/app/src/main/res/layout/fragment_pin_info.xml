@@ -1,165 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
     tools:context=".ui.main.PinInfoFragment">
-    <!--android:background="@drawable/sfondoperpin"-->
 
     <TextView
-        android:id="@+id/loginText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pin of Duomo"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/download"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.173"
-        tools:layout_editor_absoluteX="0dp" />
-    <!--android:background="@drawable/edit_text_bg" -->
-
-    <!--android:background="@drawable/button_bg"-->
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="231dp"
-        android:layout_height="242dp"
-        android:layout_marginLeft="85dp"
-        android:layout_marginRight="85dp"
+        android:id="@+id/pinLong_textView"
+        android:layout_width="137dp"
+        android:layout_height="21dp"
+        android:text="Longitude"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.208"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.237"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintVertical_bias="0.252" />
+
+    <TextView
+        android:id="@+id/PinTitle_textView"
+        android:layout_width="137dp"
+        android:layout_height="21dp"
+        android:text="Titolo Pin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.208"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.149" />
+
+    <TextView
+        android:id="@+id/PinLat_textView"
+        android:layout_width="137dp"
+        android:layout_height="21dp"
+        android:text="Latitude"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.208"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.198" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/download"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_marginLeft="120dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="120dp"
-        android:contentDescription="Spot a new place"
-        android:src="@drawable/download_foreground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.523"
-        app:maxImageSize="48dp" />
-
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="298dp"
-        android:layout_height="108dp"
-        android:background="@color/primaryLightColor"
-        android:drawableLeft="@drawable/ic_baseline_info_24"
-        android:drawablePadding="8dp"
-        android:hint="Description"
-        android:inputType="textPassword"
-        android:padding="8dp"
-        android:textColor="@color/black"
-        android:textColorHighlight="@color/cardview_dark_background"
-        android:textColorHint="#01579B"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.786" />
-
-
-    <TextView
-        android:id="@+id/meteo"
-        android:layout_width="112dp"
-        android:layout_height="40dp"
-        android:background="@color/primaryLightColor"
-        android:drawableLeft="@drawable/ic_baseline_info_24"
-        android:drawablePadding="8dp"
-        android:text="Meteo"
-        android:padding="8dp"
-        android:textColor="@color/black"
-        android:textColorHighlight="@color/cardview_dark_background"
-        android:textColorHint="#01579B"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.698"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.62" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/addtofav"
+        android:id="@+id/addPinToFav_fab"
         android:layout_width="wrap_content"
         android:layout_height="66dp"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:layout_marginStart="20dp"
         android:contentDescription="Spot a new place"
-        android:src="@drawable/favourite_foreground"
+        android:src="@drawable/fav_pin_starred_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.334"
+        app:layout_constraintHorizontal_bias="0.468"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.98"
-        app:maxImageSize="48dp" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/getdirection"
-        android:layout_width="wrap_content"
-        android:layout_height="112dp"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        android:contentDescription="Spot a new place"
-        android:src="@drawable/direction_foreground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.667"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.98"
+        app:layout_constraintVertical_bias="0.749"
         app:maxImageSize="48dp" />
 
     <TextView
-        android:id="@+id/temperatura"
-        android:text="TextView"
-        android:layout_width="112dp"
-        android:layout_height="40dp"
-        android:background="@color/primaryLightColor"
-        android:drawableLeft="@drawable/ic_baseline_info_24"
-        android:drawablePadding="8dp"
-        android:padding="8dp"
-        android:textColor="@color/black"
-        android:textColorHighlight="@color/cardview_dark_background"
-        android:textColorHint="#01579B"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.277"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.619" />
-
-    <Button
-        android:id="@+id/closeBtn"
+        android:id="@+id/textView_temperature"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="close"
-        app:layout_constraintBottom_toTopOf="@+id/temperatura"
-        app:layout_constraintEnd_toStartOf="@+id/download"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        android:layout_marginTop="296dp"
+        android:layout_marginEnd="68dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/textViewWeatherDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="396dp"
+        android:layout_marginEnd="68dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/closePinInfo_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="56dp"
+        android:text="Close"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.499" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

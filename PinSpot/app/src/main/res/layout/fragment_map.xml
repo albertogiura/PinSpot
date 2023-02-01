@@ -12,12 +12,10 @@
         android:text="mappa" />-->
 
     <com.google.android.gms.maps.MapView
-        android:id="@+id/mapv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/app_name"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-66dp" />
+        android:id="@+id/mapv"
+        android:contentDescription="@string/app_name"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"

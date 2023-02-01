@@ -8,8 +8,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.os.Bundle;
 
 import com.blackbox.pinspot.R;
-//import com.blackbox.pinspotdemo.databinding.ActivityLoginBinding;
-
 
 public class LoginActivity extends AppCompatActivity {
 

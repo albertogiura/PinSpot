@@ -2,7 +2,6 @@ package com.blackbox.pinspot.ui.main;
 
 import static android.content.ContentValues.TAG;
 
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -10,10 +9,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
-import android.net.NetworkRequest;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,9 +23,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
-import androidx.core.app.AppOpsManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -71,13 +65,14 @@ import java.util.Map;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
-    Double startLat =0.0;
-    Double startLon =0.0;
-    Double currCameraLat =0.0;
-    Double currCameraLon =0.0;
+    Double startLat = 0.0;
+    Double startLon = 0.0;
+    Double currCameraLat = 0.0;
+    Double currCameraLon = 0.0;
     Double lastUpdateLat = 0.0;
     Double lastUpdateLon = 0.0;
-    private FragmentMapBinding fragmentMapBinding;
+
+    private FragmentMapBinding binding;
 
     private ActivityResultLauncher<String[]> multiplePermissionLauncher;
     private ActivityResultContracts.RequestMultiplePermissions multiplePermissionsContract;
@@ -110,6 +105,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         Toast.makeText(requireActivity(),
                 "connessione: "+Boolean.toString(isOnline()) ,
                 Toast.LENGTH_SHORT).show();
@@ -130,8 +126,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             }
         });
 
-        fragmentMapBinding = FragmentMapBinding.inflate(inflater, container, false);
-        return fragmentMapBinding.getRoot();
+        binding = FragmentMapBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
@@ -147,6 +143,33 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         mapView.onResume();
         mapView.getMapAsync(this);
+
+        /*fragmentMapBinding.mapv.onCreate(savedInstanceState);
+        fragmentMapBinding.mapv.onResume();
+        fragmentMapBinding.mapv.getMapAsync(this);*/
+
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Navigation.findNavController(view).navigate(R.id.action_mapFragment_to_insertPinActivity);
+                /*Intent intent = new Intent(requireContext(), InsertPinActivity.class);
+                startActivity(intent);*/
+                //TODO Pass forward current latitude and longitude to the InsertPinActivity
+                getDeviceLocation(googleMap);
+                /*MapFragmentDirections.ActionMapFragmentToInsertPinActivity action =
+                        MapFragmentDirections.
+                                actionMapFragmentToInsertPinActivity(mypos.latitude, mypos.longitude);
+                Navigation.findNavController(requireView()).navigate(action);*/
+
+                Intent intent = new Intent(requireContext(), InsertPinActivity.class);
+                intent.putExtra("latitude", mypos.latitude);
+                intent.putExtra("longitude", mypos.longitude);
+                startActivity(intent);
+
+                /*Toast.makeText(requireContext(), "Latitudine: "+ mypos.latitude +
+                        " Longitudine: "+mypos.longitude, Toast.LENGTH_SHORT).show();*/
+            }
+        });
 
         ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -165,19 +188,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 });
 
         //COSTANTE AGGIUNGERECOSTANTI IMBECILLI SE NON L'ABBBIAMO ANCORA FATTO
-        Places.initialize(getContext(), "AIzaSyBVzu-lEm7gs-V1AElIWVgwHlNXdaeuVyM");
-        fragmentMapBinding.searchButton.setOnClickListener(v -> {
+        Places.initialize(requireContext(), "AIzaSyBVzu-lEm7gs-V1AElIWVgwHlNXdaeuVyM");
+        binding.searchButton.setOnClickListener(v -> {
             List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
 
             // Start the autocomplete intent.
             Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
-                    .build(getContext());
+                    .build(requireContext());
             someActivityResultLauncher.launch(intent);
         });
-
-        /*fragmentMapBinding.mapv.onCreate(savedInstanceState);
-        fragmentMapBinding.mapv.onResume();
-        fragmentMapBinding.mapv.getMapAsync(this);*/
     }
 
     private Marker marker;
@@ -185,7 +204,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.googleMap = googleMap;
-
         googleMap.setOnMarkerClickListener(this);
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -213,6 +231,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         googleMap.setMaxZoomPreference(20.0f);
         googleMap.setMinZoomPreference(13.5f);
 
+        /*googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
+            @Override public void onCameraChange(CameraPosition cameraPosition) {
+                // camera change can occur programmatically.
+                if (isResumed()) {
+                    Toast.makeText(requireActivity(),
+                            " MISTOMUOVENDO" ,
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });*/
 
         googleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
@@ -362,77 +390,75 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
 
     public void updatePin(GoogleMap map, Double radiusLat, Double radiusLon){
-        if (map != null) {
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            //final GeoLocation center = new GeoLocation(45.830308, 8.645078);
-            final GeoLocation center = new GeoLocation(radiusLat, radiusLon);
-            final double radiusInM = 5 * 1000;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        //final GeoLocation center = new GeoLocation(45.830308, 8.645078);
+        final GeoLocation center = new GeoLocation(radiusLat, radiusLon);
+        final double radiusInM = 5 * 1000;
 
-            // Each item in 'bounds' represents a startAt/endAt pair. We have to issue
-            // a separate query for each pair. There can be up to 9 pairs of bounds
-            // depending on overlap, but in most cases there are 4.
+        // Each item in 'bounds' represents a startAt/endAt pair. We have to issue
+        // a separate query for each pair. There can be up to 9 pairs of bounds
+        // depending on overlap, but in most cases there are 4.
 
-            List<GeoQueryBounds> bounds = GeoFireUtils.getGeoHashQueryBounds(center, radiusInM);
-            final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
-            for (GeoQueryBounds b : bounds) {
-                Query q = db.collection("pins4")
-                        .orderBy("geoHash")
-                        .startAt(b.startHash)
-                        .endAt(b.endHash);
+        List<GeoQueryBounds> bounds = GeoFireUtils.getGeoHashQueryBounds(center, radiusInM);
+        final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
+        for (GeoQueryBounds b : bounds) {
+            Query q = db.collection("pins4")
+                    .orderBy("geoHash")
+                    .startAt(b.startHash)
+                    .endAt(b.endHash);
 
-                tasks.add(q.get());
-            }
+            tasks.add(q.get());
+        }
 
-            // Collect all the query results together into a single list
-            Tasks.whenAllComplete(tasks)
-                    .addOnCompleteListener(new OnCompleteListener<List<Task<?>>>() {
-                        @Override
-                        public void onComplete(@NonNull Task<List<Task<?>>> t) {
-                            List<DocumentSnapshot> matchingDocs = new ArrayList<>();
+        // Collect all the query results together into a single list
+        Tasks.whenAllComplete(tasks)
+                .addOnCompleteListener(new OnCompleteListener<List<Task<?>>>() {
+                    @Override
+                    public void onComplete(@NonNull Task<List<Task<?>>> t) {
+                        List<DocumentSnapshot> matchingDocs = new ArrayList<>();
 
-                            for (Task<QuerySnapshot> task : tasks) {
-                                QuerySnapshot snap = task.getResult();
-                                for (DocumentSnapshot doc : snap.getDocuments()) {
-                                    double lat = doc.getDouble("lat");
-                                    double lng = doc.getDouble("lon");
+                        for (Task<QuerySnapshot> task : tasks) {
+                            QuerySnapshot snap = task.getResult();
+                            for (DocumentSnapshot doc : snap.getDocuments()) {
+                                double lat = doc.getDouble("lat");
+                                double lng = doc.getDouble("lon");
 
-                                    // We have to filter out a few false positives due to GeoHash
-                                    // accuracy, but most will match
-                                    GeoLocation docLocation = new GeoLocation(lat, lng);
-                                    double distanceInM = GeoFireUtils.getDistanceBetween(docLocation, center);
-                                    if (distanceInM <= radiusInM) {
-                                        matchingDocs.add(doc);
-                                    }
+                                // We have to filter out a few false positives due to GeoHash
+                                // accuracy, but most will match
+                                GeoLocation docLocation = new GeoLocation(lat, lng);
+                                double distanceInM = GeoFireUtils.getDistanceBetween(docLocation, center);
+                                if (distanceInM <= radiusInM) {
+                                    matchingDocs.add(doc);
                                 }
                             }
-                            int size = matchingDocs.size();
-
-                            String s = "I risultati sono: " + Integer.toString(size);
-                            Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show();
-
-                            for (int i = 0; i < size; ++i) {
-                                double lat = matchingDocs.get(i).getDouble("lat");
-                                double lon = matchingDocs.get(i).getDouble("lon");
-                                String title = matchingDocs.get(i).getString("title");
-                                String idpin = matchingDocs.get(i).getId();
-
-                                //Put pins on map
-                                marker = map.addMarker(new MarkerOptions()
-                                        .position(new LatLng(lat, lon))
-                                        .title(title)
-                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))//cambio colore IMPORT NECESSARIO
-                                        //BitmapDescriptorFactory.fromResource(R.drawable.arrow) cosi possiamo mettere la mappa
-                                        .alpha(0.9f)//cambio opacità
-                                        .flat(true)//In teoria dovremmo averlo così ma bho non cambia nulla a prima vista
-                                );
-                                marker.setTag(idpin);
-                            }
                         }
-                    });
-        }
-    }
+                        int size = matchingDocs.size();
 
-    //DOVE VA STO PEZZO IN ARCHI?
+                        String s = "I risultati sono: "+Integer.toString(size);
+                        Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show();
+
+                        for(int i = 0 ;i<size;++i){
+                            double lat =  matchingDocs.get(i).getDouble("lat");
+                            double lon =  matchingDocs.get(i).getDouble("lon");
+                            String title = matchingDocs.get(i).getString("title");
+                            String idpin = matchingDocs.get(i).getId();
+
+                            markerlist.add(new myMarker(lat, lon, title, idpin));
+
+                            //Put pins on map
+                            marker = map.addMarker(new MarkerOptions()
+                                    .position(new LatLng(lat, lon))
+                                    .title(markerlist.get(i).getTitle())
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))//cambio colore IMPORT NECESSARIO
+                                    //BitmapDescriptorFactory.fromResource(R.drawable.arrow) cosi possiamo mettere la mappa
+                                    .alpha(0.9f)//cambio opacità
+                                    .flat(true)//In teoria dovremmo averlo così ma bho non cambia nulla a prima vista
+                            );
+                            marker.setTag(markerlist.get(i).getIdPin());
+                        }
+                    }
+                });
+    }
 
     public boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -443,7 +469,4 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             return false;
         }
     }
-
-
-
 }

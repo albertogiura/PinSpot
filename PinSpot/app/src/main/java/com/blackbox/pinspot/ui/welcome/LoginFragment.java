@@ -7,7 +7,6 @@ import static com.blackbox.pinspot.util.Constants.ID_TOKEN;
 import static com.blackbox.pinspot.util.Constants.INVALID_CREDENTIALS_ERROR;
 import static com.blackbox.pinspot.util.Constants.INVALID_USER_ERROR;
 import static com.blackbox.pinspot.util.Constants.PASSWORD;
-import static com.blackbox.pinspot.util.Constants.SHARED_PREFERENCES_FILE_NAME;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -27,14 +26,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.blackbox.pinspot.R;
 
+import com.blackbox.pinspot.data.repository.user.IUserRepository;
 import com.blackbox.pinspot.databinding.FragmentLoginBinding;
 import com.blackbox.pinspot.model.Result;
 import com.blackbox.pinspot.model.User;
-import com.blackbox.pinspot.repository.user.IUserRepository;
 import com.blackbox.pinspot.ui.main.MainActivity;
 import com.blackbox.pinspot.util.DataEncryptionUtil;
 import com.blackbox.pinspot.util.ServiceLocator;
@@ -47,9 +45,7 @@ import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputLayout;
 
 import org.apache.commons.validator.routines.EmailValidator;
 

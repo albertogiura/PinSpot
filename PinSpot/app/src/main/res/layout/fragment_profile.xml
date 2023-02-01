@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,10 +32,10 @@
         android:text="EMAIL"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.337"
+        app:layout_constraintHorizontal_bias="0.124"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintVertical_bias="0.345" />
 
     <TextView
         android:id="@+id/textView_user_name"
@@ -76,7 +74,7 @@
         app:layout_constraintVertical_bias="0.124" />
 
     <Switch
-        android:id="@+id/switch2"
+        android:id="@+id/switchDegree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"

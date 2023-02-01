@@ -4,17 +4,14 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -27,25 +24,17 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.blackbox.pinspot.R;
+import com.blackbox.pinspot.data.repository.weather.IWeatherRepositoryWithLiveData;
 import com.blackbox.pinspot.databinding.FragmentPinInfoBinding;
-import com.blackbox.pinspot.model.Example;
-import com.blackbox.pinspot.model.Main;
-import com.blackbox.pinspot.model.Weather;
-import com.blackbox.pinspot.model.weatherapi;
-import com.google.android.gms.common.api.Response;
+import com.blackbox.pinspot.model.Result;
+import com.blackbox.pinspot.model.weather.WeatherApiResponse;
+import com.blackbox.pinspot.util.ServiceLocator;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.Source;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,12 +43,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class PinInfoFragment extends Fragment {
 
-    String url = "api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}";
-    String apikey = "4f6ec18ab9eb724adb869edca9cbbf63";
-    LocationManager manager;
-    LocationListener locationListener;
-    Double latitude, longitude;
-    private FragmentPinInfoBinding fragmentPinInfoBinding;
+    private WeatherViewModel weatherViewModel;
+
+    private FragmentPinInfoBinding binding;
+    //private String apikey = "4f6ec18ab9eb724adb869edca9cbbf63";
 
     public PinInfoFragment() {
         // Required empty public constructor
@@ -71,15 +58,29 @@ public class PinInfoFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
 
+        super.onCreate(savedInstanceState);
+
+        IWeatherRepositoryWithLiveData weatherRepositoryWithLiveData =
+                ServiceLocator.getInstance().getWeatherRepository(requireActivity().getApplication());
+
+        if (weatherRepositoryWithLiveData != null) {
+            // This is the way to create a ViewModel with custom parameters
+            // (see NewsViewModelFactory class for the implementation details)
+            weatherViewModel = new ViewModelProvider(
+                    requireActivity(),
+                    new WeatherViewModelFactory(weatherRepositoryWithLiveData)).get(WeatherViewModel.class);
+        } else {
+            Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                    getString(R.string.unexpected_error), Snackbar.LENGTH_SHORT).show();
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        fragmentPinInfoBinding = FragmentPinInfoBinding.inflate(inflater, container, false);
-        return fragmentPinInfoBinding.getRoot();
+        binding = FragmentPinInfoBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
@@ -100,29 +101,17 @@ public class PinInfoFragment extends Fragment {
                 return false;
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
-        fragmentPinInfoBinding.closeBtn.setOnClickListener(new View.OnClickListener() {
 
+        binding.closePinInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-               /* OnBackPressedCallback callback = new OnBackPressedCallback(true *//* enabled by default *//*) {
-                    @Override
-                    public void handleOnBackPressed() {
-                        // Handle the back button event
-                    }
-                };
-                requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), callback);*/
-
-                    getActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-
-
+                Navigation.findNavController(requireView()).navigateUp();
             }
-
-
         });
+
         String pinID = PinInfoFragmentArgs.fromBundle(getArguments()).getPinID();
         if (pinID != null){
-            fragmentPinInfoBinding.loginText.setText(pinID);
+            binding.PinTitleTextView.setText(pinID);
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -130,61 +119,43 @@ public class PinInfoFragment extends Fragment {
             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    Double latitude, longitude;
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                             Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                             latitude = document.getDouble("lat");
                             longitude = document.getDouble("lon");
-                            //fragmentPinInfoBinding.pinLatTextView.setText(String.valueOf(latitude));
-                            //fragmentPinInfoBinding.pinLongTextView.setText(String.valueOf(longitude));
-                            Retrofit retrofit=new Retrofit.Builder()
-                                    .baseUrl("https://api.openweathermap.org/data/2.5/")
-                                    .addConverterFactory(GsonConverterFactory.create())
-                                    .build();
-                            weatherapi myapi=retrofit.create(weatherapi.class);
-                            Call<Example> examplecall = myapi.getweather(Double.parseDouble(String.valueOf(latitude)),Double.parseDouble(String.valueOf(longitude)), apikey);
-                            examplecall.enqueue(new Callback<Example>() {
-                                @Override
-                                public void onResponse(Call<Example> call, retrofit2.Response<Example> response) {
-                                     if (response.code() == 404) {
-                                        Toast.makeText(PinInfoFragment.newInstance().requireContext(), "Please Enter a valid City", Toast.LENGTH_LONG).show();
-                                    } else if (!(response.isSuccessful())) {
-                                        Toast.makeText(PinInfoFragment.newInstance().requireContext(), response.code() + " ", Toast.LENGTH_LONG).show();
-                                        return;
-                                    }
-                                    Example mydata = response.body();
+                            binding.PinLatTextView.setText(String.valueOf(latitude));
+                            binding.pinLongTextView.setText(String.valueOf(longitude));
 
-                                    Main main = mydata.getMain();
-                                    Weather[] weather = mydata.getWeather();
+                            weatherViewModel.getPinWeather(latitude, longitude).observe(getViewLifecycleOwner(),
+                                    result -> {
+                                        if (result.isSuccess()){
+                                            WeatherApiResponse weatherApiResponse = ((Result.WeatherResponseSuccess) result).getData();
+                                            Double temp = weatherApiResponse.getMainWeatherInfo().getTemp();
+                                            String description = weatherApiResponse.getWeather()[0].getDescription();
 
+                                            //TODO solo a scopo di test, ma vanno aggiunte altre textview
+                                            //binding.PinLatTextView.setText(String.valueOf(temp));
+                                            //binding.pinLongTextView.setText(description);
+                                            Integer temperature = (int) (temp - 273.15);
+                                            SharedPreferences sharedPref = requireContext().getSharedPreferences(
+                                                    "settings", Context.MODE_PRIVATE); //DAMETTEREINUNACOSTANTE
+                                            Boolean celsiusSettings = sharedPref.getBoolean("celsius", true);
+                                            if(celsiusSettings == true){
+                                                binding.textViewTemperature.setText(String.valueOf(temperature) + " °C");
+                                            }else{
+                                                binding.textViewTemperature.setText(String.valueOf(celsToFar(temperature)) + " °F");
+                                            }
+                                            //binding.textViewTemperature.setText(String.valueOf(temp));
+                                            binding.textViewWeatherDescription.setText(description);
 
-                                    Double temp = main.getTemp();
+                                        } else {
+                                            Toast.makeText(requireContext(), "Errore imprevisto", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
 
-                                    String description = weather[0].getDescription();
-                                    String description2 = weather[0].getMain();
-
-                                    Integer temperature = (int) (temp - 273.15);
-                                    Context context = getActivity();
-                                    SharedPreferences sharedPref = context.getSharedPreferences(
-                                            "settings", Context.MODE_PRIVATE); //DAMETTEREINUNACOSTANTE
-                                    Boolean celsiusSettings = sharedPref.getBoolean("celsius", true);
-                                    if(celsiusSettings == true){
-                                        fragmentPinInfoBinding.temperatura.setText(String.valueOf(temperature) + " °C");
-                                    }else{
-                                        fragmentPinInfoBinding.temperatura.setText(String.valueOf(celsToFar(temperature)) + " °F");
-                                    }
-
-                                    fragmentPinInfoBinding.meteo.setText(description);
-                                    // descrizione2.setText(description2);
-                                }
-
-                                @Override
-                                public void onFailure(Call<Example> call, Throwable t) {
-                                    Toast.makeText(PinInfoFragment.newInstance().requireContext(), t.getMessage(),Toast.LENGTH_LONG).show();
-                                }
-
-                            });
                         } else {
                             Log.d(TAG, "No such document");
                         }
@@ -222,10 +193,33 @@ public class PinInfoFragment extends Fragment {
                         }
                     });*/
         } else{
-            fragmentPinInfoBinding.loginText.setText("NULL");
+            binding.PinTitleTextView.setText("NULL");
         }
+
+        /*Double latitude = 45.830736;
+        Double longitude = 8.646034;
+        weatherViewModel.getPinWeather(latitude, longitude).observe(getViewLifecycleOwner(),
+                result -> {
+                    if (result.isSuccess()){
+                        WeatherApiResponse weatherApiResponse = ((Result.WeatherResponseSuccess) result).getData();
+                        Double temp = weatherApiResponse.getMainWeatherInfo().getTemp();
+                        String description = weatherApiResponse.getWeather()[0].getDescription();
+
+                        //TODO solo a scopo di test, ma vanno aggiunte altre textview
+                        //binding.PinLatTextView.setText(String.valueOf(temp));
+                        //binding.pinLongTextView.setText(description);
+
+                        binding.textViewTemperature.setText(String.valueOf(temp));
+                        binding.textViewWeatherDescription.setText(description);
+
+                    } else {
+                        Toast.makeText(requireContext(), "Errore imprevisto", Toast.LENGTH_SHORT).show();
+                    }
+                });*/
+
     }
-    int celsToFar(int c){
+
+    private int celsToFar(int c){
         return (int) ((c * 1.8) + 32);
     }
 }

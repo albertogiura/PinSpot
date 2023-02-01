@@ -4,6 +4,11 @@ public class Constants {
 
     public static final int STORAGE_REQUEST_CODE = 1000;
 
+    // OpenWeatherMap.org API related constants
+    public static final String OPENWEATHERMAP_API_BASE_URL = "https://api.openweathermap.org/data/2.5/";
+
+
+
     // Constants for managing errors
     public static final String RETROFIT_ERROR = "retrofit_error";
     public static final String API_KEY_ERROR = "api_key_error";

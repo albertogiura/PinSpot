@@ -1,10 +1,12 @@
 package com.blackbox.pinspot.model;
 
+import com.blackbox.pinspot.model.weather.WeatherApiResponse;
+
 public abstract class Result {
     private Result() {}
 
     public boolean isSuccess() {
-        if (this instanceof UserResponseSuccess) {
+        if (this instanceof UserResponseSuccess || this instanceof WeatherResponseSuccess) {
             return true;
         } else {
             return false;
@@ -18,6 +20,16 @@ public abstract class Result {
         }
         public User getData() {
             return user;
+        }
+    }
+
+    public static final class WeatherResponseSuccess extends Result {
+        private final WeatherApiResponse weatherApiResponse;
+        public WeatherResponseSuccess(WeatherApiResponse weatherApiResponse) {
+            this.weatherApiResponse = weatherApiResponse;
+        }
+        public WeatherApiResponse getData() {
+            return weatherApiResponse;
         }
     }
 

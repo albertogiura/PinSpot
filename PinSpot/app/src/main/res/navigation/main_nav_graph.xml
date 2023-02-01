@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_mapFragment_to_pinInfoFragment"
             app:destination="@id/pinInfoFragment" />
+        <action
+            android:id="@+id/action_mapFragment_to_insertPinActivity"
+            app:destination="@id/insertPinActivity" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
@@ -38,4 +41,9 @@
             app:argType="string"
             app:nullable="true" />
     </fragment>
+    <activity
+        android:id="@+id/insertPinActivity"
+        android:name="com.blackbox.pinspot.ui.main.InsertPinActivity"
+        android:label="activity_insert_pin"
+        tools:layout="@layout/activity_insert_pin" />
 </navigation>

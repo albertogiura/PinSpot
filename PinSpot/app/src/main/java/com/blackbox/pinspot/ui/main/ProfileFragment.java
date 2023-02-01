@@ -8,9 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,8 +16,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.blackbox.pinspot.R;
+import com.blackbox.pinspot.data.repository.user.IUserRepository;
 import com.blackbox.pinspot.databinding.FragmentProfileBinding;
-import com.blackbox.pinspot.repository.user.IUserRepository;
 import com.blackbox.pinspot.ui.welcome.LoginActivity;
 import com.blackbox.pinspot.ui.welcome.UserViewModel;
 import com.blackbox.pinspot.ui.welcome.UserViewModelFactory;
@@ -32,9 +29,6 @@ public class ProfileFragment extends Fragment {
     private UserViewModel userViewModel;
     private FragmentProfileBinding binding;
 
-    private RadioButton celsiusRadioButton;
-    private RadioButton fahrenheitRadioButton;
-    private RadioGroup radioGroup;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -48,7 +42,6 @@ public class ProfileFragment extends Fragment {
         userViewModel = new ViewModelProvider(
                 this,
                 new UserViewModelFactory(userRepository)).get(UserViewModel.class);
-
     }
 
     @Override
@@ -61,7 +54,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //onOffSwitch = onOffSwitch.findViewById(R.id.switch1);
 
         binding.textViewUserEmail.setText(userViewModel.getLoggedUser().getEmail());
         binding.textViewUserId.setText(userViewModel.getLoggedUser().getIdToken());
@@ -84,21 +76,19 @@ public class ProfileFragment extends Fragment {
                 }
             });
         });
-        Context context = getActivity();
-        //ATTENZIONE COSTANTE
-        SharedPreferences sharedPref = context.getSharedPreferences(
-                "settings", Context.MODE_PRIVATE); //DAMETTEREINUNACOSTANTE
-      Boolean celsiusSettings = sharedPref.getBoolean("celsius", true);
+
+        SharedPreferences sharedPref = requireActivity().getSharedPreferences(
+                "settings", Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
+        Boolean celsiusSettings = sharedPref.getBoolean("celsius", true);
         Toast.makeText(requireActivity(),
                 Boolean.toString(celsiusSettings) ,
                 Toast.LENGTH_SHORT).show();
-        binding.switch2.setChecked(celsiusSettings);
+        binding.switchDegree.setChecked(celsiusSettings);
 
-
-        binding.switch2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        binding.switchDegree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Context context = getActivity();
-                //ATTENZIONE COSTANTE
+                //TODO ATTENZIONE COSTANTE
                 SharedPreferences sharedPref = context.getSharedPreferences(
                         "settings", Context.MODE_PRIVATE); //DAMETTEREINUNACOSTANTE
                 SharedPreferences.Editor editor = sharedPref.edit();
@@ -109,6 +99,5 @@ public class ProfileFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }
