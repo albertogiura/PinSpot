@@ -8,26 +8,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:background="@drawable/sfondoperpin"
     tools:context=".LoginActivity">
+    <!--android:background="@drawable/sfondoperpin"-->
 
 
-    <TextView
-        android:id="@+id/loginText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/edit_text_bg"
-        android:text="Insert New Pin"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.096" />
+
+
+
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
+
+        <TextView
+            android:id="@+id/loginText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_bg2"
+            android:text="Insert New Pin"
+            android:textColor="@color/white"
+            android:textAlignment="center"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.096" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -123,11 +130,8 @@
         android:drawableLeft="@drawable/ic_baseline_info_24"
         android:drawablePadding="8dp"
         android:hint="Description"
-        android:inputType="textPassword"
-        android:backgroundTint="@color/primaryLightColor"
         android:padding="8dp"
-        android:textColor="@color/black"
-        android:textColorHighlight="@color/cardview_dark_background"
+        android:textColor="@color/white"
         android:textColorHint="#01579B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -143,13 +147,14 @@
         android:text="Insert"
         android:textSize="18sp"
         app:cornerRadius="20dp"
+        android:backgroundTint="@color/primaryColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        android:backgroundTint="@color/secondaryDarkColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
         app:layout_constraintVertical_bias="0.182" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

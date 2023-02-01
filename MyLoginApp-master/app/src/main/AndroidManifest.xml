@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyLoginApp">
-        <activity android:name=".LoginActivity"/>
+        <activity android:name=".InfoPinActivity"/>
 
         <activity android:name=".SplashScreen"
             android:exported="true"
