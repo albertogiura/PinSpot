@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mapFragment"
+        android:icon="@drawable/map_foreground"
+        android:enabled="true"
+        android:title="Mappa"/>
+    <item
+        android:id="@+id/favPlacesFragment"
+        android:icon="@drawable/star_foreground"
+        android:enabled="true"
+        android:title="Preferiti" />
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/profile_foreground"
+        android:enabled="true"
+        android:title="Profilo"/>
+</menu>
