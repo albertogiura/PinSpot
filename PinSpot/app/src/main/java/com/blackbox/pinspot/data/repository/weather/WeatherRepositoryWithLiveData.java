@@ -33,7 +33,7 @@ public class WeatherRepositoryWithLiveData implements IWeatherRepositoryWithLive
     public void onSuccessFromRemote(WeatherApiResponse weatherApiResponse) {
         if (pinWeatherMutableLiveData.getValue() != null && pinWeatherMutableLiveData.getValue().isSuccess()) {
             WeatherApiResponse.MainWeatherInfo mainWeatherInfo = ((Result.WeatherResponseSuccess)pinWeatherMutableLiveData
-                    .getValue()).getData().getMainWeatherInfo();;
+                    .getValue()).getData().getMainWeatherInfo();
             weatherApiResponse.setMainWeatherInfo(mainWeatherInfo);
 
             WeatherApiResponse.Weather[] weather = ((Result.WeatherResponseSuccess)pinWeatherMutableLiveData

@@ -2,6 +2,8 @@ package com.blackbox.pinspot.util;
 
 import android.app.Application;
 
+import com.blackbox.pinspot.data.repository.pin.IPinRepository;
+import com.blackbox.pinspot.data.repository.pin.PinRepository;
 import com.blackbox.pinspot.data.repository.user.IUserRepository;
 import com.blackbox.pinspot.data.repository.user.UserRepository;
 import com.blackbox.pinspot.data.repository.weather.IWeatherRepositoryWithLiveData;
@@ -70,5 +72,15 @@ public class ServiceLocator {
         //weatherRemoteDataSource = new WeatherRemoteDataSource("4f6ec18ab9eb724adb869edca9cbbf63");
 
         return new WeatherRepositoryWithLiveData(weatherRemoteDataSource);
+    }
+
+    public IPinRepository getPinRepository(Application application) {
+       /* BaseWeatherRemoteDataSource weatherRemoteDataSource =
+                new WeatherRemoteDataSource("4f6ec18ab9eb724adb869edca9cbbf63");*/
+
+        //weatherRemoteDataSource = new WeatherRemoteDataSource(application.getString(R.string.news_api_key));
+        //weatherRemoteDataSource = new WeatherRemoteDataSource("4f6ec18ab9eb724adb869edca9cbbf63");
+
+        return new PinRepository(application);
     }
 }
