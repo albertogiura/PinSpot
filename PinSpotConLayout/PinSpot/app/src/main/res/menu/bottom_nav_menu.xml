@@ -3,16 +3,18 @@
     <item
         android:id="@+id/mapFragment"
         android:icon="@drawable/map_foreground"
-        android:enabled="true"
+        android:iconTint="@color/primaryColor"
         android:title="Mappa"/>
     <item
         android:id="@+id/favPlacesFragment"
         android:icon="@drawable/star_foreground"
+        android:iconTint="@color/primaryColor"
         android:enabled="true"
         android:title="Preferiti" />
     <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/profile_foreground"
+        android:iconTint="@color/primaryColor"
         android:enabled="true"
         android:title="Profilo"/>
 </menu>
