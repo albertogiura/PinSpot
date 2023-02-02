@@ -43,7 +43,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -78,7 +77,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     Double lastUpdateLat = 0.0;
     Double lastUpdateLon = 0.0;
 
-    Double lastSavedLat =0.0;
+    Double lastSavedLat = 0.0;
     Double lastSavedLon = 0.0;
 
     private FragmentMapBinding binding;
@@ -170,14 +169,14 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         //if (result.getResultCode() == Activity.RESULT_OK) {
-                            // There are no request codes
-                            Toast.makeText(requireActivity(),
-                                    " yeeeeee" ,
-                                    Toast.LENGTH_SHORT).show();
-                            googleMap.clear();
-                            getDeviceLocation(googleMap);
+                        // There are no request codes
+                        Toast.makeText(requireActivity(),
+                                " yeeeeee" ,
+                                Toast.LENGTH_SHORT).show();
+                        googleMap.clear();
+                        getDeviceLocation(googleMap);
 
-                            updatePin(googleMap,startLat, startLon);
+                        updatePin(googleMap,startLat, startLon);
                         //}
                     }
                 });
@@ -577,6 +576,5 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             outState.putDouble(LAST_LAT, googleMap.getCameraPosition().target.latitude);
             outState.putDouble(LAST_LON, googleMap.getCameraPosition().target.longitude);
         }
-
     }
 }

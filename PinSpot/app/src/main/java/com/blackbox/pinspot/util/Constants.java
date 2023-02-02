@@ -8,6 +8,10 @@ public class Constants {
     public static final String OPENWEATHERMAP_API_BASE_URL = "https://api.openweathermap.org/data/2.5/";
 
 
+    // Costants fot onSaveIstanceState
+    public static final String LAST_LAT = "LAST_LAT";
+    public static final String LAST_LON = "LAST_LON";
+
 
     // Constants for managing errors
     public static final String RETROFIT_ERROR = "retrofit_error";
@@ -23,10 +27,6 @@ public class Constants {
     public static final String SHARED_PREFERENCES_COUNTRY_OF_INTEREST = "country_of_interest";
     public static final String SHARED_PREFERENCES_TOPICS_OF_INTEREST = "topics_of_interest";
     public static final String SHARED_PREFERENCES_FIRST_LOADING = "first_loading";
-
-    // Costants fot onSaveIstanceState
-    public static final String LAST_LAT = "LAST_LAT";
-    public static final String LAST_LON = "LAST_LON";
 
     // Constants for EncryptedSharedPreferences
     public static final String ENCRYPTED_SHARED_PREFERENCES_FILE_NAME = "com.blackbox.pinspot.encrypted_preferences";
