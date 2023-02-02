@@ -43,6 +43,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -163,7 +164,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         /*fragmentMapBinding.mapv.onCreate(savedInstanceState);
         fragmentMapBinding.mapv.onResume();
         fragmentMapBinding.mapv.getMapAsync(this);*/
+        ActivityResultLauncher<Intent> insertPinActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        //if (result.getResultCode() == Activity.RESULT_OK) {
+                            // There are no request codes
+                            Toast.makeText(requireActivity(),
+                                    " yeeeeee" ,
+                                    Toast.LENGTH_SHORT).show();
+                            googleMap.clear();
+                            getDeviceLocation(googleMap);
 
+                            updatePin(googleMap,startLat, startLon);
+                        //}
+                    }
+                });
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,7 +198,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 intent.putExtra("latitude", mypos.latitude);
                 intent.putExtra("longitude", mypos.longitude);
                 startActivity(intent);
-
+                //insertPinActivityResultLauncher.launch(intent);
                 /*Toast.makeText(requireContext(), "Latitudine: "+ mypos.latitude +
                         " Longitudine: "+mypos.longitude, Toast.LENGTH_SHORT).show();*/
             }
@@ -221,6 +238,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onMapReady(@NonNull GoogleMap googleMap) {
         this.googleMap = googleMap;
         googleMap.setOnMarkerClickListener(this);
+        googleMap.getUiSettings().setCompassEnabled(false);
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(LatLng latLng) {
@@ -555,8 +573,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
+        if(outState==null){
+            outState.putDouble(LAST_LAT, googleMap.getCameraPosition().target.latitude);
+            outState.putDouble(LAST_LON, googleMap.getCameraPosition().target.longitude);
+        }
 
-        outState.putDouble(LAST_LAT, googleMap.getCameraPosition().target.latitude);
-        outState.putDouble(LAST_LON, googleMap.getCameraPosition().target.longitude);
     }
 }
