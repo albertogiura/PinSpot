@@ -85,7 +85,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private static final int DEFAULT_ZOOM = 20;
     private Location lastKnownLocation;*/
     private LatLng mypos = new LatLng(0,0);
-    private ArrayList<myMarker> markerlist = new ArrayList<myMarker>();
+
+    private ArrayList<Marker> markers = new ArrayList<Marker>();
 
     private GoogleMap googleMap;
 
@@ -255,6 +256,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                             Toast.LENGTH_SHORT).show();
                     if (isResumed()) {
                         if (googleMap != null) {
+                            for (int i = 0; i<markers.size(); ++i)
+                            {
+                                markers.get(i).remove();
+                            }
+                            markers.clear();
                             googleMap.clear();
                             updatePin(googleMap,currCameraLat, currCameraLon);
                         }
@@ -443,18 +449,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                             String title = matchingDocs.get(i).getString("title");
                             String idpin = matchingDocs.get(i).getId();
 
-                            markerlist.add(new myMarker(lat, lon, title, idpin));
+
 
                             //Put pins on map
                             marker = map.addMarker(new MarkerOptions()
                                     .position(new LatLng(lat, lon))
-                                    .title(markerlist.get(i).getTitle())
+                                    .title(title)
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))//cambio colore IMPORT NECESSARIO
                                     //BitmapDescriptorFactory.fromResource(R.drawable.arrow) cosi possiamo mettere la mappa
                                     .alpha(0.9f)//cambio opacità
                                     .flat(true)//In teoria dovremmo averlo così ma bho non cambia nulla a prima vista
                             );
-                            marker.setTag(markerlist.get(i).getIdPin());
+                            marker.setTag(idpin);
+                            markers.add(marker);
+
                         }
                     }
                 });
