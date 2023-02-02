@@ -29,6 +29,7 @@ import androidx.navigation.Navigation;
 
 import com.blackbox.pinspot.R;
 import com.blackbox.pinspot.databinding.FragmentMapBinding;
+import com.blackbox.pinspot.model.Pin;
 import com.blackbox.pinspot.myMarker;
 import com.firebase.geofire.GeoFireUtils;
 import com.firebase.geofire.GeoQueryBounds;
@@ -52,6 +53,7 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -88,7 +90,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private static final int DEFAULT_ZOOM = 20;
     private Location lastKnownLocation;*/
     private LatLng mypos = new LatLng(0,0);
-
     private ArrayList<Marker> markers = new ArrayList<Marker>();
 
     private GoogleMap googleMap;
@@ -272,7 +273,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                             Toast.LENGTH_SHORT).show();
                     if (isResumed()) {
                         if (googleMap != null) {
-                            for (int i = 0; i<markers.size(); ++i)
+                            for (int i = 0; i < markers.size(); ++i)
                             {
                                 markers.get(i).remove();
                             }
@@ -346,10 +347,45 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         if (marker.getTag() == null){
             Toast.makeText(requireActivity(), "Vuoto", Toast.LENGTH_SHORT).show();
         } else {
-            MapFragmentDirections.ActionMapFragmentToPinInfoFragment action =
-                    MapFragmentDirections.
-                            actionMapFragmentToPinInfoFragment(marker.getTag().toString());
-            Navigation.findNavController(requireView()).navigate(action);
+
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+            DocumentReference docRef = db.collection("pins4").document(marker.getTag().toString());
+
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    Double latitude, longitude;
+                    String title, link;
+                    int likes;
+                    if (task.isSuccessful()){
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()){
+                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                            title = document.getString("title");
+                            latitude = document.getDouble("lat");
+                            longitude = document.getDouble("lon");
+                            link = document.getString("link");
+                            likes = 10;
+
+                            if (latitude != null && longitude != null){
+                                Pin pin = new Pin(latitude, longitude, title, link, likes);
+                                MapFragmentDirections.ActionMapFragmentToPinInfoFragment action =
+                                        MapFragmentDirections.
+                                                actionMapFragmentToPinInfoFragment(pin);
+                                Navigation.findNavController(requireView()).navigate(action);
+                            }
+
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
+                }
+            });
+
+
         }
 
         return false;
@@ -471,8 +507,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                             String title = matchingDocs.get(i).getString("title");
                             String idpin = matchingDocs.get(i).getId();
 
-
-
                             //Put pins on map
                             marker = map.addMarker(new MarkerOptions()
                                     .position(new LatLng(lat, lon))
@@ -484,7 +518,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                             );
                             marker.setTag(idpin);
                             markers.add(marker);
-
                         }
                     }
                 });

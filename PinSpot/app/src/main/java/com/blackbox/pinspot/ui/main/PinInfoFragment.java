@@ -24,8 +24,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.blackbox.pinspot.R;
+import com.blackbox.pinspot.data.repository.pin.IPinRepository;
 import com.blackbox.pinspot.data.repository.weather.IWeatherRepositoryWithLiveData;
 import com.blackbox.pinspot.databinding.FragmentPinInfoBinding;
+import com.blackbox.pinspot.model.Pin;
 import com.blackbox.pinspot.model.Result;
 import com.blackbox.pinspot.model.weather.WeatherApiResponse;
 import com.blackbox.pinspot.util.ServiceLocator;
@@ -43,7 +45,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
  */
 public class PinInfoFragment extends Fragment {
 
+    //private Pin pin;
     private WeatherViewModel weatherViewModel;
+    private PinViewModel pinViewModel;
 
     private FragmentPinInfoBinding binding;
     //private String apikey = "4f6ec18ab9eb724adb869edca9cbbf63";
@@ -70,6 +74,20 @@ public class PinInfoFragment extends Fragment {
             weatherViewModel = new ViewModelProvider(
                     requireActivity(),
                     new WeatherViewModelFactory(weatherRepositoryWithLiveData)).get(WeatherViewModel.class);
+        } else {
+            Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                    getString(R.string.unexpected_error), Snackbar.LENGTH_SHORT).show();
+        }
+
+        IPinRepository pinRepository =
+                ServiceLocator.getInstance().getPinRepository(requireActivity().getApplication());
+
+        if (pinRepository != null) {
+            // This is the way to create a ViewModel with custom parameters
+            // (see NewsViewModelFactory class for the implementation details)
+            pinViewModel = new ViewModelProvider(
+                    requireActivity(),
+                    new PinViewModelFactory(pinRepository)).get(PinViewModel.class);
         } else {
             Snackbar.make(requireActivity().findViewById(android.R.id.content),
                     getString(R.string.unexpected_error), Snackbar.LENGTH_SHORT).show();
@@ -102,6 +120,8 @@ public class PinInfoFragment extends Fragment {
             }
         }, getViewLifecycleOwner(), Lifecycle.State.RESUMED);
 
+        Pin pin = PinInfoFragmentArgs.fromBundle(getArguments()).getPin();
+
         binding.closePinInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,61 +129,53 @@ public class PinInfoFragment extends Fragment {
             }
         });
 
-        String pinID = PinInfoFragmentArgs.fromBundle(getArguments()).getPinID();
-        if (pinID != null){
-            binding.PinTitleTextView.setText(pinID);
+        binding.addPinToFavFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pin != null){
+                    pinViewModel.insert(pin);
+                    Toast.makeText(requireContext(), "Pin added to favorite list", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(requireContext(), "Error in adding pin to favorite list", Toast.LENGTH_SHORT).show();
+                }
+                ;
+            }
+        });
 
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
+        if (pin != null){
+            binding.PinTitleTextView.setText(pin.getTitle());
+            binding.PinLatTextView.setText(String.valueOf(pin.getLat()));
+            binding.pinLongTextView.setText(String.valueOf(pin.getLon()));
 
-            DocumentReference docRef = db.collection("pins4").document(pinID);
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    Double latitude, longitude;
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                            latitude = document.getDouble("lat");
-                            longitude = document.getDouble("lon");
-                            binding.PinLatTextView.setText(String.valueOf(latitude));
-                            binding.pinLongTextView.setText(String.valueOf(longitude));
+            Double latitude = pin.getLat();
+            Double longitude = pin.getLon();
 
-                            weatherViewModel.getPinWeather(latitude, longitude).observe(getViewLifecycleOwner(),
-                                    result -> {
-                                        if (result.isSuccess()){
-                                            WeatherApiResponse weatherApiResponse = ((Result.WeatherResponseSuccess) result).getData();
-                                            Double temp = weatherApiResponse.getMainWeatherInfo().getTemp();
-                                            String description = weatherApiResponse.getWeather()[0].getDescription();
+            weatherViewModel.getPinWeather(latitude, longitude).observe(getViewLifecycleOwner(),
+                    result -> {
+                        if (result.isSuccess()){
+                            WeatherApiResponse weatherApiResponse = ((Result.WeatherResponseSuccess) result).getData();
+                            Double temp = weatherApiResponse.getMainWeatherInfo().getTemp();
+                            String description = weatherApiResponse.getWeather()[0].getDescription();
 
-                                            //TODO solo a scopo di test, ma vanno aggiunte altre textview
-                                            //binding.PinLatTextView.setText(String.valueOf(temp));
-                                            //binding.pinLongTextView.setText(description);
-                                            Integer temperature = (int) (temp - 273.15);
-                                            SharedPreferences sharedPref = requireContext().getSharedPreferences(
-                                                    "settings", Context.MODE_PRIVATE); //DAMETTEREINUNACOSTANTE
-                                            Boolean celsiusSettings = sharedPref.getBoolean("celsius", true);
-                                            if(celsiusSettings == true){
-                                                binding.textViewTemperature.setText(String.valueOf(temperature) + " °C");
-                                            }else{
-                                                binding.textViewTemperature.setText(String.valueOf(celsToFar(temperature)) + " °F");
-                                            }
-                                            //binding.textViewTemperature.setText(String.valueOf(temp));
-                                            binding.textViewWeatherDescription.setText(description);
-
-                                        } else {
-                                            Toast.makeText(requireContext(), "Errore imprevisto", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                            //TODO solo a scopo di test, ma vanno aggiunte altre textview
+                            //binding.PinLatTextView.setText(String.valueOf(temp));
+                            //binding.pinLongTextView.setText(description);
+                            Integer temperature = (int) (temp - 273.15);
+                            SharedPreferences sharedPref = requireContext().getSharedPreferences(
+                                    "settings", Context.MODE_PRIVATE); //DAMETTEREINUNACOSTANTE
+                            Boolean celsiusSettings = sharedPref.getBoolean("celsius", true);
+                            if(celsiusSettings == true){
+                                binding.textViewTemperature.setText(String.valueOf(temperature) + " °C");
+                            }else{
+                                binding.textViewTemperature.setText(String.valueOf(celsToFar(temperature)) + " °F");
+                            }
+                            //binding.textViewTemperature.setText(String.valueOf(temp));
+                            binding.textViewWeatherDescription.setText(description);
 
                         } else {
-                            Log.d(TAG, "No such document");
+                            Toast.makeText(requireContext(), "Errore imprevisto", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-                        Log.d(TAG, "get failed with ", task.getException());
-                    }
-                }
-            });
+                    });
 
 
 

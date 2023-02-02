@@ -37,9 +37,8 @@
         android:label="fragment_pin_info"
         tools:layout="@layout/fragment_pin_info" >
         <argument
-            android:name="PinID"
-            app:argType="string"
-            app:nullable="true" />
+            android:name="Pin"
+            app:argType="com.blackbox.pinspot.model.Pin" />
     </fragment>
     <activity
         android:id="@+id/insertPinActivity"
