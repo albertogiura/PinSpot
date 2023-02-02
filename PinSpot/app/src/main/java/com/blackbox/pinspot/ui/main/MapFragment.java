@@ -72,6 +72,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     Double lastUpdateLat = 0.0;
     Double lastUpdateLon = 0.0;
 
+    Double lastSavedLat =0.0;
+    Double lastSavedLon = 0.0;
+
     private FragmentMapBinding binding;
 
     private ActivityResultLauncher<String[]> multiplePermissionLauncher;
@@ -128,13 +131,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         });
 
         binding = FragmentMapBinding.inflate(inflater, container, false);
+
+
+
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if(savedInstanceState != null){
+            //AGGINGERE COSTANTE AAAAAAAAAA
+            lastSavedLat = savedInstanceState.getDouble("LAST_LAT");
+            lastSavedLon = savedInstanceState.getDouble("LAST_LON");
 
+        }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
         multiplePermissionsContract = new ActivityResultContracts.RequestMultiplePermissions();
@@ -227,6 +238,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         // Turn on the My Location layer and the related control on the map.
 
         getDeviceLocation(googleMap);
+        if (googleMap != null) {
+
+            googleMap.clear();
+            updatePin(googleMap,currCameraLat, currCameraLon);
+        }
         googleMap.setMyLocationEnabled(true);
 
         googleMap.setMaxZoomPreference(20.0f);
@@ -325,7 +341,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
-
+        lastSavedLat = googleMap.getCameraPosition().target.latitude;
+        lastSavedLon = googleMap.getCameraPosition().target.longitude;
         if (marker.getTag() == null){
             Toast.makeText(requireActivity(), "Vuoto", Toast.LENGTH_SHORT).show();
         } else {
@@ -358,7 +375,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                                     startLat = currentPos.latitude;
                                     startLon = currentPos.longitude;
                                     updatePin(googleMap, startLat, startLon);
-                                    mypos = currentPos;
+                                    if(lastSavedLat!=0.0||lastSavedLon!=0.0){
+                                        mypos = new LatLng(lastSavedLat,lastSavedLon);
+                                    }else{
+                                        mypos = currentPos;
+                                    }
+
                                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(mypos, 14.0f));
                                     map.setMyLocationEnabled(true);
                                 }
@@ -476,5 +498,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         } else {
             return false;
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //AGGINGERE COSTANTE AAAAAAAAAA
+        outState.putDouble("LAST_LAT",googleMap.getCameraPosition().target.latitude);
+        outState.putDouble("LAST_LON",googleMap.getCameraPosition().target.longitude);
     }
 }
