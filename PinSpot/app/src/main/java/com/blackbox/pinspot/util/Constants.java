@@ -24,6 +24,10 @@ public class Constants {
     public static final String SHARED_PREFERENCES_TOPICS_OF_INTEREST = "topics_of_interest";
     public static final String SHARED_PREFERENCES_FIRST_LOADING = "first_loading";
 
+    // Costants fot onSaveIstanceState
+    public static final String LAST_LAT = "LAST_LAT";
+    public static final String LAST_LON = "LAST_LON";
+
     // Constants for EncryptedSharedPreferences
     public static final String ENCRYPTED_SHARED_PREFERENCES_FILE_NAME = "com.blackbox.pinspot.encrypted_preferences";
     public static final String EMAIL_ADDRESS = "email_address";

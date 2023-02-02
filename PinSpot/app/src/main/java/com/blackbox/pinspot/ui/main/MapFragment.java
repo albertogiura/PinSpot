@@ -2,6 +2,9 @@ package com.blackbox.pinspot.ui.main;
 
 import static android.content.ContentValues.TAG;
 
+import static com.blackbox.pinspot.util.Constants.LAST_LAT;
+import static com.blackbox.pinspot.util.Constants.LAST_LON;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -142,9 +145,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if(savedInstanceState != null){
-            //AGGINGERE COSTANTE AAAAAAAAAA
-            lastSavedLat = savedInstanceState.getDouble("LAST_LAT");
-            lastSavedLon = savedInstanceState.getDouble("LAST_LON");
+
+            lastSavedLat = savedInstanceState.getDouble(LAST_LAT);
+            lastSavedLon = savedInstanceState.getDouble(LAST_LON);
 
         }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
@@ -242,7 +245,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         if (googleMap != null) {
 
             googleMap.clear();
-            updatePin(googleMap,currCameraLat, currCameraLon);
+            updatePin(googleMap,lastSavedLat, lastSavedLon);
         }
         googleMap.setMyLocationEnabled(true);
 
@@ -285,6 +288,20 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                     }
                 }
 
+            }
+        });
+        googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener()
+        {
+            @Override
+            public boolean onMyLocationButtonClick() {
+                Toast.makeText(requireActivity(),
+                        " bottonecliccato" ,
+                        Toast.LENGTH_SHORT).show();
+                googleMap.clear();
+                updatePin(googleMap, startLat, startLon);
+                // Return false so that we don't consume the event and the default behavior still occurs
+                // (the camera animates to the user's current position).
+                return false;
             }
         });
 
@@ -391,6 +408,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         return false;
     }
 
+
     private void getDeviceLocation(GoogleMap map){
         // Using a boolean variable to determine if permissions have been granted
         boolean multiplePermissionsStatus =
@@ -416,7 +434,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                                     }else{
                                         mypos = currentPos;
                                     }
-
+                                    lastSavedLat=startLat;
+                                    lastSavedLon=startLon;
                                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(mypos, 14.0f));
                                     map.setMyLocationEnabled(true);
                                 }
@@ -457,7 +476,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         //final GeoLocation center = new GeoLocation(45.830308, 8.645078);
         final GeoLocation center = new GeoLocation(radiusLat, radiusLon);
-        final double radiusInM = 5 * 1000;
+        final double radiusInM = 10 * 1000;
 
         // Each item in 'bounds' represents a startAt/endAt pair. We have to issue
         // a separate query for each pair. There can be up to 9 pairs of bounds
@@ -536,8 +555,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        //AGGINGERE COSTANTE AAAAAAAAAA
-        outState.putDouble("LAST_LAT",googleMap.getCameraPosition().target.latitude);
-        outState.putDouble("LAST_LON",googleMap.getCameraPosition().target.longitude);
+
+        outState.putDouble(LAST_LAT, googleMap.getCameraPosition().target.latitude);
+        outState.putDouble(LAST_LON, googleMap.getCameraPosition().target.longitude);
     }
 }
