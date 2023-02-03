@@ -30,13 +30,17 @@ import com.blackbox.pinspot.databinding.FragmentPinInfoBinding;
 import com.blackbox.pinspot.model.Pin;
 import com.blackbox.pinspot.model.Result;
 import com.blackbox.pinspot.model.weather.WeatherApiResponse;
+import com.blackbox.pinspot.util.GlideApp;
 import com.blackbox.pinspot.util.ServiceLocator;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +52,10 @@ public class PinInfoFragment extends Fragment {
     //private Pin pin;
     private WeatherViewModel weatherViewModel;
     private PinViewModel pinViewModel;
+
+    //TODO Move constant
+    private static final String DBIMAGES = "gs://pinspot-demo.appspot.com/";
+    private FirebaseStorage storage = FirebaseStorage.getInstance(DBIMAGES);
 
     private FragmentPinInfoBinding binding;
     //private String apikey = "4f6ec18ab9eb724adb869edca9cbbf63";
@@ -146,6 +154,13 @@ public class PinInfoFragment extends Fragment {
             binding.PinTitleTextView.setText(pin.getTitle());
             binding.PinLatTextView.setText(String.valueOf(pin.getLat()));
             binding.pinLongTextView.setText(String.valueOf(pin.getLon()));
+
+            // Retrieve the photo associated to a provided pin via its link attribute from
+            // Firebase Storage and displays it with Glide support
+            StorageReference storageReference = storage.getReference().child("pinPhotos/"+pin.getLink()+".jpeg");
+            GlideApp.with(binding.pinPhotoImageView.getContext())
+                    .load(storageReference)
+                    .into(binding.pinPhotoImageView);
 
             Double latitude = pin.getLat();
             Double longitude = pin.getLon();

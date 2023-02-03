@@ -176,10 +176,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                         googleMap.clear();
                         getDeviceLocation(googleMap);
 
-                        updatePin(googleMap,startLat, startLon);
+                        updatePin(googleMap, startLat, startLon);
                         //}
                     }
                 });
+        
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,8 +197,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 Intent intent = new Intent(requireContext(), InsertPinActivity.class);
                 intent.putExtra("latitude", mypos.latitude);
                 intent.putExtra("longitude", mypos.longitude);
-                startActivity(intent);
-                //insertPinActivityResultLauncher.launch(intent);
+                //startActivity(intent);
+                insertPinActivityResultLauncher.launch(intent);
                 /*Toast.makeText(requireContext(), "Latitudine: "+ mypos.latitude +
                         " Longitudine: "+mypos.longitude, Toast.LENGTH_SHORT).show();*/
             }
