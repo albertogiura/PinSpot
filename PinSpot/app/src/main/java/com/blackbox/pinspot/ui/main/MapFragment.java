@@ -80,7 +80,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     Double lastSavedLat = 0.0;
     Double lastSavedLon = 0.0;
-
+    private MapViewModel mapViewModel;
     private FragmentMapBinding binding;
     PinViewModel pinViewModel;
 
@@ -107,6 +107,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        mapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
 
         IPinRepository pinRepository =
                 ServiceLocator.getInstance().getPinRepository(requireActivity().getApplication());
@@ -161,8 +162,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         super.onViewCreated(view, savedInstanceState);
         if(savedInstanceState != null){
 
-            lastSavedLat = savedInstanceState.getDouble(LAST_LAT);
-            lastSavedLon = savedInstanceState.getDouble(LAST_LON);
+            lastSavedLat = mapViewModel.getLastLat();
+            lastSavedLon = mapViewModel.getLastLon();
 
         }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
@@ -582,11 +583,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if(outState==null){
-            outState.putDouble(LAST_LAT, googleMap.getCameraPosition().target.latitude);
-            outState.putDouble(LAST_LON, googleMap.getCameraPosition().target.longitude);
-        }
+    public void onPause() {
+        super.onPause();
+        Toast.makeText(requireActivity(),
+                " pausa",
+                Toast.LENGTH_SHORT).show();
+        mapViewModel.setLastLat(googleMap.getCameraPosition().target.latitude);
+        mapViewModel.setLastLon(googleMap.getCameraPosition().target.longitude);
     }
 }
