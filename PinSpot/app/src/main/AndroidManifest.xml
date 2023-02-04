@@ -32,14 +32,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC0ID1-UstsT3NO6WE7pmUlrN0_LQ9HlPY" />
-
-        <activity
-            android:name=".SignupActivity"
-            android:exported="false" >
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
         <activity
             android:name=".ui.welcome.LoginActivity"
             android:exported="true" >

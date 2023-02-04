@@ -6,7 +6,8 @@ public abstract class Result {
     private Result() {}
 
     public boolean isSuccess() {
-        if (this instanceof UserResponseSuccess || this instanceof WeatherResponseSuccess) {
+        if (this instanceof UserResponseSuccess || this instanceof WeatherResponseSuccess
+                || this instanceof PinResponseSuccess) {
             return true;
         } else {
             return false;
@@ -21,6 +22,10 @@ public abstract class Result {
         public User getData() {
             return user;
         }
+    }
+
+    public static final class PinResponseSuccess extends Result {
+        public PinResponseSuccess() {}
     }
 
     public static final class WeatherResponseSuccess extends Result {

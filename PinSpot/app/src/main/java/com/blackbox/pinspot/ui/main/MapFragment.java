@@ -28,12 +28,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.blackbox.pinspot.R;
+import com.blackbox.pinspot.data.repository.pin.IPinRepository;
 import com.blackbox.pinspot.databinding.FragmentMapBinding;
 import com.blackbox.pinspot.model.Pin;
-import com.blackbox.pinspot.myMarker;
+import com.blackbox.pinspot.util.ServiceLocator;
 import com.firebase.geofire.GeoFireUtils;
 import com.firebase.geofire.GeoQueryBounds;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -42,9 +44,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -56,6 +56,7 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -81,6 +82,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     Double lastSavedLon = 0.0;
 
     private FragmentMapBinding binding;
+    PinViewModel pinViewModel;
 
     private ActivityResultLauncher<String[]> multiplePermissionLauncher;
     private ActivityResultContracts.RequestMultiplePermissions multiplePermissionsContract;
@@ -106,6 +108,19 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         super.onCreate(savedInstanceState);
 
+        IPinRepository pinRepository =
+                ServiceLocator.getInstance().getPinRepository(requireActivity().getApplication());
+
+        if (pinRepository != null) {
+            // This is the way to create a ViewModel with custom parameters
+            // (see NewsViewModelFactory class for the implementation details)
+            pinViewModel = new ViewModelProvider(
+                    requireActivity(),
+                    new PinViewModelFactory(pinRepository)).get(PinViewModel.class);
+        } else {
+            Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                    getString(R.string.unexpected_error), Snackbar.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -180,7 +195,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                         //}
                     }
                 });
-        
+
         binding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -392,7 +407,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     Double latitude, longitude;
                     String title, link;
-                    int likes;
                     if (task.isSuccessful()){
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()){
@@ -401,10 +415,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                             latitude = document.getDouble("lat");
                             longitude = document.getDouble("lon");
                             link = document.getString("link");
-                            likes = 10;
 
                             if (latitude != null && longitude != null){
-                                Pin pin = new Pin(latitude, longitude, title, link, likes);
+                                Pin pin = new Pin(latitude, longitude, title, link);
                                 MapFragmentDirections.ActionMapFragmentToPinInfoFragment action =
                                         MapFragmentDirections.
                                                 actionMapFragmentToPinInfoFragment(pin);
@@ -419,8 +432,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                     }
                 }
             });
-
-
         }
 
         return false;

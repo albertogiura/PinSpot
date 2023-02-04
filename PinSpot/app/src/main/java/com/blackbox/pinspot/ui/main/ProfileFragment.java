@@ -38,7 +38,7 @@ public class ProfileFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         IUserRepository userRepository = ServiceLocator.getInstance().
-                getUserRepository(requireActivity().getApplication());
+                getUserRepository();
         userViewModel = new ViewModelProvider(
                 this,
                 new UserViewModelFactory(userRepository)).get(UserViewModel.class);

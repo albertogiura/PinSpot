@@ -11,6 +11,8 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.blackbox.pinspot.model.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -20,8 +22,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-// Implementazione concreta dei metodi che interagiscono con il database Firebase Auth
-
+// Class that contains concrete methods implementation that interacts with Firebase Auth database
 public class UserAuthRemoteDataSource extends BaseUserAuthRemoteDataSource {
 
     private static final String TAG = UserAuthRemoteDataSource.class.getSimpleName();
@@ -64,7 +65,7 @@ public class UserAuthRemoteDataSource extends BaseUserAuthRemoteDataSource {
             if (task.isSuccessful()) {
                 FirebaseUser firebaseUser = mAuth.getCurrentUser();
                 if (firebaseUser != null) {
-                    // Logica da eseguire se l'utente è stato creato nel database Firebase Auth
+                    // Code to be executed if user has been correctly created on the Firebase Auth side
                     userResponseCallback.onSuccessFromAuthentication(new User(
                             firebaseUser.getDisplayName(), email, firebaseUser.getUid()));
                 } else {
@@ -82,7 +83,7 @@ public class UserAuthRemoteDataSource extends BaseUserAuthRemoteDataSource {
             if (task.isSuccessful()) {
                 FirebaseUser firebaseUser = mAuth.getCurrentUser();
                 if (firebaseUser != null) {
-                    // Logica da eseguire se l'utente è presente nel database Firebase Auth
+                    // Code to be executed if user has been correctly created on the Firebase Auth side
                     userResponseCallback.onSuccessFromAuthentication(new User(
                             firebaseUser.getDisplayName(), email, firebaseUser.getUid()));
                 } else {
@@ -106,7 +107,7 @@ public class UserAuthRemoteDataSource extends BaseUserAuthRemoteDataSource {
                     Log.d(TAG, "signInWithCredential:success");
                     FirebaseUser firebaseUser = mAuth.getCurrentUser();
                     if (firebaseUser != null) {
-                        // Logica da eseguire se l'utente esegue il login con Google
+                        // Code to be executed if user has been correctly created on the Firebase Auth side
                         userResponseCallback.onSuccessFromAuthentication(new User(
                                 firebaseUser.getDisplayName(), firebaseUser.getEmail(),
                                 firebaseUser.getUid()));
@@ -120,6 +121,21 @@ public class UserAuthRemoteDataSource extends BaseUserAuthRemoteDataSource {
                     userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
                 }
             });
+        }
+    }
+
+    @Override
+    public void forgotPassword(String email) {
+        if (email != null) {
+            mAuth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                userResponseCallback.onSuccessForgotPassword();
+                            }
+                        }
+                    });
         }
     }
 

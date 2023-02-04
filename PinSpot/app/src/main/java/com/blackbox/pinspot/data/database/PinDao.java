@@ -1,6 +1,7 @@
 package com.blackbox.pinspot.data.database;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -23,5 +24,5 @@ public interface PinDao {
     void deleteAll();
 
     @Query("SELECT * FROM pin_table")
-    LiveData<List<Pin>> getAllFavPin();
+    List<Pin> getAllFavPin();
 }

@@ -23,9 +23,6 @@ public class Pin implements Parcelable {
     public String title;
 
     @ColumnInfo()
-    public int likes;
-
-    @ColumnInfo()
     public String geoHash;
 
     @ColumnInfo()
@@ -42,24 +39,22 @@ public class Pin implements Parcelable {
     }
 
 
-    public Pin(double lat, double lon, String geoHash, String title, @NonNull String link, int likes) {
+    public Pin(double lat, double lon, String geoHash, String title, @NonNull String link) {
         this.lat = lat;
         this.lon = lon;
         this.geoHash = geoHash;
         this.title = title;
         this.link = link;
-        this.likes = likes;
     }
 
-    public Pin(double lat, double lon, String title, String link, int likes) {
-        this(lat, lon, GeoFireUtils.getGeoHashForLocation(new GeoLocation(lat, lon)), title, link, likes);
+    public Pin(double lat, double lon, String title, String link) {
+        this(lat, lon, GeoFireUtils.getGeoHashForLocation(new GeoLocation(lat, lon)), title, link);
     }
 
 
     protected Pin(Parcel in) {
         link = in.readString();
         title = in.readString();
-        likes = in.readInt();
         geoHash = in.readString();
         lat = in.readDouble();
         lon = in.readDouble();
@@ -117,14 +112,6 @@ public class Pin implements Parcelable {
         this.link = link;
     }
 
-    public int getLikes() {
-        return likes;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -134,7 +121,6 @@ public class Pin implements Parcelable {
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(link);
         dest.writeString(title);
-        dest.writeInt(likes);
         dest.writeString(geoHash);
         dest.writeDouble(lat);
         dest.writeDouble(lon);

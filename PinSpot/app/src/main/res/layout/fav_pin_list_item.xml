@@ -7,15 +7,16 @@
 
     <TextView
         android:id="@+id/textview_fav_pin_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="222dp"
+        android:layout_height="24dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:textAppearance="?attr/textAppearanceTitleMedium"
         app:layout_constraintEnd_toStartOf="@+id/imageview_favorite_pin"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Pin title"/>
+        tools:text="Pin title" />
 
     <TextView
         android:id="@+id/textview_fav_pin_lat"
@@ -27,11 +28,11 @@
         android:textAppearance="?attr/textAppearanceBody1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageview_favorite_pin"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.46"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textview_fav_pin_title"
-        app:layout_constraintVertical_bias="0.001"
-        tools:text="Latitude"/>
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="Latitude" />
 
     <TextView
         android:id="@+id/textview_fav_pin_lng"
@@ -43,11 +44,11 @@
         android:textAppearance="?attr/textAppearanceBody1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageview_favorite_pin"
-        app:layout_constraintHorizontal_bias="0.535"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textview_fav_pin_title"
         app:layout_constraintVertical_bias="0.0"
-        tools:text="Longitude"/>
+        tools:text="Longitude" />
 
     <ImageView
         android:id="@+id/imageview_favorite_pin"
@@ -64,5 +65,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.515" />
+
+    <ImageView
+        android:id="@+id/imageView_PinPreviewImage"
+        android:layout_width="80dp"
+        android:layout_height="76dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_background" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

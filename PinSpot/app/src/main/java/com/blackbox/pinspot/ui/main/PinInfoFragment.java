@@ -74,7 +74,7 @@ public class PinInfoFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         IWeatherRepositoryWithLiveData weatherRepositoryWithLiveData =
-                ServiceLocator.getInstance().getWeatherRepository(requireActivity().getApplication());
+                ServiceLocator.getInstance().getWeatherRepository();
 
         if (weatherRepositoryWithLiveData != null) {
             // This is the way to create a ViewModel with custom parameters
