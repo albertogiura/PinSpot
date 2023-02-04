@@ -84,6 +84,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private FragmentMapBinding binding;
     PinViewModel pinViewModel;
 
+
+    private MapViewModel mapViewModel;
     private ActivityResultLauncher<String[]> multiplePermissionLauncher;
     private ActivityResultContracts.RequestMultiplePermissions multiplePermissionsContract;
     private final String[] PERMISSIONS = {
@@ -121,6 +123,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             Snackbar.make(requireActivity().findViewById(android.R.id.content),
                     getString(R.string.unexpected_error), Snackbar.LENGTH_SHORT).show();
         }
+
+        mapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
 
     }
 
@@ -161,8 +165,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         super.onViewCreated(view, savedInstanceState);
         if(savedInstanceState != null){
 
-            lastSavedLat = savedInstanceState.getDouble(LAST_LAT);
-            lastSavedLon = savedInstanceState.getDouble(LAST_LON);
+            lastSavedLat = mapViewModel.getLastLat();
+            lastSavedLon = mapViewModel.getLastLon();
 
         }
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
@@ -581,12 +585,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         }
     }
 
+
+
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if(outState==null){
-            outState.putDouble(LAST_LAT, googleMap.getCameraPosition().target.latitude);
-            outState.putDouble(LAST_LON, googleMap.getCameraPosition().target.longitude);
-        }
+    public void onPause() {
+        super.onPause();
+        Toast.makeText(requireActivity(),
+                " pausa" ,
+                Toast.LENGTH_SHORT).show();
+        mapViewModel.setLastLat(googleMap.getCameraPosition().target.latitude);
+        mapViewModel.setLastLon(googleMap.getCameraPosition().target.longitude);
+
     }
 }
