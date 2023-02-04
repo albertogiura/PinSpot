@@ -3,8 +3,10 @@ package com.blackbox.pinspot.data.source.weather;
 import static com.blackbox.pinspot.util.Constants.API_KEY_ERROR;
 import static com.blackbox.pinspot.util.Constants.RETROFIT_ERROR;
 
+import android.util.Log;
 import android.widget.Toast;
 
+import com.blackbox.pinspot.data.repository.weather.WeatherRepositoryWithLiveData;
 import com.blackbox.pinspot.data.service.WeatherApiService;
 import com.blackbox.pinspot.model.weather.WeatherApiResponse;
 import com.blackbox.pinspot.ui.main.PinInfoFragment;
@@ -14,6 +16,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 public class WeatherRemoteDataSource extends BaseWeatherRemoteDataSource {
+    private String TAG = "ciao";
 
     private final WeatherApiService weatherApiService;
     private final String apiKey;
@@ -32,6 +35,10 @@ public class WeatherRemoteDataSource extends BaseWeatherRemoteDataSource {
                     Toast.makeText(PinInfoFragment.newInstance().requireContext(), "Please Enter a valid City", Toast.LENGTH_LONG).show();
                     weatherCallback.onFailureFromRemote(new Exception(API_KEY_ERROR));
                 } else if (response.isSuccessful() && response.body() != null) {
+                    Log.d(TAG, "ciao mondo");
+
+                    //Log.d(TAG, response.body().getWeather()[0].toString());
+
                     //Toast.makeText(PinInfoFragment.newInstance().requireContext(), response.code() + " ", Toast.LENGTH_LONG).show();
                     weatherCallback.onSuccessFromRemote(response.body());
                 }

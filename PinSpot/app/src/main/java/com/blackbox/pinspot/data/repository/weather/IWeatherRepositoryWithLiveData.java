@@ -5,5 +5,5 @@ import androidx.lifecycle.MutableLiveData;
 import com.blackbox.pinspot.model.Result;
 
 public interface IWeatherRepositoryWithLiveData {
-    public MutableLiveData<Result> retrieveWeather(Double lat, Double lng);
+    public MutableLiveData<Result> retrieveWeather(Double lat, Double lng, Boolean firstLoading);
 }

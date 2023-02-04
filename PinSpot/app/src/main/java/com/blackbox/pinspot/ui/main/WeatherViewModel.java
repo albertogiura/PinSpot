@@ -13,19 +13,29 @@ public class WeatherViewModel extends ViewModel {
 
     private final IWeatherRepositoryWithLiveData weatherRepositoryWithLiveData;
     private MutableLiveData<Result> pinWeatherMutableLiveData;
+    private boolean firstLoading;
 
     public WeatherViewModel(IWeatherRepositoryWithLiveData weatherRepositoryWithLiveData) {
         this.weatherRepositoryWithLiveData = weatherRepositoryWithLiveData;
+        this.firstLoading = true;
     }
 
-    public MutableLiveData<Result> getPinWeather(Double lat, Double lng) {
-        if (pinWeatherMutableLiveData == null) {
-            retrievePinWeather(lat, lng);
-        }
+    public MutableLiveData<Result> getPinWeather(Double lat, Double lng, boolean firstLoading) {
+        //if (pinWeatherMutableLiveData == null) {
+            retrievePinWeather(lat, lng, firstLoading);
+        //}
         return pinWeatherMutableLiveData;
     }
 
-    private void retrievePinWeather(Double lat, Double lng) {
-        pinWeatherMutableLiveData = weatherRepositoryWithLiveData.retrieveWeather(lat, lng);
+    private void retrievePinWeather(Double lat, Double lng, Boolean firstLoading) {
+        pinWeatherMutableLiveData = weatherRepositoryWithLiveData.retrieveWeather(lat, lng, firstLoading);
+    }
+
+    public boolean isFirstLoading() {
+        return firstLoading;
+    }
+
+    public void setFirstLoading(boolean firstLoading) {
+        this.firstLoading = firstLoading;
     }
 }

@@ -2,7 +2,6 @@ package com.blackbox.pinspot.data.repository.pin;
 
 import android.app.Application;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.blackbox.pinspot.data.database.PinRoomDatabase;
@@ -62,7 +61,8 @@ public class PinRepository implements IPinRepository, PinCallback {
         favoritePinLocalDataSource.deleteFavoritePin(pin);
     }
 
-    private void retrieveFavPinList() {
+    @Override
+    public void retrieveFavPinList() {
         favoritePinLocalDataSource.getFavoritePinList();
     }
 

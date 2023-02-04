@@ -15,4 +15,5 @@ public interface IPinRepository {
 
     void insert(Pin pin);
     void remove(Pin pin);
+    void retrieveFavPinList();
 }
