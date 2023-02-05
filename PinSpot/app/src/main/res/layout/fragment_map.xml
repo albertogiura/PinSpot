@@ -38,7 +38,7 @@
         android:id="@+id/searchButton"
         android:layout_width="74dp"
         android:layout_height="66dp"
-        android:background="#00FFFFFF"
+        android:background="@drawable/edit_text_bg"
         android:contentDescription="@string/app_name"
         app:icon="@android:drawable/ic_search_category_default"
         app:iconSize="28dp"

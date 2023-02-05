@@ -76,7 +76,7 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="251dp"
+        android:layout_width="255dp"
         android:layout_height="255dp"
         android:layout_marginLeft="85dp"
         android:layout_marginRight="85dp"
@@ -86,7 +86,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.273"
-        tools:srcCompat="@tools:sample/avatars" />
+        android:src="@drawable/roma"
+         />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
