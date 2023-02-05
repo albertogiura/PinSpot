@@ -41,6 +41,7 @@
         app:itemRippleColor="@color/secondaryDarkColor"
         app:itemIconTint="@drawable/nav_item_color_state"
         app:itemTextColor="@drawable/nav_item_color_state"
+        app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
         app:menu="@menu/bottom_nav_menu"
         app:labelVisibilityMode="labeled" />
 
