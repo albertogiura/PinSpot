@@ -50,7 +50,14 @@ import com.google.firebase.storage.StorageReference;
  * create an instance of this fragment.
  */
 public class PinInfoFragment extends Fragment {
+    public class MyGoToLoginAction implements View.OnClickListener {
 
+        @Override
+        public void onClick(View v) {
+            Navigation.findNavController(v).navigate(R.id.action_pinInfoFragment_to_loginActivity);
+            // Code to undo the user's last action
+        }
+    }
     //private Pin pin;
     private WeatherViewModel weatherViewModel;
     private PinViewModel pinViewModel;
@@ -147,13 +154,23 @@ public class PinInfoFragment extends Fragment {
         binding.addPinToFavFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sharedPref = requireActivity().getSharedPreferences(
+                        "settings", Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
+                Boolean skipSettings = sharedPref.getBoolean("skip", false);
+                if (skipSettings == false) {
                 if (pin != null){
                     pinViewModel.insert(pin);
                     Toast.makeText(requireContext(), "Pin added to favorite list", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(requireContext(), "Error in adding pin to favorite list", Toast.LENGTH_SHORT).show();
                 }
-                ;
+
+                }else{
+                    Snackbar.make(v,
+                                    "Vai al login",
+                                    Snackbar.LENGTH_SHORT).setAction("vai", new PinInfoFragment.MyGoToLoginAction())
+                            .show();
+                }
             }
         });
 

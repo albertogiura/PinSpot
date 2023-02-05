@@ -4,7 +4,9 @@ import static com.blackbox.pinspot.util.Constants.INVALID_CREDENTIALS_ERROR;
 import static com.blackbox.pinspot.util.Constants.INVALID_USER_ERROR;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -138,7 +140,16 @@ public class LoginFragment extends Fragment {
                 startActivityBasedOnCondition(MainActivity.class,
                         R.id.action_loginFragment_to_mainActivity);
         }
+        binding.skipButton.setOnClickListener(v -> {
+            SharedPreferences sharedPref = requireActivity().getSharedPreferences(
+                    "settings", Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
 
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("skip", true);
+            editor.apply();
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_mainActivity);
+            //startActivityBasedOnCondition(MainActivity.class, R.id.action_loginFragment_to_mainActivity);
+        });
 
         binding.buttonLogin.setOnClickListener(v -> {
             String email = binding.edtEmail.getText().toString().trim();
@@ -155,6 +166,12 @@ public class LoginFragment extends Fragment {
                             if (result.isSuccess()) {
                                 userViewModel.setAuthenticationError(false);
                                 binding.progressBar.setVisibility(View.VISIBLE);
+                                SharedPreferences sharedPref = requireActivity().getSharedPreferences(
+                                        "settings", Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
+
+                                SharedPreferences.Editor editor = sharedPref.edit();
+                                editor.putBoolean("skip", false);
+                                editor.apply();
                                 startActivityBasedOnCondition(MainActivity.class, R.id.action_loginFragment_to_mainActivity);
                             } else {
                                 userViewModel.setAuthenticationError(true);
@@ -179,6 +196,12 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onSuccess(BeginSignInResult result) {
                         Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
+                        SharedPreferences sharedPref = requireActivity().getSharedPreferences(
+                                "settings", Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
+
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putBoolean("skip", false);
+                        editor.apply();
                         IntentSenderRequest intentSenderRequest =
                                 new IntentSenderRequest.Builder(result.getPendingIntent()).build();
                         activityResultLauncher.launch(intentSenderRequest);

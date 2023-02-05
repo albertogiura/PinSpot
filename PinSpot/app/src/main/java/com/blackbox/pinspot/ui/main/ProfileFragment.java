@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.blackbox.pinspot.R;
 import com.blackbox.pinspot.data.repository.user.IUserRepository;
@@ -54,31 +55,43 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        SharedPreferences sharedPref = requireActivity().getSharedPreferences(
+                "settings", Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
+        Boolean skipSettings = sharedPref.getBoolean("skip", false);
+        Toast.makeText(requireActivity(),
+                Boolean.toString(skipSettings) ,
+                Toast.LENGTH_SHORT).show();
+        if(skipSettings==false) {
+            binding.textViewUserEmail.setText(userViewModel.getLoggedUser().getEmail());
+            binding.textViewUserId.setText(userViewModel.getLoggedUser().getIdToken());
 
-        binding.textViewUserEmail.setText(userViewModel.getLoggedUser().getEmail());
-        binding.textViewUserId.setText(userViewModel.getLoggedUser().getIdToken());
-
-        binding.buttonUserLogout.setOnClickListener(v -> {
-            userViewModel.logout().observe(getViewLifecycleOwner(), result -> {
-                if (result.isSuccess()) {
+            binding.buttonUserLogout.setOnClickListener(v -> {
+                userViewModel.logout().observe(getViewLifecycleOwner(), result -> {
+                    if (result.isSuccess()) {
                     /*Snackbar.make(v,
                     "Logout completed successfully",
                             Snackbar.LENGTH_SHORT).show();*/
-                    Intent intent = new Intent(requireContext(), LoginActivity.class);
-                    startActivity(intent);
-                    requireActivity().finish();
+                        Intent intent = new Intent(requireContext(), LoginActivity.class);
+                        startActivity(intent);
+                        requireActivity().finish();
                     /*Navigation.findNavController(view).navigate(
                     R.id.action_fragment_settings_to_welcomeActivity);*/
-                } else {
-                    Snackbar.make(v,
-                            this.getString(R.string.unexpected_error),
-                            Snackbar.LENGTH_SHORT).show();
-                }
+                    } else {
+                        Snackbar.make(v,
+                                this.getString(R.string.unexpected_error),
+                                Snackbar.LENGTH_SHORT).show();
+                    }
+                });
             });
-        });
+        }else{
+           binding.textViewUserEmail.setText("VaI aL LOgIn plS");
+           binding.buttonUserLogout.setText("Log In");
 
-        SharedPreferences sharedPref = requireActivity().getSharedPreferences(
-                "settings", Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
+           binding.buttonUserLogout.setOnClickListener(v -> {
+               Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_loginActivity);
+           });
+        }
+
         Boolean celsiusSettings = sharedPref.getBoolean("celsius", true);
         Toast.makeText(requireActivity(),
                 Boolean.toString(celsiusSettings) ,

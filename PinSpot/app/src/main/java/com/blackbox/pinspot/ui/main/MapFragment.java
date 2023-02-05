@@ -9,6 +9,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.ConnectivityManager;
@@ -71,6 +72,14 @@ import java.util.Map;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+    public class MyGoToLoginAction implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Navigation.findNavController(v).navigate(R.id.action_mapFragment_to_loginActivity);
+            // Code to undo the user's last action
+        }
+    }
     Double startLat = 0.0;
     Double startLon = 0.0;
     Double currCameraLat = 0.0;
@@ -166,6 +175,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             lastSavedLon = mapViewModel.getLastLon();
 
         }
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
         multiplePermissionsContract = new ActivityResultContracts.RequestMultiplePermissions();
@@ -197,28 +207,33 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                     }
                 });
 
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Navigation.findNavController(view).navigate(R.id.action_mapFragment_to_insertPinActivity);
-                /*Intent intent = new Intent(requireContext(), InsertPinActivity.class);
-                startActivity(intent);*/
-                //TODO Pass forward current latitude and longitude to the InsertPinActivity
-                getDeviceLocation(googleMap);
-                /*MapFragmentDirections.ActionMapFragmentToInsertPinActivity action =
-                        MapFragmentDirections.
-                                actionMapFragmentToInsertPinActivity(mypos.latitude, mypos.longitude);
-                Navigation.findNavController(requireView()).navigate(action);*/
+            binding.fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences sharedPref = requireActivity().getSharedPreferences(
+                            "settings", Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
+                    Boolean skipSettings = sharedPref.getBoolean("skip", false);
+                    if (skipSettings == false) {
 
-                Intent intent = new Intent(requireContext(), InsertPinActivity.class);
-                intent.putExtra("latitude", mypos.latitude);
-                intent.putExtra("longitude", mypos.longitude);
-                //startActivity(intent);
-                insertPinActivityResultLauncher.launch(intent);
-                /*Toast.makeText(requireContext(), "Latitudine: "+ mypos.latitude +
-                        " Longitudine: "+mypos.longitude, Toast.LENGTH_SHORT).show();*/
-            }
-        });
+                        //TODO Pass forward current latitude and longitude to the InsertPinActivity
+                        getDeviceLocation(googleMap);
+
+
+                        Intent intent = new Intent(requireContext(), InsertPinActivity.class);
+                        intent.putExtra("latitude", mypos.latitude);
+                        intent.putExtra("longitude", mypos.longitude);
+                        //startActivity(intent);
+                        insertPinActivityResultLauncher.launch(intent);
+
+                    }else{
+                        Snackbar.make(v,
+                                "Vai al login",
+                                Snackbar.LENGTH_SHORT).setAction("vai", new MyGoToLoginAction())
+                                .show();
+
+                    }
+                }
+            });
 
         ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),

@@ -1,5 +1,7 @@
 package com.blackbox.pinspot.ui.main;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,30 +85,35 @@ public class FavPlacesFragment extends Fragment {
 
         /*Pin pin = new Pin(45.561356, 8.983443, "title", "pippo", 10);
         pinList.add(pin);*/
+        SharedPreferences sharedPref = requireActivity().getSharedPreferences(
+                "settings", Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
+        Boolean skipSettings = sharedPref.getBoolean("skip", false);
+        if (skipSettings == false) {
+            mAdapter = new PinRecyclerViewAdapter(requireContext(), pinList, requireActivity().getApplication(),
+                    new PinRecyclerViewAdapter.OnItemClickListener() {
+                        @Override
+                        public void onPinItemClick(Pin pin) {
+                            FavPlacesFragmentDirections.ActionFavPlacesFragmentToPinInfoFragment action =
+                                    FavPlacesFragmentDirections.actionFavPlacesFragmentToPinInfoFragment(pin);
+                            Navigation.findNavController(view).navigate(action);
+                        }
 
-        mAdapter = new PinRecyclerViewAdapter(requireContext(), pinList, requireActivity().getApplication(),
-                new PinRecyclerViewAdapter.OnItemClickListener() {
-                    @Override
-                    public void onPinItemClick(Pin pin) {
-                        FavPlacesFragmentDirections.ActionFavPlacesFragmentToPinInfoFragment action =
-                                FavPlacesFragmentDirections.actionFavPlacesFragmentToPinInfoFragment(pin);
-                        Navigation.findNavController(view).navigate(action);
-                    }
+                        @Override
+                        public void onFavoriteButtonPressed(int position) {
+                            pinViewModel.removeFavPin(pinList.get(position));
+                        }
+                    });
+            binding.favPinRecyclerview.setAdapter(mAdapter);
+            binding.favPinRecyclerview.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-                    @Override
-                    public void onFavoriteButtonPressed(int position) {
-                        pinViewModel.removeFavPin(pinList.get(position));
-                    }
-                });
-        binding.favPinRecyclerview.setAdapter(mAdapter);
-        binding.favPinRecyclerview.setLayoutManager(new LinearLayoutManager(requireContext()));
-
-        pinViewModel.getFavPinList().observe(getViewLifecycleOwner(), pins -> {
-            //this.pinList = pinList;
-            pinList.clear();
-            pinList.addAll(pins);
-            mAdapter.notifyDataSetChanged();
-        });
-
+            pinViewModel.getFavPinList().observe(getViewLifecycleOwner(), pins -> {
+                //this.pinList = pinList;
+                pinList.clear();
+                pinList.addAll(pins);
+                mAdapter.notifyDataSetChanged();
+            });
+        }else{
+            binding.LogInTxt.setVisibility(View.VISIBLE);
+        }
     }
 }
