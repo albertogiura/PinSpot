@@ -4,58 +4,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primaryColor"
     tools:context=".ui.main.InsertPinActivity">
 
-    <Button
-        android:id="@+id/uploadPin_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:text="Upload pin"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.934" />
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/titleAddNewPin_textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Insert New Pin"
+        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.096" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="345dp"
-        android:layout_height="343dp"
-        android:src="@drawable/ic_launcher_background"
+        android:id="@+id/rounded_bg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/rounded_corner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.44" />
+        app:layout_constraintTop_toTopOf="@id/divider"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/takePic_button"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/closePinInfo_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Take picture"
-        android:textSize="20sp"
+        android:layout_height="112dp"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/white"
+        android:contentDescription="Spot a new place"
+        android:src="@drawable/ic_baseline_arrow_back_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.064"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.789" />
-
-    <Button
-        android:id="@+id/choosePicFromLocal_button"
-        android:layout_width="219dp"
-        android:layout_height="77dp"
-        android:text="Choose from gallery"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.973"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.824" />
+        app:layout_constraintVertical_bias="0.0"
+        app:maxImageSize="48dp" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:layout_width="0dp"
@@ -69,40 +74,106 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.008" />
 
-    <TextView
-        android:id="@+id/titleAddNewPin_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Aggiungi un nuovo Pin"
-        android:textSize="26sp"
-        android:textStyle="bold"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="251dp"
+        android:layout_height="255dp"
+        android:layout_marginLeft="85dp"
+        android:layout_marginRight="85dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.121"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/newPinTitle_txtInputLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.772">
+        app:layout_constraintVertical_bias="0.273"
+        tools:srcCompat="@tools:sample/avatars" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/newPinTitle_edt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Inserisci un titolo per il nuovo Pin"
-            android:inputType="text"
-            tools:layout_editor_absoluteX="1dp"
-            tools:layout_editor_absoluteY="83dp" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/choosePicFromLocal_button"
+        android:layout_width="wrap_content"
+        android:layout_height="66dp"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:layout_marginStart="20dp"
+        android:backgroundTint="@color/secondaryDarkColor"
+        android:contentDescription="Spot a new place"
+        android:src="@drawable/library_foreground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/takePic_button"
+        app:layout_constraintHorizontal_bias="0.700"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.635"
+        app:maxImageSize="48dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/takePic_button"
+        android:layout_width="wrap_content"
+        android:layout_height="112dp"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/secondaryDarkColor"
+        android:contentDescription="Spot a new place"
+        android:src="@drawable/takephoto_foreground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.635"
+        app:maxImageSize="48dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/download"
+        android:layout_width="wrap_content"
+        android:layout_height="112dp"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/secondaryDarkColor"
+        android:contentDescription="Spot a new place"
+        android:src="@drawable/download_foreground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.300"
+        app:layout_constraintStart_toEndOf="@+id/takePic_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.635"
+        app:maxImageSize="48dp" />
+
+    <EditText
+        android:id="@+id/newPinTitle_edt"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/edit_text_bg"
+        android:backgroundTint="@color/secondaryDarkColor"
+        android:drawableLeft="@drawable/ic_baseline_info_24"
+        android:drawablePadding="8dp"
+        android:hint="Name"
+        android:minHeight="48dp"
+        android:padding="8dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/takePic_button"
+        app:layout_constraintVertical_bias="0.18" />
+
+    <Button
+        android:id="@+id/uploadPin_button"
+        android:layout_width="128dp"
+        android:layout_height="74dp"
+        android:layout_marginBottom="72dp"
+        android:backgroundTint="@color/primaryColor"
+        android:text="Insert"
+        android:textSize="18sp"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

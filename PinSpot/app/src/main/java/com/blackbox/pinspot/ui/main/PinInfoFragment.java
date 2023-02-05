@@ -176,8 +176,6 @@ public class PinInfoFragment extends Fragment {
 
         if (pin != null){
             binding.PinTitleTextView.setText(pin.getTitle());
-            binding.PinLatTextView.setText(String.valueOf(pin.getLat()));
-            binding.pinLongTextView.setText(String.valueOf(pin.getLon()));
 
             // Retrieve the photo associated to a provided pin via its link attribute from
             // Firebase Storage and displays it with Glide support
