@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.blackbox.pinspot.R;
 import com.blackbox.pinspot.model.Pin;
+import com.blackbox.pinspot.util.GlideApp;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 
@@ -23,6 +26,8 @@ public class PinRecyclerViewAdapter extends RecyclerView.Adapter<PinRecyclerView
     private final List<Pin> pinList;
     private final Application application;
     private final OnItemClickListener onItemClickListener;
+    private static final String DBIMAGES = "gs://pinspot-demo.appspot.com/";
+    private FirebaseStorage storage = FirebaseStorage.getInstance(DBIMAGES);
 
     public PinRecyclerViewAdapter(Context context, List<Pin> pinList, Application application,
                                   OnItemClickListener onItemClickListener) {
@@ -61,7 +66,7 @@ public class PinRecyclerViewAdapter extends RecyclerView.Adapter<PinRecyclerView
         private final TextView textview_fav_pin_title;
         private final TextView textview_fav_pin_lat;
         private final TextView textview_fav_pin_lng;
-        //private final ImageView imageViewNewsCoverImage;
+        private final ImageView imageView_PinPreviewImage;
         private final ImageView imageview_favorite_pin;
 
         public PinViewHolder(PinRecyclerViewAdapter mAdapter, @NonNull View itemView) {
@@ -71,10 +76,11 @@ public class PinRecyclerViewAdapter extends RecyclerView.Adapter<PinRecyclerView
             textview_fav_pin_lat = itemView.findViewById(R.id.textview_fav_pin_lat);
             textview_fav_pin_lng = itemView.findViewById(R.id.textview_fav_pin_lng);
             imageview_favorite_pin = itemView.findViewById(R.id.imageview_favorite_pin);
+            imageView_PinPreviewImage = itemView.findViewById(R.id.imageView_PinPreviewImage);
             /*textViewTitle = itemView.findViewById(R.id.textview_title);
             textViewDate = itemView.findViewById(R.id.textview_date);
             imageViewNewsCoverImage = itemView.findViewById(R.id.imageview_news_cover_image);
-            imageViewFavoriteNews = itemView.findViewById(R.id.imageview_favorite_news);*/
+            imageView_PinPreviewImage = itemView.findViewById(R.id.imageview_favorite_news);*/
             itemView.setOnClickListener(this);
             imageview_favorite_pin.setOnClickListener(this);
         }
@@ -86,6 +92,12 @@ public class PinRecyclerViewAdapter extends RecyclerView.Adapter<PinRecyclerView
 
             //textViewDate.setText(DateTimeUtil.getDate(news.getDate()));
             //setImageViewFavoriteNews(newsList.get(getAdapterPosition()).isFavorite());
+
+            StorageReference storageReference = storage.getReference().child("pinPhotos/"+pin.getLink()+".jpeg");
+            GlideApp.with(imageView_PinPreviewImage.getContext())
+                    .load(storageReference)
+                    .into(imageView_PinPreviewImage);
+
             /*Glide.with(application)
                     .load(news.getUrlToImage())
                     .placeholder(R.drawable.ic_baseline_cloud_download_24)
@@ -99,18 +111,6 @@ public class PinRecyclerViewAdapter extends RecyclerView.Adapter<PinRecyclerView
                 onItemClickListener.onFavoriteButtonPressed(getAdapterPosition());
             } else {
                 onItemClickListener.onPinItemClick(pinList.get(getAdapterPosition()));
-            }
-        }
-
-        private void setImageViewFavoritePin(boolean isFavorite) {
-            if (isFavorite) {
-                /*imageViewFavoriteNews.setImageDrawable(
-                        AppCompatResources.getDrawable(application,
-                                R.drawable.ic_baseline_favorite_24));*/
-            } else {
-                /*imageViewFavoriteNews.setImageDrawable(
-                        AppCompatResources.getDrawable(application,
-                                R.drawable.ic_baseline_favorite_border_24));*/
             }
         }
     }

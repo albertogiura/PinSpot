@@ -15,4 +15,5 @@ public abstract class BaseUserAuthRemoteDataSource {
     public abstract void signUp(String email, String password);
     public abstract void signIn(String email, String password);
     public abstract void signInWithGoogle(String idToken);
+    public abstract void forgotPassword(String email);
 }

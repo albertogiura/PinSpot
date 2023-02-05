@@ -16,12 +16,19 @@
         <action
             android:id="@+id/action_mapFragment_to_insertPinActivity"
             app:destination="@id/insertPinActivity" />
+        <action
+            android:id="@+id/action_mapFragment_to_loginActivity"
+            app:destination="@id/loginActivity" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.blackbox.pinspot.ui.main.ProfileFragment"
         android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_loginActivity"
+            app:destination="@id/loginActivity" />
+    </fragment>
     <fragment
         android:id="@+id/favPlacesFragment"
         android:name="com.blackbox.pinspot.ui.main.FavPlacesFragment"
@@ -39,10 +46,18 @@
         <argument
             android:name="Pin"
             app:argType="com.blackbox.pinspot.model.Pin" />
+        <action
+            android:id="@+id/action_pinInfoFragment_to_loginActivity"
+            app:destination="@id/loginActivity" />
     </fragment>
     <activity
         android:id="@+id/insertPinActivity"
         android:name="com.blackbox.pinspot.ui.main.InsertPinActivity"
         android:label="activity_insert_pin"
         tools:layout="@layout/activity_insert_pin" />
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.blackbox.pinspot.ui.welcome.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
 </navigation>

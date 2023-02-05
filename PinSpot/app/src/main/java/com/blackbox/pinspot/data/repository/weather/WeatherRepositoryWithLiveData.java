@@ -24,7 +24,12 @@ public class WeatherRepositoryWithLiveData implements IWeatherRepositoryWithLive
         this.weatherRemoteDataSource.setWeatherCallback(this);
     }
 
-    public MutableLiveData<Result> retrieveWeather(Double lat, Double lng) {
+    public MutableLiveData<Result> retrieveWeather(Double lat, Double lng, Boolean firstLoading) {
+        /*if (firstLoading) {
+            weatherRemoteDataSource.getWeatherWithLatLng(lat, lng);
+        } else {
+            return pinWeatherMutableLiveData;
+        }*/
         weatherRemoteDataSource.getWeatherWithLatLng(lat, lng);
         return pinWeatherMutableLiveData;
     }
@@ -32,6 +37,22 @@ public class WeatherRepositoryWithLiveData implements IWeatherRepositoryWithLive
     @Override
     public void onSuccessFromRemote(WeatherApiResponse weatherApiResponse) {
         if (pinWeatherMutableLiveData.getValue() != null && pinWeatherMutableLiveData.getValue().isSuccess()) {
+            ((Result.WeatherResponseSuccess)pinWeatherMutableLiveData
+                    .getValue()).getData().setMainWeatherInfo(weatherApiResponse.getMainWeatherInfo());
+
+            ((Result.WeatherResponseSuccess)pinWeatherMutableLiveData
+                    .getValue()).getData().setWeather(weatherApiResponse.getWeather());
+
+            Result.WeatherResponseSuccess result = new Result.WeatherResponseSuccess(weatherApiResponse);
+            pinWeatherMutableLiveData.postValue(result);
+        } else {
+            Result.WeatherResponseSuccess result = new Result.WeatherResponseSuccess(weatherApiResponse);
+            pinWeatherMutableLiveData.postValue(result);
+        }
+
+
+
+        /*if (pinWeatherMutableLiveData.getValue() != null && pinWeatherMutableLiveData.getValue().isSuccess()) {
             WeatherApiResponse.MainWeatherInfo mainWeatherInfo = ((Result.WeatherResponseSuccess)pinWeatherMutableLiveData
                     .getValue()).getData().getMainWeatherInfo();
             weatherApiResponse.setMainWeatherInfo(mainWeatherInfo);
@@ -44,7 +65,8 @@ public class WeatherRepositoryWithLiveData implements IWeatherRepositoryWithLive
         } else {
             Result.WeatherResponseSuccess result = new Result.WeatherResponseSuccess(weatherApiResponse);
             pinWeatherMutableLiveData.postValue(result);
-        }
+        }*/
+
 
             /*WeatherApiResponse.MainWeatherInfo mainWeatherInfo = ((Result.WeatherResponseSuccess)pinWeatherMutableLiveData
                     .getValue()).getData().getMainWeatherInfo();;

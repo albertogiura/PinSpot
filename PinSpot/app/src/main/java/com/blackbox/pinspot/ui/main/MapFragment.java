@@ -9,6 +9,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.ConnectivityManager;
@@ -28,12 +29,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.blackbox.pinspot.R;
+import com.blackbox.pinspot.data.repository.pin.IPinRepository;
 import com.blackbox.pinspot.databinding.FragmentMapBinding;
 import com.blackbox.pinspot.model.Pin;
-import com.blackbox.pinspot.myMarker;
+import com.blackbox.pinspot.util.ServiceLocator;
 import com.firebase.geofire.GeoFireUtils;
 import com.firebase.geofire.GeoQueryBounds;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -42,9 +45,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -56,6 +57,7 @@ import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -70,6 +72,14 @@ import java.util.Map;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+    public class MyGoToLoginAction implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            Navigation.findNavController(v).navigate(R.id.action_mapFragment_to_loginActivity);
+            // Code to undo the user's last action
+        }
+    }
     Double startLat = 0.0;
     Double startLon = 0.0;
     Double currCameraLat = 0.0;
@@ -79,8 +89,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     Double lastSavedLat = 0.0;
     Double lastSavedLon = 0.0;
-
+    private MapViewModel mapViewModel;
     private FragmentMapBinding binding;
+    PinViewModel pinViewModel;
 
     private ActivityResultLauncher<String[]> multiplePermissionLauncher;
     private ActivityResultContracts.RequestMultiplePermissions multiplePermissionsContract;
@@ -105,7 +116,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        mapViewModel = new ViewModelProvider(this).get(MapViewModel.class);
 
+        IPinRepository pinRepository =
+                ServiceLocator.getInstance().getPinRepository(requireActivity().getApplication());
+
+        if (pinRepository != null) {
+            // This is the way to create a ViewModel with custom parameters
+            // (see NewsViewModelFactory class for the implementation details)
+            pinViewModel = new ViewModelProvider(
+                    requireActivity(),
+                    new PinViewModelFactory(pinRepository)).get(PinViewModel.class);
+        } else {
+            Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                    getString(R.string.unexpected_error), Snackbar.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -146,10 +171,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         super.onViewCreated(view, savedInstanceState);
         if(savedInstanceState != null){
 
-            lastSavedLat = savedInstanceState.getDouble(LAST_LAT);
-            lastSavedLon = savedInstanceState.getDouble(LAST_LON);
+            lastSavedLat = mapViewModel.getLastLat();
+            lastSavedLon = mapViewModel.getLastLon();
 
         }
+
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
         multiplePermissionsContract = new ActivityResultContracts.RequestMultiplePermissions();
@@ -180,29 +206,34 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                         //}
                     }
                 });
-        
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Navigation.findNavController(view).navigate(R.id.action_mapFragment_to_insertPinActivity);
-                /*Intent intent = new Intent(requireContext(), InsertPinActivity.class);
-                startActivity(intent);*/
-                //TODO Pass forward current latitude and longitude to the InsertPinActivity
-                getDeviceLocation(googleMap);
-                /*MapFragmentDirections.ActionMapFragmentToInsertPinActivity action =
-                        MapFragmentDirections.
-                                actionMapFragmentToInsertPinActivity(mypos.latitude, mypos.longitude);
-                Navigation.findNavController(requireView()).navigate(action);*/
 
-                Intent intent = new Intent(requireContext(), InsertPinActivity.class);
-                intent.putExtra("latitude", mypos.latitude);
-                intent.putExtra("longitude", mypos.longitude);
-                //startActivity(intent);
-                insertPinActivityResultLauncher.launch(intent);
-                /*Toast.makeText(requireContext(), "Latitudine: "+ mypos.latitude +
-                        " Longitudine: "+mypos.longitude, Toast.LENGTH_SHORT).show();*/
-            }
-        });
+            binding.fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences sharedPref = requireActivity().getSharedPreferences(
+                            "settings", Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
+                    Boolean skipSettings = sharedPref.getBoolean("skip", false);
+                    if (skipSettings == false) {
+
+                        //TODO Pass forward current latitude and longitude to the InsertPinActivity
+                        getDeviceLocation(googleMap);
+
+
+                        Intent intent = new Intent(requireContext(), InsertPinActivity.class);
+                        intent.putExtra("latitude", mypos.latitude);
+                        intent.putExtra("longitude", mypos.longitude);
+                        //startActivity(intent);
+                        insertPinActivityResultLauncher.launch(intent);
+
+                    }else{
+                        Snackbar.make(v,
+                                "Vai al login",
+                                Snackbar.LENGTH_SHORT).setAction("vai", new MyGoToLoginAction())
+                                .show();
+
+                    }
+                }
+            });
 
         ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -392,7 +423,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     Double latitude, longitude;
                     String title, link;
-                    int likes;
                     if (task.isSuccessful()){
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()){
@@ -401,10 +431,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                             latitude = document.getDouble("lat");
                             longitude = document.getDouble("lon");
                             link = document.getString("link");
-                            likes = 10;
 
                             if (latitude != null && longitude != null){
-                                Pin pin = new Pin(latitude, longitude, title, link, likes);
+                                Pin pin = new Pin(latitude, longitude, title, link);
                                 MapFragmentDirections.ActionMapFragmentToPinInfoFragment action =
                                         MapFragmentDirections.
                                                 actionMapFragmentToPinInfoFragment(pin);
@@ -419,8 +448,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                     }
                 }
             });
-
-
         }
 
         return false;
@@ -571,11 +598,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     }
 
     @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        if(outState==null){
-            outState.putDouble(LAST_LAT, googleMap.getCameraPosition().target.latitude);
-            outState.putDouble(LAST_LON, googleMap.getCameraPosition().target.longitude);
-        }
+    public void onPause() {
+        super.onPause();
+        Toast.makeText(requireActivity(),
+                " pausa",
+                Toast.LENGTH_SHORT).show();
+        mapViewModel.setLastLat(googleMap.getCameraPosition().target.latitude);
+        mapViewModel.setLastLon(googleMap.getCameraPosition().target.longitude);
     }
 }

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.content.ContentResolver;
@@ -25,12 +26,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.blackbox.pinspot.R;
+import com.blackbox.pinspot.data.repository.pin.IPinRepository;
 import com.blackbox.pinspot.databinding.ActivityInsertPinBinding;
 import com.blackbox.pinspot.model.Pin;
+import com.blackbox.pinspot.util.ServiceLocator;
 import com.firebase.geofire.GeoFireUtils;
 import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -54,9 +59,12 @@ public class InsertPinActivity extends AppCompatActivity {
     private String currentPhotoPath = "";
     private String randomPhotoFileName = UUID.randomUUID().toString();
 
+    private PinViewModel pinViewModel;
+
     private ActivityResultLauncher<String[]> multiplePermissionLauncher;
     private ActivityResultContracts.RequestMultiplePermissions multiplePermissionsContract;
     private ActivityResultLauncher<Intent> activityResultLauncher;
+    private int opCode = 0;
 
     private ActivityResultLauncher<Uri> mTakePicture;
     Uri tempImageUri;
@@ -70,8 +78,13 @@ public class InsertPinActivity extends AppCompatActivity {
     // Image picker
     private ActivityResultLauncher<String> openLocalPhoto;
 
-    private final String[] PERMISSIONS = {
+    private final String[] CAMERA_PERMISSIONS = {
             Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+    };
+
+    private final String[] GALLERY_PERMISSIONS = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
 
@@ -83,6 +96,20 @@ public class InsertPinActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
+        IPinRepository pinRepository =
+                ServiceLocator.getInstance().getPinRepository(this.getApplication());
+
+        if (pinRepository != null) {
+            // This is the way to create a ViewModel with custom parameters
+            // (see NewsViewModelFactory class for the implementation details)
+            pinViewModel = new ViewModelProvider(
+                    this,
+                    new PinViewModelFactory(pinRepository)).get(PinViewModel.class);
+        } else {
+            Snackbar.make(this.findViewById(android.R.id.content),
+                    getString(R.string.unexpected_error), Snackbar.LENGTH_SHORT).show();
+        }
+
         multiplePermissionsContract = new ActivityResultContracts.RequestMultiplePermissions();
 
         multiplePermissionLauncher = registerForActivityResult(multiplePermissionsContract, isGranted -> {
@@ -91,10 +118,16 @@ public class InsertPinActivity extends AppCompatActivity {
             }
             if (!isGranted.containsValue(false)) {
                 Log.d(TAG, "All permission have been granted");
-                takePicture();
+
+                if (opCode == 1) {
+                    takePicture();
+                } else if (opCode == 0){
+                    openLocalPhoto.launch("image/*");
+                }
+
             } else {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(PERMISSIONS, CAMERA_REQUEST_CODE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && opCode == 1) {
+                    requestPermissions(CAMERA_PERMISSIONS, CAMERA_REQUEST_CODE);
                 }
             }
 
@@ -184,6 +217,29 @@ public class InsertPinActivity extends AppCompatActivity {
         binding.choosePicFromLocalButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                boolean multiplePermissionsStatus =
+                        ActivityCompat.checkSelfPermission(InsertPinActivity.this,
+                                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED &&
+                                ActivityCompat.checkSelfPermission(InsertPinActivity.this,
+                                        Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+
+                if (multiplePermissionsStatus) {
+                    Log.d(TAG, "All permissions needed to take a picture have been granted");
+                    // If all permissions have been granted, execute the following logic
+
+                    openLocalPhoto.launch("image/*");
+
+
+                } else {
+                    Log.d(TAG, "One or more permissions have not been granted");
+                    // Notify the user with a new permission request
+                    opCode = 0;
+                    multiplePermissionLauncher.launch(GALLERY_PERMISSIONS);
+
+                }
+
+
                 // TODO Determine if read permission need to be asked explicitly in order to support older Android builds
                 if(ContextCompat.checkSelfPermission(InsertPinActivity.this,
                         Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
@@ -206,27 +262,13 @@ public class InsertPinActivity extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
-        //takenPhotoRef = storageRef.child(pin.getLink()+".jpeg"); TODO
-
-        //StorageReference takenPhotoRef = storageRef.child("caricata.jpeg");
-        StorageReference takenPhotoRef = storageRef.child("pinPhotos/"+randomPhotoFileName+".jpeg");
-        UploadTask uploadTask = takenPhotoRef.putBytes(data); // uploading here
-        uploadTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle unsuccessful uploads
-                binding.uploadProgressBar.setVisibility(View.GONE);
-                Toast.makeText(InsertPinActivity.this, "Photo upload failed", Toast.LENGTH_SHORT).show();
-
-            }
-        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
-                // binding.uploadProgressBar.setVisibility(View.GONE);
+        pinViewModel.uploadImagePin(data, randomPhotoFileName).observe(this, result -> {
+            if (result.isSuccess()){
                 uploadPin();
                 Toast.makeText(InsertPinActivity.this,"Upload completed", Toast.LENGTH_SHORT).show();
+            } else {
+                binding.uploadProgressBar.setVisibility(View.GONE);
+                Toast.makeText(InsertPinActivity.this, "Photo upload failed", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -235,43 +277,22 @@ public class InsertPinActivity extends AppCompatActivity {
     private void uploadPin() {
         Bundle mypos = getIntent().getExtras();
 
-        /*Double lat = mypos.getDouble("latitude");
-        Double lng = mypos.getDouble("longitude");
-        Toast.makeText(InsertPinActivity.this, "Latitudine: "+ lat +
-                " Longitudine: "+lng, Toast.LENGTH_SHORT).show();*/
-
-        /*Toast.makeText(InsertPinActivity.this, "Latitudine: "+ mypos.getDouble("latitude") +
-                " Longitudine: "+mypos.getDouble("longitude"), Toast.LENGTH_SHORT).show();*/
-
         if (mypos != null) {
             Double lat = mypos.getDouble("latitude");
             Double lng = mypos.getDouble("longitude");
 
-            Pin pin = new Pin(lat, lng, binding.newPinTitleEdt.getText().toString(), randomPhotoFileName,10);
+            Pin pin = new Pin(lat, lng, binding.newPinTitleEdt.getText().toString(), randomPhotoFileName);
 
-            /*String hash = GeoFireUtils.getGeoHashForLocation(new GeoLocation(lat, lng));
-            Pin pin = new Pin(lat, lng, hash, binding.newPinTitleEdt.getText().toString(), randomPhotoFileName,10);*/
-
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("pins4")
-                    .add(pin)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                            binding.uploadProgressBar.setVisibility(View.GONE);
-                            Toast.makeText(InsertPinActivity.this, "Pin uploaded", Toast.LENGTH_SHORT).show();
-                            InsertPinActivity.this.finish();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.w(TAG, "Error adding document", e);
-                            binding.uploadProgressBar.setVisibility(View.GONE);
-                            Toast.makeText(InsertPinActivity.this, "Upload failed", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+            pinViewModel.uploadPin(pin).observe(this, result -> {
+                if (result.isSuccess()){
+                    binding.uploadProgressBar.setVisibility(View.GONE);
+                    Toast.makeText(InsertPinActivity.this,"Upload completed", Toast.LENGTH_SHORT).show();
+                    InsertPinActivity.this.finish();
+                } else {
+                    binding.uploadProgressBar.setVisibility(View.GONE);
+                    Toast.makeText(InsertPinActivity.this, "Pin upload failed", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
     }
@@ -320,7 +341,8 @@ public class InsertPinActivity extends AppCompatActivity {
         } else {
             Log.d(TAG, "One or more permissions have not been granted");
             // Notify the user with a new permission request
-            multiplePermissionLauncher.launch(PERMISSIONS);
+            opCode = 1;
+            multiplePermissionLauncher.launch(CAMERA_PERMISSIONS);
 
         }
     }

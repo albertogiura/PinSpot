@@ -3,7 +3,6 @@ package com.blackbox.pinspot.data.repository.user;
 import androidx.lifecycle.MutableLiveData;
 
 import com.blackbox.pinspot.data.source.user.BaseUserAuthRemoteDataSource;
-import com.blackbox.pinspot.data.source.user.BaseUserDataRemoteDataSource;
 import com.blackbox.pinspot.model.Result;
 import com.blackbox.pinspot.model.User;
 
@@ -13,17 +12,15 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
     private static final String TAG = UserRepository.class.getSimpleName();
 
     private final BaseUserAuthRemoteDataSource userRemoteDataSource;
-    private final BaseUserDataRemoteDataSource userDataRemoteDataSource;
     private final MutableLiveData<Result> userMutableLiveData;
-    // private final MutableLiveData<Result> userPreferencesMutableLiveData;
+    private final MutableLiveData<Result> forgotPasswordMutableLiveData;
 
 
-    public UserRepository(BaseUserAuthRemoteDataSource userRemoteDataSource, BaseUserDataRemoteDataSource userDataRemoteDataSource) {
+    public UserRepository(BaseUserAuthRemoteDataSource userRemoteDataSource) {
         this.userRemoteDataSource = userRemoteDataSource;
-        this.userDataRemoteDataSource = userDataRemoteDataSource;
         this.userMutableLiveData = new MutableLiveData<>();
+        this.forgotPasswordMutableLiveData = new MutableLiveData<>();
         this.userRemoteDataSource.setUserResponseCallback(this);
-        this.userDataRemoteDataSource.setUserResponseCallback(this);
     }
 
 
@@ -50,6 +47,12 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
     }
 
     @Override
+    public MutableLiveData<Result> forgotPwd(String email) {
+        userRemoteDataSource.forgotPassword(email);
+        return forgotPasswordMutableLiveData;
+    }
+
+    @Override
     public User getLoggedUser() {
         return userRemoteDataSource.getLoggedUser();
     }
@@ -69,15 +72,12 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
         userRemoteDataSource.signInWithGoogle(token);
     }
 
-    /*@Override
-    public void saveUserPreferences(String favoriteCountry, Set<String> favoriteTopics, String idToken) {
-
-    }*/
 
     @Override
     public void onSuccessFromAuthentication(User user) {
         if (user != null) {
-            userDataRemoteDataSource.saveUserData(user);
+            Result.UserResponseSuccess result = new Result.UserResponseSuccess(user);
+            userMutableLiveData.postValue(result);
         }
     }
 
@@ -96,31 +96,10 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
     }
 
     @Override
-    public void onSuccessFromRemoteDatabase(User user) {
-        Result.UserResponseSuccess result = new Result.UserResponseSuccess(user);
-        userMutableLiveData.postValue(result);
+    public void onSuccessForgotPassword() {
+        Result.UserResponseSuccess result = new Result.UserResponseSuccess(null);
+        forgotPasswordMutableLiveData.postValue(result);
     }
-
-    /*@Override
-    public void onSuccessFromRemoteDatabase(List<News> newsList) {
-        newsLocalDataSource.insertNews(newsList);
-    }
-
-    @Override
-    public void onSuccessFromGettingUserPreferences() {
-        userPreferencesMutableLiveData.postValue(new Result.UserResponseSuccess(null));
-    }*/
-
-    @Override
-    public void onFailureFromRemoteDatabase(String message) {
-        Result.Error result = new Result.Error(message);
-        userMutableLiveData.postValue(result);
-    }
-
-    /*@Override
-    public void onSuccessFromGettingUserPreferences() {
-        userPreferencesMutableLiveData.postValue(new Result.UserResponseSuccess(null));
-    }*/
 
     public void onSuccessCleaning() {
         Result.UserResponseSuccess result = new Result.UserResponseSuccess(null);

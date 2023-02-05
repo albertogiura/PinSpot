@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -48,10 +50,22 @@ import com.google.firebase.storage.StorageReference;
  * create an instance of this fragment.
  */
 public class PinInfoFragment extends Fragment {
+    public class MyGoToLoginAction implements View.OnClickListener {
 
+        @Override
+        public void onClick(View v) {
+            Navigation.findNavController(v).navigate(R.id.action_pinInfoFragment_to_loginActivity);
+            // Code to undo the user's last action
+        }
+    }
     //private Pin pin;
     private WeatherViewModel weatherViewModel;
     private PinViewModel pinViewModel;
+    private boolean isFirstLoading = true;
+    /*Observer<Result> observerOfLiveQuery;
+    MutableLiveData<Result> firstLiveQuery;
+    MutableLiveData<Result> secondLiveQuery;*/
+
 
     //TODO Move constant
     private static final String DBIMAGES = "gs://pinspot-demo.appspot.com/";
@@ -74,7 +88,7 @@ public class PinInfoFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         IWeatherRepositoryWithLiveData weatherRepositoryWithLiveData =
-                ServiceLocator.getInstance().getWeatherRepository(requireActivity().getApplication());
+                ServiceLocator.getInstance().getWeatherRepository();
 
         if (weatherRepositoryWithLiveData != null) {
             // This is the way to create a ViewModel with custom parameters
@@ -140,13 +154,23 @@ public class PinInfoFragment extends Fragment {
         binding.addPinToFavFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sharedPref = requireActivity().getSharedPreferences(
+                        "settings", Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
+                Boolean skipSettings = sharedPref.getBoolean("skip", false);
+                if (skipSettings == false) {
                 if (pin != null){
                     pinViewModel.insert(pin);
                     Toast.makeText(requireContext(), "Pin added to favorite list", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(requireContext(), "Error in adding pin to favorite list", Toast.LENGTH_SHORT).show();
                 }
-                ;
+
+                }else{
+                    Snackbar.make(v,
+                                    "Vai al login",
+                                    Snackbar.LENGTH_SHORT).setAction("vai", new PinInfoFragment.MyGoToLoginAction())
+                            .show();
+                }
             }
         });
 
@@ -165,9 +189,49 @@ public class PinInfoFragment extends Fragment {
             Double latitude = pin.getLat();
             Double longitude = pin.getLon();
 
-            weatherViewModel.getPinWeather(latitude, longitude).observe(getViewLifecycleOwner(),
+
+            /*observerOfLiveQuery = new Observer<Result>() {
+                @Override
+                public void onChanged(Result result) {
+                    if (result.isSuccess()){
+                        //isFirstLoading = false;
+                        WeatherApiResponse weatherApiResponse = ((Result.WeatherResponseSuccess) result).getData();
+                        Double temp = weatherApiResponse.getMainWeatherInfo().getTemp();
+                        String description = weatherApiResponse.getWeather()[0].getDescription();
+
+                        //TODO solo a scopo di test, ma vanno aggiunte altre textview
+                        //binding.PinLatTextView.setText(String.valueOf(temp));
+                        //binding.pinLongTextView.setText(description);
+                        Integer temperature = (int) (temp - 273.15);
+                        SharedPreferences sharedPref = requireContext().getSharedPreferences(
+                                "settings", Context.MODE_PRIVATE); //DAMETTEREINUNACOSTANTE
+                        Boolean celsiusSettings = sharedPref.getBoolean("celsius", true);
+                        if(celsiusSettings == true){
+                            binding.textViewTemperature.setText(String.valueOf(temperature) + " °C");
+                        }else{
+                            binding.textViewTemperature.setText(String.valueOf(celsToFar(temperature)) + " °F");
+                        }
+                        //binding.textViewTemperature.setText(String.valueOf(temp));
+                        binding.textViewWeatherDescription.setText(description);
+
+                    } else {
+                        Toast.makeText(requireContext(), "Errore imprevisto", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            };
+
+            firstLiveQuery = weatherViewModel.getPinWeather(latitude, longitude, isFirstLoading);
+            firstLiveQuery.observe(getViewLifecycleOwner(), observerOfLiveQuery);
+
+            secondLiveQuery = weatherViewModel.getPinWeather(latitude, longitude, isFirstLoading);
+            //firstLiveQuery.removeObserver(observerOfLiveQuery);
+            secondLiveQuery.observe(getViewLifecycleOwner(), observerOfLiveQuery);*/
+
+
+            weatherViewModel.getPinWeather(latitude, longitude, isFirstLoading).observe(getViewLifecycleOwner(),
                     result -> {
                         if (result.isSuccess()){
+                            //isFirstLoading = false;
                             WeatherApiResponse weatherApiResponse = ((Result.WeatherResponseSuccess) result).getData();
                             Double temp = weatherApiResponse.getMainWeatherInfo().getTemp();
                             String description = weatherApiResponse.getWeather()[0].getDescription();
@@ -191,6 +255,35 @@ public class PinInfoFragment extends Fragment {
                             Toast.makeText(requireContext(), "Errore imprevisto", Toast.LENGTH_SHORT).show();
                         }
                     });
+
+            /*
+            weatherViewModel.getPinWeather(latitude, longitude, isFirstLoading).observe(getViewLifecycleOwner(),
+                    result -> {
+                        if (result.isSuccess()){
+                            //isFirstLoading = false;
+                            WeatherApiResponse weatherApiResponse = ((Result.WeatherResponseSuccess) result).getData();
+                            Double temp = weatherApiResponse.getMainWeatherInfo().getTemp();
+                            String description = weatherApiResponse.getWeather()[0].getDescription();
+
+                            //TODO solo a scopo di test, ma vanno aggiunte altre textview
+                            //binding.PinLatTextView.setText(String.valueOf(temp));
+                            //binding.pinLongTextView.setText(description);
+                            Integer temperature = (int) (temp - 273.15);
+                            SharedPreferences sharedPref = requireContext().getSharedPreferences(
+                                    "settings", Context.MODE_PRIVATE); //DAMETTEREINUNACOSTANTE
+                            Boolean celsiusSettings = sharedPref.getBoolean("celsius", true);
+                            if(celsiusSettings == true){
+                                binding.textViewTemperature.setText(String.valueOf(temperature) + " °C");
+                            }else{
+                                binding.textViewTemperature.setText(String.valueOf(celsToFar(temperature)) + " °F");
+                            }
+                            //binding.textViewTemperature.setText(String.valueOf(temp));
+                            binding.textViewWeatherDescription.setText(description);
+
+                        } else {
+                            Toast.makeText(requireContext(), "Errore imprevisto", Toast.LENGTH_SHORT).show();
+                        }
+                    });*/
 
 
 
@@ -248,5 +341,15 @@ public class PinInfoFragment extends Fragment {
 
     private int celsToFar(int c){
         return (int) ((c * 1.8) + 32);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        /*if (secondLiveQuery.hasActiveObservers()){
+            secondLiveQuery.removeObserver(observerOfLiveQuery);
+        }*/
+        binding = null;
+        //firstLiveQuery.removeObserver(observerOfLiveQuery);
     }
 }
