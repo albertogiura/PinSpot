@@ -44,19 +44,8 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/edtFullNameSignup"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/edit_text_bg"
-                android:drawableLeft="@drawable/ic_baseline_person_outline_24"
-                android:drawablePadding="8dp"
-                android:hint="Full Name"
-                android:padding="8dp"
-                android:textColor="@color/white" />
-
-            <EditText
                 android:id="@+id/edtEmailSignup"
+                style="@style/Button"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
@@ -65,10 +54,12 @@
                 android:drawablePadding="8dp"
                 android:hint="Email"
                 android:padding="8dp"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
 
             <EditText
                 android:id="@+id/edtPasswordSignup"
+                style="@style/Button"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
@@ -78,14 +69,16 @@
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:padding="8dp"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
+
             <Button
                 android:id="@+id/button_signup"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/primaryDarkColor"
-                android:text="REGISTER NOW"
+                android:text="Register now"
                 android:textSize="18sp"
                 app:cornerRadius="20dp" />
             <Button

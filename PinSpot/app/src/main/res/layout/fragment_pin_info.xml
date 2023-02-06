@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryColor"
+    android:background="@color/primaryLightColor"
     tools:context=".ui.main.PinInfoFragment">
 
     <View
@@ -38,7 +38,8 @@
         app:layout_constraintBottom_toTopOf="@id/rounded_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/placeholder_pin_photo" />
 
     <TextView
         android:id="@+id/PinTitle_textView"
@@ -80,13 +81,14 @@
         app:layout_constraintTop_toBottomOf="@id/pinPhotoImageView" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        style="@style/Button"
         android:id="@+id/addPinToFav_fab"
         android:layout_width="wrap_content"
         android:layout_height="66dp"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         android:layout_marginStart="20dp"
-        android:backgroundTint="@color/white"
+
         android:contentDescription="Spot a new place"
 
         android:src="@drawable/star_foreground"
@@ -100,13 +102,16 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/closePinInfo_button"
+        style="@style/Button"
         android:layout_width="wrap_content"
         android:layout_height="112dp"
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
-        android:backgroundTint="@color/white"
+
         android:contentDescription="Spot a new place"
+        android:foregroundTint="@color/white"
         android:src="@drawable/ic_baseline_arrow_back_24"
+        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -114,7 +119,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
         app:maxImageSize="48dp" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
