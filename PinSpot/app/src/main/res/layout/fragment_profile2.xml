@@ -42,18 +42,17 @@
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:id="@+id/textViewUserEmail"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="mail@gmail.com"
-                    android:textSize="20dp"
+                    android:textSize="25dp"
                     android:textStyle="bold" />
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp"
-                    android:background="@color/primaryColor" />
+                    android:background="@color/white" />
 
             </LinearLayout>
 
@@ -68,9 +67,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="100dp"
-                    android:text="Temperatura in gradi celsius:"
+                    android:text="Celsius?"
 
-                    android:textSize="20dp"
+                    android:textSize="30dp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.513"
@@ -109,7 +108,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp"
-                    android:background="@color/primaryColor" />
+                    android:background="@color/white" />
 
             </LinearLayout>
 
