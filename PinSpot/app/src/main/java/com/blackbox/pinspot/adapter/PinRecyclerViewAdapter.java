@@ -64,8 +64,8 @@ public class PinRecyclerViewAdapter extends RecyclerView.Adapter<PinRecyclerView
 
         private final PinRecyclerViewAdapter mAdapter;
         private final TextView textview_fav_pin_title;
-        private final TextView textview_fav_pin_lat;
-        private final TextView textview_fav_pin_lng;
+        /*private final TextView textview_fav_pin_lat;
+        private final TextView textview_fav_pin_lng;*/
         private final ImageView imageView_PinPreviewImage;
         private final ImageView imageview_favorite_pin;
 
@@ -73,8 +73,8 @@ public class PinRecyclerViewAdapter extends RecyclerView.Adapter<PinRecyclerView
             super(itemView);
             this.mAdapter = mAdapter;
             textview_fav_pin_title = itemView.findViewById(R.id.textview_fav_pin_title);
-            textview_fav_pin_lat = itemView.findViewById(R.id.textview_fav_pin_lat);
-            textview_fav_pin_lng = itemView.findViewById(R.id.textview_fav_pin_lng);
+            /*textview_fav_pin_lat = itemView.findViewById(R.id.textview_fav_pin_lat);
+            textview_fav_pin_lng = itemView.findViewById(R.id.textview_fav_pin_lng);*/
             imageview_favorite_pin = itemView.findViewById(R.id.imageview_favorite_pin);
             imageView_PinPreviewImage = itemView.findViewById(R.id.imageView_PinPreviewImage);
             /*textViewTitle = itemView.findViewById(R.id.textview_title);
@@ -87,8 +87,8 @@ public class PinRecyclerViewAdapter extends RecyclerView.Adapter<PinRecyclerView
 
         public void bind(Pin pin) {
             textview_fav_pin_title.setText(pin.getTitle());
-            textview_fav_pin_lat.setText(String.valueOf(pin.getLat()));
-            textview_fav_pin_lng.setText(String.valueOf(pin.getLon()));
+            /*textview_fav_pin_lat.setText(String.valueOf(pin.getLat()));
+            textview_fav_pin_lng.setText(String.valueOf(pin.getLon()));*/
 
             //textViewDate.setText(DateTimeUtil.getDate(news.getDate()));
             //setImageViewFavoriteNews(newsList.get(getAdapterPosition()).isFavorite());
@@ -98,10 +98,6 @@ public class PinRecyclerViewAdapter extends RecyclerView.Adapter<PinRecyclerView
                     .load(storageReference)
                     .into(imageView_PinPreviewImage);
 
-            /*Glide.with(application)
-                    .load(news.getUrlToImage())
-                    .placeholder(R.drawable.ic_baseline_cloud_download_24)
-                    .into(imageViewNewsCoverImage);*/
         }
 
         @Override
