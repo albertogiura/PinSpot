@@ -21,9 +21,9 @@
         android:id="@+id/titleAddNewPin_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Insert New Pin"
-        android:textColor="@color/white"
+        android:text="Spot a new place"
         android:textAlignment="center"
+        android:textColor="@color/white"
         android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -31,7 +31,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.096" />
+        app:layout_constraintVertical_bias="0.084" />
 
     <ImageView
         android:id="@+id/rounded_bg"
@@ -77,18 +77,17 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="255dp"
-        android:layout_height="255dp"
+        android:layout_width="310dp"
+        android:layout_height="317dp"
         android:layout_marginLeft="85dp"
         android:layout_marginRight="85dp"
+        android:src="@drawable/placeholder_pin_photo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.273"
-        android:src="@drawable/roma"
-         />
+        app:layout_constraintVertical_bias="0.273" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -100,15 +99,15 @@
         android:layout_marginStart="20dp"
         android:backgroundTint="@color/secondaryDarkColor"
         android:contentDescription="Spot a new place"
-        app:tint="@color/white"
         android:src="@drawable/library_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/takePic_button"
-        app:layout_constraintHorizontal_bias="0.700"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.635"
-        app:maxImageSize="48dp" />
+        app:layout_constraintVertical_bias="0.659"
+        app:maxImageSize="48dp"
+        app:tint="@color/white" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/takePic_button"
@@ -119,14 +118,14 @@
         android:backgroundTint="@color/secondaryDarkColor"
         android:contentDescription="Spot a new place"
         android:src="@drawable/takephoto_foreground"
-        app:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.69"
+        app:layout_constraintHorizontal_bias="0.695"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.64"
-        app:maxImageSize="48dp" />
+        app:layout_constraintVertical_bias="0.663"
+        app:maxImageSize="48dp"
+        app:tint="@color/white" />
 
     <EditText
         android:id="@+id/newPinTitle_edt"
@@ -152,7 +151,7 @@
         android:id="@+id/uploadPin_button"
         android:layout_width="128dp"
         android:layout_height="74dp"
-        android:layout_marginBottom="72dp"
+        android:layout_marginBottom="56dp"
         android:backgroundTint="@color/secondaryDarkColor"
         android:text="Insert"
         android:textSize="18sp"

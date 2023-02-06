@@ -7,16 +7,26 @@
     android:background="@color/primaryColor"
     tools:context=".ui.main.PinInfoFragment">
 
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/rounded_bg"
-        android:layout_width="413dp"
-        android:layout_height="353dp"
+        android:layout_width="416dp"
+        android:layout_height="355dp"
         android:src="@drawable/rounded_corner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/divider"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/pinPhotoImageView"
