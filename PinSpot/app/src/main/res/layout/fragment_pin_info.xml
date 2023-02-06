@@ -12,31 +12,32 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/rounded_bg"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="416dp"
+        android:layout_height="355dp"
         android:src="@drawable/rounded_corner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/divider"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/pinPhotoImageView"
-        android:layout_width="256dp"
-        android:layout_height="303dp"
+        android:layout_width="328dp"
+        android:layout_height="368dp"
         android:layout_marginBottom="-80dp"
         android:scaleType="fitXY"
         android:src="@drawable/roma"
         app:layout_constraintBottom_toTopOf="@id/rounded_bg"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -88,7 +89,7 @@
         android:backgroundTint="@color/white"
         android:contentDescription="Spot a new place"
 
-        android:src="@drawable/favourite_foreground"
+        android:src="@drawable/star_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.937"
