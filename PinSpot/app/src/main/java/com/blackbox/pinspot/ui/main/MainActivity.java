@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.mapFragment, R.id.favPlacesFragment,
+                R.id.favPlacesFragment, R.id.mapFragment,
                 R.id.profileFragment).build();
 
         // For the BottomNavigationView

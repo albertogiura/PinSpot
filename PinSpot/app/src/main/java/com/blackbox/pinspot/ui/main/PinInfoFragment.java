@@ -182,6 +182,7 @@ public class PinInfoFragment extends Fragment {
             StorageReference storageReference = storage.getReference().child("pinPhotos/"+pin.getLink()+".jpeg");
             GlideApp.with(binding.pinPhotoImageView.getContext())
                     .load(storageReference)
+                    .placeholder(R.drawable.placeholder_pin_photo)
                     .into(binding.pinPhotoImageView);
 
             Double latitude = pin.getLat();

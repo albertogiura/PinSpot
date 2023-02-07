@@ -39,18 +39,21 @@
 
             <EditText
                 android:id="@+id/edtEmail"
+                style="@style/Button"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="40dp"
                 android:background="@drawable/edit_text_bg"
                 android:drawableLeft="@drawable/ic_baseline_person_outline_24"
                 android:drawablePadding="8dp"
-                android:hint="Username"
+                android:hint="E-Mail address"
                 android:padding="8dp"
-                />
+                android:textColor="@color/white"
+                android:textColorHint="@color/white" />
 
             <EditText
                 android:id="@+id/edtPassword"
+                style="@style/Button"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
@@ -60,8 +63,9 @@
                 android:hint="Password"
                 android:inputType="textPassword"
                 android:padding="8dp"
+                android:textColor="@color/white"
                 android:textColorHighlight="@color/cardview_dark_background"
-                />
+                android:textColorHint="@color/white" />
 
             <Button
                 android:id="@+id/button_login"
