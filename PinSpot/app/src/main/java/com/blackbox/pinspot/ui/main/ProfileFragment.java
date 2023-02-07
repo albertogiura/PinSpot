@@ -63,7 +63,7 @@ public class ProfileFragment extends Fragment {
                 Toast.LENGTH_SHORT).show();
         if(skipSettings==false) {
             binding.textViewUserEmail.setText(userViewModel.getLoggedUser().getEmail());
-            binding.textViewUserId.setText(userViewModel.getLoggedUser().getIdToken());
+            //binding.textViewUserId.setText(userViewModel.getLoggedUser().getIdToken());
 
             binding.buttonUserLogout.setOnClickListener(v -> {
                 userViewModel.logout().observe(getViewLifecycleOwner(), result -> {
