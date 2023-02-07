@@ -1,6 +1,5 @@
-# PinSpot
+# PinSpot - Gruppo BlackBox
 
-Gruppo BlackBox
 
 Membri:
 
@@ -11,6 +10,7 @@ Membri:
 866144 Giura Alberto
 
 869564 Tombolini Simone
+
 
 
 Referente: 
