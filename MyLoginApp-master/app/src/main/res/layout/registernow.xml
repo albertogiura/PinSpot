@@ -31,10 +31,10 @@
                 android:id="@+id/loginText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Register Now"
+                android:text="Password Recovery"
                 android:textAlignment="center"
                 android:textColor="@color/primaryDarkColor"
-                android:textSize="36sp"
+                android:textSize="33sp"
                 android:textStyle="bold" />
 
             <EditText
@@ -45,48 +45,9 @@
                 android:background="@drawable/edit_text_bg"
                 android:drawableLeft="@drawable/ic_baseline_person_outline_24"
                 android:drawablePadding="8dp"
-                android:hint="Username"
+                android:hint="E-mail for recovery"
                 android:padding="8dp"
                 android:textColor="@color/white" />
-
-            <EditText
-                android:id="@+id/mail"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/edit_text_bg"
-                android:drawableLeft="@drawable/ic_baseline_person_outline_24"
-                android:drawablePadding="8dp"
-                android:hint="Email"
-                android:padding="8dp"
-                android:textColor="@color/white" />
-
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/edit_text_bg"
-                android:drawableLeft="@drawable/ic_baseline_info_24"
-                android:drawablePadding="8dp"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:padding="8dp"
-                android:textColor="@color/white" />
-
-            <EditText
-                android:id="@+id/repeatpassword"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/edit_text_bg"
-                android:drawableLeft="@drawable/ic_baseline_info_24"
-                android:drawablePadding="8dp"
-                android:hint="Repeat Password"
-                android:inputType="textPassword"
-                android:padding="8dp"
-                android:textColor="@color/black"
-                android:textColorHighlight="@color/cardview_dark_background" />
 
             <Button
                 android:id="@+id/loginButton"
@@ -94,7 +55,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/primaryDarkColor"
-                android:text="REGISTER NOW"
+                android:text="Recover"
                 android:textSize="18sp"
                 app:cornerRadius="20dp" />
 
