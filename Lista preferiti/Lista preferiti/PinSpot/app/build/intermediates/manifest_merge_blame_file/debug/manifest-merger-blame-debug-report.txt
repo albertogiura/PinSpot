@@ -1,0 +1,331 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.blackbox.pinspot"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+8-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="33" />
+9-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+11-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:5:5-79
+11-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:5:22-76
+12    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+12-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:6:5-81
+12-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:6:22-78
+13    <uses-permission android:name="android.permission.INTERNET" />
+13-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:7:5-67
+13-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:7:22-64
+14    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+14-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:8:5-79
+14-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:8:22-76
+15    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+15-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:9:5-80
+15-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:9:22-77
+16    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+16-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:10:5-81
+16-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:10:22-78
+17
+18    <uses-feature
+18-->[com.google.android.gms:play-services-maps:18.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\64d0523e47a7efd6f53cae2124e54ec1\transformed\play-services-maps-18.1.0\AndroidManifest.xml:26:5-28:35
+19        android:glEsVersion="0x00020000"
+19-->[com.google.android.gms:play-services-maps:18.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\64d0523e47a7efd6f53cae2124e54ec1\transformed\play-services-maps-18.1.0\AndroidManifest.xml:27:9-41
+20        android:required="true" />
+20-->[com.google.android.gms:play-services-maps:18.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\64d0523e47a7efd6f53cae2124e54ec1\transformed\play-services-maps-18.1.0\AndroidManifest.xml:28:9-32
+21
+22    <queries>
+22-->[com.google.android.gms:play-services-maps:18.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\64d0523e47a7efd6f53cae2124e54ec1\transformed\play-services-maps-18.1.0\AndroidManifest.xml:30:5-34:15
+23
+24        <!-- Needs to be explicitly declared on Android R+ -->
+25        <package android:name="com.google.android.apps.maps" />
+25-->[com.google.android.gms:play-services-maps:18.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\64d0523e47a7efd6f53cae2124e54ec1\transformed\play-services-maps-18.1.0\AndroidManifest.xml:33:9-64
+25-->[com.google.android.gms:play-services-maps:18.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\64d0523e47a7efd6f53cae2124e54ec1\transformed\play-services-maps-18.1.0\AndroidManifest.xml:33:18-61
+26    </queries>
+27
+28    <application
+28-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:12:5-51:19
+29        android:allowBackup="true"
+29-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:13:9-35
+30        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+30-->[androidx.core:core:1.8.0] C:\Users\Matteo\.gradle\caches\transforms-3\7d0deac13fa095fc9d9e74da8f410a6b\transformed\core-1.8.0\AndroidManifest.xml:24:18-86
+31        android:dataExtractionRules="@xml/data_extraction_rules"
+31-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:14:9-65
+32        android:debuggable="true"
+33        android:fullBackupContent="@xml/backup_rules"
+33-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:15:9-54
+34        android:icon="@mipmap/ic_launcher"
+34-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:16:9-43
+35        android:label="@string/app_name"
+35-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:17:9-41
+36        android:requestLegacyExternalStorage="true"
+36-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:18:9-52
+37        android:roundIcon="@mipmap/ic_launcher_round"
+37-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:19:9-54
+38        android:supportsRtl="true"
+38-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:20:9-35
+39        android:theme="@style/Theme.PinSpot" >
+39-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:21:9-45
+40        <meta-data
+40-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:23:9-25:71
+41            android:name="com.google.android.geo.API_KEY"
+41-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:24:13-58
+42            android:value="AIzaSyC0ID1-UstsT3NO6WE7pmUlrN0_LQ9HlPY" />
+42-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:25:13-68
+43
+44        <activity
+44-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:26:9-32:20
+45            android:name="com.blackbox.pinspot.SignupActivity"
+45-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:27:13-43
+46            android:exported="false" >
+46-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:28:13-37
+47            <meta-data
+47-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:29:13-31:36
+48                android:name="android.app.lib_name"
+48-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:30:17-52
+49                android:value="" />
+49-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:31:17-33
+50        </activity>
+51        <activity
+51-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:33:9-43:20
+52            android:name="com.blackbox.pinspot.ui.welcome.LoginActivity"
+52-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:34:13-53
+53            android:exported="true" >
+53-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:35:13-36
+54            <intent-filter>
+54-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:36:13-39:29
+55                <action android:name="android.intent.action.MAIN" />
+55-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:37:17-69
+55-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:37:25-66
+56
+57                <category android:name="android.intent.category.LAUNCHER" />
+57-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:38:17-77
+57-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:38:27-74
+58            </intent-filter>
+59
+60            <meta-data
+60-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:29:13-31:36
+61                android:name="android.app.lib_name"
+61-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:30:17-52
+62                android:value="" />
+62-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:31:17-33
+63        </activity>
+64        <activity
+64-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:44:9-50:20
+65            android:name="com.blackbox.pinspot.ui.main.MainActivity"
+65-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:45:13-49
+66            android:exported="true" >
+66-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:46:13-36
+67            <meta-data
+67-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:29:13-31:36
+68                android:name="android.app.lib_name"
+68-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:30:17-52
+69                android:value="" />
+69-->C:\Users\Matteo\Desktop\Lista preferiti\PinSpot\app\src\main\AndroidManifest.xml:31:17-33
+70        </activity>
+71
+72        <service
+72-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Matteo\.gradle\caches\transforms-3\8824f02aa0028c104bfc1156e1fb0977\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:16:9-22:19
+73            android:name="com.google.firebase.components.ComponentDiscoveryService"
+73-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Matteo\.gradle\caches\transforms-3\8824f02aa0028c104bfc1156e1fb0977\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:17:13-84
+74            android:directBootAware="true"
+74-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Matteo\.gradle\caches\transforms-3\2c188f093b6757aaccb3d7dae6872145\transformed\firebase-common-20.3.0\AndroidManifest.xml:34:13-43
+75            android:exported="false" >
+75-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Matteo\.gradle\caches\transforms-3\8824f02aa0028c104bfc1156e1fb0977\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:18:13-37
+76            <meta-data
+76-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Matteo\.gradle\caches\transforms-3\8824f02aa0028c104bfc1156e1fb0977\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:19:13-21:85
+77                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+77-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Matteo\.gradle\caches\transforms-3\8824f02aa0028c104bfc1156e1fb0977\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:20:17-111
+78                android:value="com.google.firebase.components.ComponentRegistrar" />
+78-->[com.google.firebase:firebase-firestore:24.4.2] C:\Users\Matteo\.gradle\caches\transforms-3\8824f02aa0028c104bfc1156e1fb0977\transformed\firebase-firestore-24.4.2\AndroidManifest.xml:21:17-82
+79            <meta-data
+79-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:67:13-69:85
+80                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+80-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:68:17-109
+81                android:value="com.google.firebase.components.ComponentRegistrar" />
+81-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:69:17-82
+82            <meta-data
+82-->[com.google.firebase:firebase-database:20.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\33a2c5f4323abde3b1c60b1ef7394f58\transformed\firebase-database-20.1.0\AndroidManifest.xml:31:13-33:85
+83                android:name="com.google.firebase.components:com.google.firebase.database.DatabaseRegistrar"
+83-->[com.google.firebase:firebase-database:20.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\33a2c5f4323abde3b1c60b1ef7394f58\transformed\firebase-database-20.1.0\AndroidManifest.xml:32:17-109
+84                android:value="com.google.firebase.components.ComponentRegistrar" />
+84-->[com.google.firebase:firebase-database:20.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\33a2c5f4323abde3b1c60b1ef7394f58\transformed\firebase-database-20.1.0\AndroidManifest.xml:33:17-82
+85        </service>
+86        <service
+86-->[androidx.room:room-runtime:2.5.0] C:\Users\Matteo\.gradle\caches\transforms-3\9d85e3a24c601392b7d7f0626a3889fa\transformed\room-runtime-2.5.0\AndroidManifest.xml:24:9-28:63
+87            android:name="androidx.room.MultiInstanceInvalidationService"
+87-->[androidx.room:room-runtime:2.5.0] C:\Users\Matteo\.gradle\caches\transforms-3\9d85e3a24c601392b7d7f0626a3889fa\transformed\room-runtime-2.5.0\AndroidManifest.xml:25:13-74
+88            android:directBootAware="true"
+88-->[androidx.room:room-runtime:2.5.0] C:\Users\Matteo\.gradle\caches\transforms-3\9d85e3a24c601392b7d7f0626a3889fa\transformed\room-runtime-2.5.0\AndroidManifest.xml:26:13-43
+89            android:exported="false" />
+89-->[androidx.room:room-runtime:2.5.0] C:\Users\Matteo\.gradle\caches\transforms-3\9d85e3a24c601392b7d7f0626a3889fa\transformed\room-runtime-2.5.0\AndroidManifest.xml:27:13-37
+90
+91        <activity
+91-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:27:9-44:20
+92            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+92-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:28:13-80
+93            android:excludeFromRecents="true"
+93-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:29:13-46
+94            android:exported="true"
+94-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:30:13-36
+95            android:launchMode="singleTask"
+95-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:31:13-44
+96            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+96-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:32:13-72
+97            <intent-filter>
+97-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:33:13-43:29
+98                <action android:name="android.intent.action.VIEW" />
+98-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:34:17-69
+98-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:34:25-66
+99
+100                <category android:name="android.intent.category.DEFAULT" />
+100-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:36:17-76
+100-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:36:27-73
+101                <category android:name="android.intent.category.BROWSABLE" />
+101-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:37:17-78
+101-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:37:27-75
+102
+103                <data
+103-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:39:17-42:51
+104                    android:host="firebase.auth"
+104-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:40:21-49
+105                    android:path="/"
+105-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:41:21-37
+106                    android:scheme="genericidp" />
+106-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:42:21-48
+107            </intent-filter>
+108        </activity>
+109        <activity
+109-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:45:9-62:20
+110            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+110-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:46:13-79
+111            android:excludeFromRecents="true"
+111-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:47:13-46
+112            android:exported="true"
+112-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:48:13-36
+113            android:launchMode="singleTask"
+113-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:49:13-44
+114            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+114-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:50:13-72
+115            <intent-filter>
+115-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:51:13-61:29
+116                <action android:name="android.intent.action.VIEW" />
+116-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:34:17-69
+116-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:34:25-66
+117
+118                <category android:name="android.intent.category.DEFAULT" />
+118-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:36:17-76
+118-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:36:27-73
+119                <category android:name="android.intent.category.BROWSABLE" />
+119-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:37:17-78
+119-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:37:27-75
+120
+121                <data
+121-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:39:17-42:51
+122                    android:host="firebase.auth"
+122-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:40:21-49
+123                    android:path="/"
+123-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:41:21-37
+124                    android:scheme="recaptcha" />
+124-->[com.google.firebase:firebase-auth:21.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\cc2ffc9c673169df3e4e9b73d03eb342\transformed\firebase-auth-21.1.0\AndroidManifest.xml:42:21-48
+125            </intent-filter>
+126        </activity>
+127        <activity
+127-->[com.google.android.gms:play-services-auth:20.4.0] C:\Users\Matteo\.gradle\caches\transforms-3\e6a9439a203de545ae9f95d974aeeeaf\transformed\play-services-auth-20.4.0\AndroidManifest.xml:23:9-27:75
+128            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+128-->[com.google.android.gms:play-services-auth:20.4.0] C:\Users\Matteo\.gradle\caches\transforms-3\e6a9439a203de545ae9f95d974aeeeaf\transformed\play-services-auth-20.4.0\AndroidManifest.xml:24:13-93
+129            android:excludeFromRecents="true"
+129-->[com.google.android.gms:play-services-auth:20.4.0] C:\Users\Matteo\.gradle\caches\transforms-3\e6a9439a203de545ae9f95d974aeeeaf\transformed\play-services-auth-20.4.0\AndroidManifest.xml:25:13-46
+130            android:exported="false"
+130-->[com.google.android.gms:play-services-auth:20.4.0] C:\Users\Matteo\.gradle\caches\transforms-3\e6a9439a203de545ae9f95d974aeeeaf\transformed\play-services-auth-20.4.0\AndroidManifest.xml:26:13-37
+131            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+131-->[com.google.android.gms:play-services-auth:20.4.0] C:\Users\Matteo\.gradle\caches\transforms-3\e6a9439a203de545ae9f95d974aeeeaf\transformed\play-services-auth-20.4.0\AndroidManifest.xml:27:13-72
+132        <!--
+133            Service handling Google Sign-In user revocation. For apps that do not integrate with
+134            Google Sign-In, this service will never be started.
+135        -->
+136        <service
+136-->[com.google.android.gms:play-services-auth:20.4.0] C:\Users\Matteo\.gradle\caches\transforms-3\e6a9439a203de545ae9f95d974aeeeaf\transformed\play-services-auth-20.4.0\AndroidManifest.xml:33:9-37:51
+137            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+137-->[com.google.android.gms:play-services-auth:20.4.0] C:\Users\Matteo\.gradle\caches\transforms-3\e6a9439a203de545ae9f95d974aeeeaf\transformed\play-services-auth-20.4.0\AndroidManifest.xml:34:13-89
+138            android:exported="true"
+138-->[com.google.android.gms:play-services-auth:20.4.0] C:\Users\Matteo\.gradle\caches\transforms-3\e6a9439a203de545ae9f95d974aeeeaf\transformed\play-services-auth-20.4.0\AndroidManifest.xml:35:13-36
+139            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+139-->[com.google.android.gms:play-services-auth:20.4.0] C:\Users\Matteo\.gradle\caches\transforms-3\e6a9439a203de545ae9f95d974aeeeaf\transformed\play-services-auth-20.4.0\AndroidManifest.xml:36:13-107
+140            android:visibleToInstantApps="true" /> <!-- Needs to be explicitly declared on P+ -->
+140-->[com.google.android.gms:play-services-auth:20.4.0] C:\Users\Matteo\.gradle\caches\transforms-3\e6a9439a203de545ae9f95d974aeeeaf\transformed\play-services-auth-20.4.0\AndroidManifest.xml:37:13-48
+141        <uses-library
+141-->[com.google.android.gms:play-services-maps:18.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\64d0523e47a7efd6f53cae2124e54ec1\transformed\play-services-maps-18.1.0\AndroidManifest.xml:39:9-41:40
+142            android:name="org.apache.http.legacy"
+142-->[com.google.android.gms:play-services-maps:18.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\64d0523e47a7efd6f53cae2124e54ec1\transformed\play-services-maps-18.1.0\AndroidManifest.xml:40:13-50
+143            android:required="false" />
+143-->[com.google.android.gms:play-services-maps:18.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\64d0523e47a7efd6f53cae2124e54ec1\transformed\play-services-maps-18.1.0\AndroidManifest.xml:41:13-37
+144
+145        <provider
+145-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Matteo\.gradle\caches\transforms-3\2c188f093b6757aaccb3d7dae6872145\transformed\firebase-common-20.3.0\AndroidManifest.xml:25:9-30:39
+146            android:name="com.google.firebase.provider.FirebaseInitProvider"
+146-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Matteo\.gradle\caches\transforms-3\2c188f093b6757aaccb3d7dae6872145\transformed\firebase-common-20.3.0\AndroidManifest.xml:26:13-77
+147            android:authorities="com.blackbox.pinspot.firebaseinitprovider"
+147-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Matteo\.gradle\caches\transforms-3\2c188f093b6757aaccb3d7dae6872145\transformed\firebase-common-20.3.0\AndroidManifest.xml:27:13-72
+148            android:directBootAware="true"
+148-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Matteo\.gradle\caches\transforms-3\2c188f093b6757aaccb3d7dae6872145\transformed\firebase-common-20.3.0\AndroidManifest.xml:28:13-43
+149            android:exported="false"
+149-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Matteo\.gradle\caches\transforms-3\2c188f093b6757aaccb3d7dae6872145\transformed\firebase-common-20.3.0\AndroidManifest.xml:29:13-37
+150            android:initOrder="100" />
+150-->[com.google.firebase:firebase-common:20.3.0] C:\Users\Matteo\.gradle\caches\transforms-3\2c188f093b6757aaccb3d7dae6872145\transformed\firebase-common-20.3.0\AndroidManifest.xml:30:13-36
+151
+152        <activity
+152-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\941e17a8fb516f8a92c225b7817c944f\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
+153            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+153-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\941e17a8fb516f8a92c225b7817c944f\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:19-85
+154            android:exported="false"
+154-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\941e17a8fb516f8a92c225b7817c944f\transformed\play-services-base-18.1.0\AndroidManifest.xml:22:19-43
+155            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+155-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\941e17a8fb516f8a92c225b7817c944f\transformed\play-services-base-18.1.0\AndroidManifest.xml:21:19-78
+156
+157        <meta-data
+157-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\6bd9f8aff7576f5c83e62d5e360f8bd0\transformed\play-services-basement-18.1.0\AndroidManifest.xml:21:9-23:69
+158            android:name="com.google.android.gms.version"
+158-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\6bd9f8aff7576f5c83e62d5e360f8bd0\transformed\play-services-basement-18.1.0\AndroidManifest.xml:22:13-58
+159            android:value="@integer/google_play_services_version" />
+159-->[com.google.android.gms:play-services-basement:18.1.0] C:\Users\Matteo\.gradle\caches\transforms-3\6bd9f8aff7576f5c83e62d5e360f8bd0\transformed\play-services-basement-18.1.0\AndroidManifest.xml:23:13-66
+160
+161        <provider
+161-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Matteo\.gradle\caches\transforms-3\b0979c74bcafbf92926cafeab0bc64cc\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+162            android:name="androidx.startup.InitializationProvider"
+162-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Matteo\.gradle\caches\transforms-3\b0979c74bcafbf92926cafeab0bc64cc\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+163            android:authorities="com.blackbox.pinspot.androidx-startup"
+163-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Matteo\.gradle\caches\transforms-3\b0979c74bcafbf92926cafeab0bc64cc\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+164            android:exported="false" >
+164-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Matteo\.gradle\caches\transforms-3\b0979c74bcafbf92926cafeab0bc64cc\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+165            <meta-data
+165-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Matteo\.gradle\caches\transforms-3\b0979c74bcafbf92926cafeab0bc64cc\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+166                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+166-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Matteo\.gradle\caches\transforms-3\b0979c74bcafbf92926cafeab0bc64cc\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+167                android:value="androidx.startup" />
+167-->[androidx.emoji2:emoji2:1.2.0] C:\Users\Matteo\.gradle\caches\transforms-3\b0979c74bcafbf92926cafeab0bc64cc\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+168            <meta-data
+168-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Matteo\.gradle\caches\transforms-3\6eb140401ebfa782b00a6e782abef4cb\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
+169                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+169-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Matteo\.gradle\caches\transforms-3\6eb140401ebfa782b00a6e782abef4cb\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
+170                android:value="androidx.startup" />
+170-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Matteo\.gradle\caches\transforms-3\6eb140401ebfa782b00a6e782abef4cb\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
+171        </provider>
+172
+173        <uses-library
+173-->[androidx.window:window:1.0.0] C:\Users\Matteo\.gradle\caches\transforms-3\4890aec4821256a31ea44f99d3cad489\transformed\window-1.0.0\AndroidManifest.xml:25:9-27:40
+174            android:name="androidx.window.extensions"
+174-->[androidx.window:window:1.0.0] C:\Users\Matteo\.gradle\caches\transforms-3\4890aec4821256a31ea44f99d3cad489\transformed\window-1.0.0\AndroidManifest.xml:26:13-54
+175            android:required="false" />
+175-->[androidx.window:window:1.0.0] C:\Users\Matteo\.gradle\caches\transforms-3\4890aec4821256a31ea44f99d3cad489\transformed\window-1.0.0\AndroidManifest.xml:27:13-37
+176        <uses-library
+176-->[androidx.window:window:1.0.0] C:\Users\Matteo\.gradle\caches\transforms-3\4890aec4821256a31ea44f99d3cad489\transformed\window-1.0.0\AndroidManifest.xml:28:9-30:40
+177            android:name="androidx.window.sidecar"
+177-->[androidx.window:window:1.0.0] C:\Users\Matteo\.gradle\caches\transforms-3\4890aec4821256a31ea44f99d3cad489\transformed\window-1.0.0\AndroidManifest.xml:29:13-51
+178            android:required="false" />
+178-->[androidx.window:window:1.0.0] C:\Users\Matteo\.gradle\caches\transforms-3\4890aec4821256a31ea44f99d3cad489\transformed\window-1.0.0\AndroidManifest.xml:30:13-37
+179    </application>
+180
+181</manifest>

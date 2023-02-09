@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">PinSpot</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="error_password">Password is not valid</string>
+    <string name="error_user_collision_message">There is no user record corresponding to this identifier</string>
+    <string name="unexpected_error">Unexpected error</string>
+    <string name="error_email">Insert a valid email address</string>
+    <string name="error_login_password_message">The password is invalid</string>
+    <string name="error_login_user_message">There is no user record corresponding to this identifier</string>
+    <string name="check_login_data_message">Check the data you inserted</string>
+    <string name="error_no_google_account_found_message">No Google account have been found</string>
+    
+    <string name="title">Title</string>
+    <string name="spot_it">Spot it</string>
+    <string name="remove_the_pin_the_favorite_list">Remove the pin the favorite list</string>
+    <string name="Log_in">Log in</string>
+    <string name="login">Login</string>
+    <string name="e_mail_address">email address</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">forgot password?</string>
+    <string name="not_yet_registered_signup_now">Not yet registered? SignUp Now</string>
+    <string name="or_sign_in_with">or sign in with</string>
+    <string name="not_now">Not now</string>
+    <string name="milan_s_cathedral">Milan\'s Cathedral</string>
+    <string name="weather">Weather</string>
+    <string name="temp">Temp</string>
+    <string name="spot_a_new_place">Spot a new place</string>
+    <string name="email_two_points">Email:</string>
+    <string name="mail_gmail_com">mail@gmail.com</string>
+    <string name="temperature_fahrenheit">Temperature (Fahrenheit):</string>
+    <string name="celsius">C°</string>
+    <string name="research_s_radius_50_km">research\'s radius: 50 km</string>
+    <string name="logout">Logout</string>
+    <string name="celsius_question_mark">Celsius?</string>
+    <string name="register_now">Register Now</string>
+    <string name="email">Email</string>
+    <string name="have_an_account_log_in">Have an Account? Log in</string>
+</resources>

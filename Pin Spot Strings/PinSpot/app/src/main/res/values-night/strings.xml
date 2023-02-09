@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_password">Password is not valid</string>
+    <string name="error_user_collision_message">There is no user record corresponding to this identifier</string>
+    <string name="error_email">Insert a valid email address</string>
+    <string name="error_login_password_message">The password is invalid</string>
+    <string name="error_login_user_message">There is no user record corresponding to this identifier</string>
+    <string name="check_login_data_message">Check the data you inserted</string>
+    <string name="error_no_google_account_found_message">No Google account have been found</string>
+</resources>

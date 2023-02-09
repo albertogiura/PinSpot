@@ -1,0 +1,398 @@
+[
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxhdpi_star.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxhdpi/star.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xhdpi_spot_place_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xhdpi/spot_place_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-mdpi_map.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-mdpi/map.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/drawable_fav_pin_starred_background.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/drawable/fav_pin_starred_background.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-mdpi_fav_pin_starred.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-mdpi/fav_pin_starred.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/layout_fragment_map.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/layout/fragment_map.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/drawable_map_background.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/drawable/map_background.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/navigation_welcome_nav_graph.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/navigation/welcome_nav_graph.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-anydpi-v26_fav_pin_starred.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-anydpi-v26/fav_pin_starred.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-hdpi_profile.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-hdpi/profile.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xhdpi_map_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xhdpi/map_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/drawable_star_background.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/drawable/star_background.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxhdpi_fav_pin_starred.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxhdpi/fav_pin_starred.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/layout_activity_main.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/layout/activity_main.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxhdpi_map_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxhdpi/map_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/navigation_main_nav_graph.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/navigation/main_nav_graph.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/drawable_profile_foreground.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/drawable/profile_foreground.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/xml_data_extraction_rules.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxxhdpi_fav_pin_starred.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxxhdpi/fav_pin_starred.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxxhdpi_map.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxxhdpi/map.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-hdpi_spot_place.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-hdpi/spot_place.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-anydpi-v26_profile.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-anydpi-v26/profile.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-hdpi_fav_pin_starred_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-hdpi/fav_pin_starred_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xhdpi_map.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xhdpi/map.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-mdpi_fav_pin_starred_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-mdpi/fav_pin_starred_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/layout_fragment_login.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/layout/fragment_login.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-anydpi-v26_spot_place.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-anydpi-v26/spot_place.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxxhdpi_star.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxxhdpi/star.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/layout_activity_login.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/layout/activity_login.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-hdpi_fav_pin_starred.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-hdpi/fav_pin_starred.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxxhdpi_star_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxxhdpi/star_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxhdpi_spot_place_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxhdpi/spot_place_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/layout_fragment_sign_up.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/layout/fragment_sign_up.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-hdpi_map.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-hdpi/map.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-mdpi_profile_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-mdpi/profile_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-hdpi_map_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-hdpi/map_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-mdpi_spot_place_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-mdpi/spot_place_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xhdpi_spot_place.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xhdpi/spot_place.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-hdpi_profile_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-hdpi/profile_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-anydpi-v26_star.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-anydpi-v26/star.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxhdpi_profile_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxhdpi/profile_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-hdpi_star_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-hdpi/star_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-mdpi_profile.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-mdpi/profile.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-anydpi-v26_fav_pin_starred_round.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-anydpi-v26/fav_pin_starred_round.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxhdpi_spot_place.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxhdpi/spot_place.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-anydpi-v26_map.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-anydpi-v26/map.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/drawable_map_foreground.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/drawable/map_foreground.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-hdpi_star.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-hdpi/star.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxhdpi_map.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxhdpi/map.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/menu_bottom_nav_menu.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/menu/bottom_nav_menu.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/drawable_spot_place_background.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/drawable/spot_place_background.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/layout_activity_signup.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/layout/activity_signup.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/drawable_star_foreground.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/drawable/star_foreground.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-mdpi_star_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-mdpi/star_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xhdpi_star_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xhdpi/star_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-hdpi_spot_place_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-hdpi/spot_place_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/layout_fragment_fav_places.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/layout/fragment_fav_places.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xhdpi_fav_pin_starred_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xhdpi/fav_pin_starred_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xhdpi_fav_pin_starred.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xhdpi/fav_pin_starred.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/drawable_fav_pin_starred_foreground.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/drawable/fav_pin_starred_foreground.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxhdpi_fav_pin_starred_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxhdpi/fav_pin_starred_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/xml_backup_rules.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/xml/backup_rules.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-anydpi-v26_spot_place_round.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-anydpi-v26/spot_place_round.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxxhdpi_spot_place.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxxhdpi/spot_place.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxxhdpi_spot_place_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxxhdpi/spot_place_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxhdpi_profile.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxhdpi/profile.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/drawable_spot_place_foreground.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/drawable/spot_place_foreground.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xhdpi_star.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xhdpi/star.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/drawable_profile_background.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/drawable/profile_background.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-mdpi_spot_place.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-mdpi/spot_place.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/layout_fav_pin_list_item.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/layout/fav_pin_list_item.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxxhdpi_fav_pin_starred_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxxhdpi/fav_pin_starred_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxxhdpi_profile.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxxhdpi/profile.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxhdpi_star_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxhdpi/star_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxxhdpi_profile_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxxhdpi/profile_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxxhdpi_map_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xxxhdpi/map_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/layout_fragment_pin_info.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/layout/fragment_pin_info.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/mipmap-mdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-anydpi-v26_profile_round.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-anydpi-v26/profile_round.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/layout_fragment_profile.xml.flat",
+        "source": "com.blackbox.pinspot.app-main-56:/layout/fragment_profile.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-mdpi_map_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-mdpi/map_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xhdpi_profile_round.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xhdpi/profile_round.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "com.blackbox.pinspot.app-pngs-49:/drawable-anydpi-v24/ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-anydpi-v26_star_round.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-anydpi-v26/star_round.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-anydpi-v26_map_round.xml.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-anydpi-v26/map_round.xml"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-xhdpi_profile.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-xhdpi/profile.png"
+    },
+    {
+        "merged": "com.blackbox.pinspot.app-merged_res-54:/mipmap-mdpi_star.png.flat",
+        "source": "com.blackbox.pinspot.app-debug-55:/mipmap-mdpi/star.png"
+    }
+]
