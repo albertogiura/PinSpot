@@ -1,124 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primaryLightColor"
+    android:layout_marginBottom="80dp"
+    android:fillViewport="true"
     tools:context=".ui.main.PinInfoFragment">
 
-    <View
-        android:id="@+id/divider"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/rounded_bg"
-        android:layout_width="416dp"
-        android:layout_height="355dp"
-        android:src="@drawable/rounded_corner"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/divider"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <ImageView
-        android:id="@+id/pinPhotoImageView"
-        android:layout_width="328dp"
-        android:layout_height="368dp"
-        android:layout_marginBottom="-80dp"
-        android:scaleType="fitXY"
-        android:src="@drawable/roma"
-        app:layout_constraintBottom_toTopOf="@id/rounded_bg"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/placeholder_pin_photo" />
-
-    <TextView
-        android:id="@+id/PinTitle_textView"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="4dp"
-        android:text="@string/default_pin_title"
-        android:textColor="@color/black"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pinPhotoImageView" />
+        android:background="@color/primaryLightColor">
 
-    <TextView
-        android:id="@+id/textViewWeatherDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="84dp"
-        android:text="@string/weather"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pinPhotoImageView" />
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewTemperature"
-        android:layout_width="72dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="52dp"
-        android:text="@string/temperature"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pinPhotoImageView" />
+        <ImageView
+            android:id="@+id/rounded_bg"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/rounded_corner"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/divider"
+            app:layout_constraintVertical_bias="1.0" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        style="@style/Button"
-        android:id="@+id/addPinToFav_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="66dp"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        android:layout_marginStart="20dp"
+        <ImageView
+            android:id="@+id/pinPhotoImageView"
+            android:layout_width="328dp"
+            android:layout_height="368dp"
+            android:layout_marginTop="28dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/roma"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/closePinInfo_button"
+            app:srcCompat="@drawable/placeholder_pin_photo" />
 
-        android:contentDescription="@string/spot_a_new_place"
+        <TextView
+            android:id="@+id/PinTitle_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="60dp"
+            android:text="@string/default_pin_title"
+            android:textColor="@color/black"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pinPhotoImageView" />
 
-        android:src="@drawable/star_foreground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.937"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.005"
-        app:maxImageSize="48dp" />
+        <TextView
+            android:id="@+id/textViewWeatherDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:text="@string/weather"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/addPinToFav_fab"
+            app:layout_constraintTop_toBottomOf="@+id/PinTitle_textView" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/closePinInfo_button"
-        style="@style/Button"
-        android:layout_width="wrap_content"
-        android:layout_height="112dp"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
+        <TextView
+            android:id="@+id/textViewTemperature"
+            android:layout_width="72dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="36dp"
+            android:text="@string/temperature"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/PinTitle_textView"
+            app:layout_constraintTop_toBottomOf="@+id/PinTitle_textView" />
 
-        android:contentDescription="@string/spot_a_new_place"
-        android:foregroundTint="@color/white"
-        android:src="@drawable/ic_baseline_arrow_back_24"
-        app:tint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:maxImageSize="48dp" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addPinToFav_fab"
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:layout_height="66dp"
+            android:layout_gravity="end|bottom"
+
+            android:layout_marginTop="16dp"
+
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/spot_a_new_place"
+            android:src="@drawable/star_foreground"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:maxImageSize="48dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/closePinInfo_button"
+            style="@style/Button"
+            android:layout_width="wrap_content"
+            android:layout_height="112dp"
+            android:layout_gravity="end|bottom"
+
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/spot_a_new_place"
+            android:foregroundTint="@color/white"
+            android:src="@drawable/ic_baseline_arrow_back_24"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:maxImageSize="48dp"
+            app:tint="@color/white" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
