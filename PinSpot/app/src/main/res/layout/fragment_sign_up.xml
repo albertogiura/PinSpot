@@ -29,6 +29,32 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="15dp" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+
+    <!--<com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:indeterminate="true"
+        android:visibility="gone"
+        app:indicatorColor="@color/primaryDarkColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:trackColor="@color/primaryColor" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="15dp" /> -->
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,6 +69,8 @@
             android:layout_gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="24dp">
+
+
 
 
             <TextView
@@ -107,20 +135,22 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/textView4" />
 
+
+
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
-
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/socialicons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
 
         android:gravity="center"
-        android:orientation="horizontal" />
+        android:orientation="horizontal" />  -->
 
-
+    </ScrollView>
 </LinearLayout>
 
