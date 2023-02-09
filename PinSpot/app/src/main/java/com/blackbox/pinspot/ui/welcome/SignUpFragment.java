@@ -67,10 +67,12 @@ public class SignUpFragment extends Fragment {
                             getViewLifecycleOwner(), result -> {
                                 if (result.isSuccess()) {
                                     userViewModel.setAuthenticationError(false);
+                                    binding.progressBar.setVisibility(View.GONE);
                                     Navigation.findNavController(view).navigate(R.id.action_signUpFragment_to_mainActivity);
                                     requireActivity().finish();
                                 } else {
                                     userViewModel.setAuthenticationError(true);
+                                    binding.progressBar.setVisibility(View.GONE);
                                     Snackbar.make(requireActivity().findViewById(android.R.id.content),
                                             getErrorMessage(((Result.Error) result).getMessage()),
                                             Snackbar.LENGTH_SHORT).show();

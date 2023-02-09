@@ -105,7 +105,7 @@ public class LoginFragment extends Fragment {
                         userViewModel.getGoogleUserMutableLiveData(idToken).observe(getViewLifecycleOwner(), authenticationResult -> {
                             if (authenticationResult.isSuccess()) {
                                 userViewModel.setAuthenticationError(false);
-                                binding.progressBar.setVisibility(View.VISIBLE);
+                                binding.progressBar.setVisibility(View.GONE);
                                 startActivityBasedOnCondition(MainActivity.class, R.id.action_loginFragment_to_mainActivity);
                             } else {
                                 userViewModel.setAuthenticationError(true);
@@ -227,18 +227,7 @@ public class LoginFragment extends Fragment {
         binding.buttonForgotLoginPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String emailAddress = String.valueOf(binding.edtEmail.getText()).trim();
-                if (isEmailOk(emailAddress)) {
-                    userViewModel.forgotPassword(emailAddress).observe(getViewLifecycleOwner(), result -> {
-                        if (result.isSuccess()) {
-                            Toast.makeText(requireContext(), "Password recovery email sent", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(requireContext(), "Error. Password recovery email sent not sent", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-                    Toast.makeText(requireContext(), "This is not a valid email address for recovery", Toast.LENGTH_SHORT).show();
-                }
+                Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_forgotPasswordFragment);
             }
         });
     }

@@ -10,7 +10,7 @@
     <string name="error_login_user_message">There is no user record corresponding to this identifier</string>
     <string name="check_login_data_message">Check the data you inserted</string>
     <string name="error_no_google_account_found_message">No Google account have been found</string>
-    
+
     <string name="title">Title</string>
     <string name="spot_it">Spot it</string>
     <string name="remove_the_pin_the_favorite_list">Remove the pin the favorite list</string>
@@ -22,9 +22,9 @@
     <string name="invite_to_signup">Not registered yet? Signup Now</string>
     <string name="or_sign_in_with">or sign in with</string>
     <string name="not_now">Not now</string>
-    <string name="default_pin_title">Milan\'s Cathedral</string>
+    <string name="default_pin_title">Pin title</string>
     <string name="weather">Weather</string>
-    <string name="temp">Temp</string>
+    <string name="temperature">Temperature</string>
     <string name="spot_a_new_place">Spot a new place</string>
     <string name="email_two_points">Email:</string>
     <string name="mail_example_com">mail@example.com</string>
