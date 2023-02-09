@@ -31,7 +31,7 @@
                 android:id="@+id/loginText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Login"
+                android:text="@string/login"
                 android:textAlignment="center"
                 android:textColor="@color/primaryDarkColor"
                 android:textSize="36sp"
@@ -46,7 +46,7 @@
                 android:background="@drawable/edit_text_bg"
                 android:drawableLeft="@drawable/ic_baseline_person_outline_24"
                 android:drawablePadding="8dp"
-                android:hint="E-Mail address"
+                android:hint="@string/e_mail_address"
                 android:padding="8dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white" />
@@ -60,7 +60,7 @@
                 android:background="@drawable/edit_text_bg"
                 android:drawableLeft="@drawable/ic_baseline_info_24"
                 android:drawablePadding="8dp"
-                android:hint="Password"
+                android:hint="@string/password"
                 android:inputType="textPassword"
                 android:padding="8dp"
                 android:textColor="@color/white"
@@ -73,7 +73,7 @@
                 android:layout_height="60dp"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/primaryDarkColor"
-                android:text="Login"
+                android:text="@string/login"
                 android:textSize="18sp"
                 app:cornerRadius="20dp" />
 
@@ -89,7 +89,7 @@
         android:padding="8dp"
         android:background="?android:attr/selectableItemBackground"
         android:inputType="textCapSentences"
-        android:text="forgot password?"
+        android:text="@string/forgot_password"
         android:textAlignment="center"
         android:textSize="14sp"
         android:textStyle="bold" />
@@ -98,7 +98,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="Not yet registered? SignUp Now"
+        android:text="@string/invite_to_signup"
         android:backgroundTint="@color/primaryDarkColor"
         android:textSize="14sp"
         android:textAlignment="center"
@@ -114,7 +114,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/socialicons"
         android:layout_centerHorizontal="true"
-        android:text="or sign in with"
+        android:text="@string/or_sign_in_with"
         android:textStyle="bold"
         />
 
@@ -144,7 +144,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:backgroundTint="@color/primaryDarkColor"
-            android:text="Not now"
+            android:text="@string/not_now"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

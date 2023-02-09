@@ -33,7 +33,7 @@
         android:focusable="true"
         android:padding="0.5dp"
         android:scaleType="centerCrop"
-        android:contentDescription="Remove the pin the favorite list"
+        android:contentDescription="@string/remove_the_pin_the_favorite_list"
         android:src="@drawable/fav_pin_starred_foreground"
 
         app:layout_constraintBottom_toBottomOf="parent"

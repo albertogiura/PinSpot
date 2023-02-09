@@ -10,4 +10,29 @@
     <string name="error_login_user_message">There is no user record corresponding to this identifier</string>
     <string name="check_login_data_message">Check the data you inserted</string>
     <string name="error_no_google_account_found_message">No Google account have been found</string>
+    
+    <string name="title">Title</string>
+    <string name="spot_it">Spot it</string>
+    <string name="remove_the_pin_the_favorite_list">Remove the pin the favorite list</string>
+    <string name="login_to_unblock_feature">Please login to unblock this feature</string>
+    <string name="login">Login</string>
+    <string name="e_mail_address">Email address</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">forgot password?</string>
+    <string name="invite_to_signup">Not registered yet? Signup Now</string>
+    <string name="or_sign_in_with">or sign in with</string>
+    <string name="not_now">Not now</string>
+    <string name="default_pin_title">Milan\'s Cathedral</string>
+    <string name="weather">Weather</string>
+    <string name="temp">Temp</string>
+    <string name="spot_a_new_place">Spot a new place</string>
+    <string name="email_two_points">Email:</string>
+    <string name="mail_example_com">mail@example.com</string>
+    <string name="temperature_setting">Temperature: F°</string>
+    <string name="celsius">C°</string>
+    <string name="research_radius">Research\'s radius: 50 km</string>
+    <string name="logout">Logout</string>
+    <string name="register_now">Register Now</string>
+    <string name="have_an_account_log_in">Have an account? Log in</string>
+    <string name="app_settings">App settings</string>
 </resources>

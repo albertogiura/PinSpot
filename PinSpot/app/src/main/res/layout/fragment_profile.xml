@@ -17,7 +17,8 @@
             android:layout_width="235dp"
             android:layout_height="217dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/undraw_active_options_re_8rj3" />
+            android:src="@drawable/undraw_active_options_re_8rj3"
+            android:contentDescription="@string/app_settings"/>
 
     </LinearLayout>
 
@@ -44,9 +45,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Email:"
+                    android:text="@string/email_two_points"
                     android:textColor="@color/primaryColor"
-                    android:textSize="30dp"
+                    android:textSize="30sp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -54,8 +55,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="mail@gmail.com"
-                    android:textSize="20dp"
+                    android:text="@string/mail_example_com"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <View
@@ -72,14 +73,13 @@
                 android:layout_marginTop="15dp"
                 android:orientation="vertical">
 
-                <Switch
+                <com.google.android.material.switchmaterial.SwitchMaterial
                     android:id="@+id/switchDegree"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="80dp"
-                    android:text="Temperatura in gradi: F°"
-
-                    android:textSize="20dp"
+                    android:text="@string/temperature_setting"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -99,8 +99,8 @@
                 <TextView
                     android:layout_width="29dp"
                     android:layout_height="wrap_content"
-                    android:text="C°"
-                    android:textSize="20dp"
+                    android:text="@string/celsius"
+                    android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -122,8 +122,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:minHeight="80dp"
-                    android:text="Raggio della ricerca: 50 km"
-                    android:textSize="20dp"
+                    android:text="@string/research_radius"
+                    android:textSize="20sp"
                     android:gravity="center"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -151,8 +151,8 @@
                     android:id="@+id/button_user_logout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Logout"
-                    android:textSize="30dp"
+                    android:text="@string/logout"
+                    android:textSize="30sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.849"
