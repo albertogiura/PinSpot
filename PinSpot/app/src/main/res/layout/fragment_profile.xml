@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="80dp"
     android:gravity="center"
-    android:orientation="horizontal">
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,15 +25,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="235dp"
                     android:layout_height="217dp"
                     android:layout_marginTop="15dp"
-                    android:src="@drawable/undraw_active_options_re_8rj3"
-                    android:contentDescription="@string/app_settings"/>
+                    android:contentDescription="@string/app_settings"
+                    android:src="@drawable/undraw_active_options_re_8rj3" />
 
                 <View
                     android:layout_width="match_parent"
@@ -125,10 +127,10 @@
                     android:id="@+id/search_raggio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:minHeight="80dp"
                     android:text="@string/research_radius"
                     android:textSize="20sp"
-                    android:gravity="center"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.513"
@@ -174,5 +176,5 @@
 
 
         </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

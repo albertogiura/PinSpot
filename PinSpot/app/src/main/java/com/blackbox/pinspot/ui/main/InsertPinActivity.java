@@ -253,6 +253,15 @@ public class InsertPinActivity extends AppCompatActivity {
             }
         });
 
+        binding.closePinInfoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                /*Intent intent = new Intent(InsertPinActivity.this, MainActivity.class);
+                startActivity(intent);*/
+                InsertPinActivity.this.finish();
+            }
+        });
+
     }
 
     private void uploadPicture(){
