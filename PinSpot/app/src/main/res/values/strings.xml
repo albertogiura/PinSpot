@@ -35,4 +35,6 @@
     <string name="register_now">Register Now</string>
     <string name="have_an_account_log_in">Have an account? Log in</string>
     <string name="app_settings">App settings</string>
+    <string name="forgot_password_title">Password recovery</string>
+    <string name="recover_password_now">Recover password</string>
 </resources>
