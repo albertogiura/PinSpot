@@ -1,32 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-    <LinearLayout
-        android:id="@+id/linlay1"
-        android:layout_width="match_parent"
-        android:layout_height="244dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="235dp"
-            android:layout_height="217dp"
-            android:layout_marginTop="15dp"
-            android:src="@drawable/undraw_active_options_re_8rj3"
-            android:contentDescription="@string/app_settings"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="513dp"
-        android:layout_below="@+id/linlay1"
-        android:layout_marginTop="0dp">
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="horizontal">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,6 +19,27 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="235dp"
+                    android:layout_height="217dp"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/undraw_active_options_re_8rj3"
+                    android:contentDescription="@string/app_settings"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/primaryColor" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -170,7 +174,5 @@
 
 
         </LinearLayout>
-
+        </ScrollView>
     </LinearLayout>
-
-</RelativeLayout>
