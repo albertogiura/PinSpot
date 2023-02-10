@@ -11,6 +11,8 @@ import androidx.room.PrimaryKey;
 import com.firebase.geofire.GeoFireUtils;
 import com.firebase.geofire.GeoLocation;
 
+import java.util.Objects;
+
 @Entity(tableName = "pin_table")
 public class Pin implements Parcelable {
 
@@ -110,6 +112,19 @@ public class Pin implements Parcelable {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pin pin = (Pin) o;
+        return Double.compare(pin.lat, lat) == 0 && Double.compare(pin.lon, lon) == 0 && link.equals(pin.link) && Objects.equals(title, pin.title) && Objects.equals(geoHash, pin.geoHash);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(link, title, geoHash, lat, lon);
     }
 
     @Override

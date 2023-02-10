@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
@@ -44,6 +45,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link PinInfoFragment#newInstance} factory method to
@@ -59,6 +63,7 @@ public class PinInfoFragment extends Fragment {
         }
     }
     //private Pin pin;
+    private List<Pin> pinList = new ArrayList<>();
     private WeatherViewModel weatherViewModel;
     private PinViewModel pinViewModel;
     private boolean isFirstLoading = true;
@@ -151,6 +156,15 @@ public class PinInfoFragment extends Fragment {
             }
         });
 
+        pinViewModel.getFavPinList().observe(getViewLifecycleOwner(), pins -> {
+            //this.pinList = pinList;
+            pinList.clear();
+            pinList.addAll(pins);
+
+            Pin currentPin = PinInfoFragmentArgs.fromBundle(getArguments()).getPin();
+            setImageViewButtonFavoritePin(currentPin);
+        });
+
         binding.addPinToFavFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,8 +173,21 @@ public class PinInfoFragment extends Fragment {
                 Boolean skipSettings = sharedPref.getBoolean("skip", false);
                 if (skipSettings == false) {
                 if (pin != null){
-                    pinViewModel.insert(pin);
-                    Toast.makeText(requireContext(), "Pin added to favorite list", Toast.LENGTH_SHORT).show();
+
+                    if (pinList.contains(pin)) {
+                        pinViewModel.removeFavPin(pin);
+                        Toast.makeText(requireContext(), "Pin removed from favorite list", Toast.LENGTH_SHORT).show();
+                        binding.addPinToFavFab.setImageDrawable(
+                                AppCompatResources.getDrawable(requireActivity().getApplication(),
+                                        R.drawable.not_starred_fav_pin_foreground));
+                    } else {
+                        pinViewModel.insert(pin);
+                        Toast.makeText(requireContext(), "Pin added to favorite list", Toast.LENGTH_SHORT).show();
+                        binding.addPinToFavFab.setImageDrawable(
+                                AppCompatResources.getDrawable(requireActivity().getApplication(),
+                                        R.drawable.fav_pin_starred_foreground));
+                    }
+
                 } else {
                     Toast.makeText(requireContext(), "Error in adding pin to favorite list", Toast.LENGTH_SHORT).show();
                 }
@@ -176,7 +203,7 @@ public class PinInfoFragment extends Fragment {
 
         if (pin != null){
             binding.PinTitleTextView.setText(pin.getTitle());
-
+            setImageViewButtonFavoritePin(pin);
             // Retrieve the photo associated to a provided pin via its link attribute from
             // Firebase Storage and displays it with Glide support
             StorageReference storageReference = storage.getReference().child("pinPhotos/"+pin.getLink()+".jpeg");
@@ -340,6 +367,18 @@ public class PinInfoFragment extends Fragment {
 
     private int celsToFar(int c){
         return (int) ((c * 1.8) + 32);
+    }
+
+    private void setImageViewButtonFavoritePin(Pin pin) {
+        if (pinList.contains(pin)) {
+            binding.addPinToFavFab.setImageDrawable(
+                    AppCompatResources.getDrawable(requireActivity().getApplication(),
+                            R.drawable.fav_pin_starred_foreground));
+        } else {
+            binding.addPinToFavFab.setImageDrawable(
+                    AppCompatResources.getDrawable(requireActivity().getApplication(),
+                            R.drawable.not_starred_fav_pin_foreground));
+        }
     }
 
     @Override
