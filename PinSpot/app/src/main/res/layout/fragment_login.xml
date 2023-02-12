@@ -126,7 +126,9 @@
             </androidx.cardview.widget.CardView>
 
             <Button
+
                 android:id="@+id/button_open_signup"
+                android:backgroundTint="@color/primaryDarkColor"
                 android:layout_width="250dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
@@ -167,6 +169,7 @@
                 android:layout_gravity="end"
                 android:text="@string/not_now"
                 android:textStyle="bold"
+                android:backgroundTint="@color/primaryDarkColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.996"

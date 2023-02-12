@@ -9,6 +9,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -119,9 +121,15 @@ public class LoginFragment extends Fragment {
                         });
                     }
                 } catch (ApiException e) {
-                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                            requireActivity().getString(R.string.unexpected_error),
-                            Snackbar.LENGTH_SHORT).show();
+                    if(isOnline()==false){
+                        Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                "You are offline", Snackbar.LENGTH_SHORT).show();
+                    }else{
+                        Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                requireActivity().getString(R.string.unexpected_error),
+                                Snackbar.LENGTH_SHORT).show();
+                    }
+
                 }
             }
         });
@@ -144,7 +152,7 @@ public class LoginFragment extends Fragment {
         }
         binding.skipButton.setOnClickListener(v -> {
             SharedPreferences sharedPref = requireActivity().getSharedPreferences(
-                    SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
+                    SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
 
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean(SHARED_PREFERENCES_SKIP, true);
@@ -285,5 +293,13 @@ public class LoginFragment extends Fragment {
             return true;
         }
     }
-
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -316,50 +316,55 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public boolean onMarkerClick(@NonNull Marker marker) {
+
         lastSavedLat = googleMap.getCameraPosition().target.latitude;
         lastSavedLon = googleMap.getCameraPosition().target.longitude;
-        if (marker.getTag() == null){
-            Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                    getString(R.string.unexpected_error), Snackbar.LENGTH_SHORT).show();
+        if(isOnline()==true) {
+            if (marker.getTag() == null) {
+                Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                        getString(R.string.unexpected_error), Snackbar.LENGTH_SHORT).show();
 
-        } else {
+            } else {
 
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            // TODO da cambiare pins4
-            DocumentReference docRef = db.collection("pins4").document(marker.getTag().toString());
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                // TODO da cambiare pins4
+                DocumentReference docRef = db.collection("pins4").document(marker.getTag().toString());
 
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    Double latitude, longitude;
-                    String title, link;
-                    if (task.isSuccessful()){
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()){
-                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                            title = document.getString("title");
-                            latitude = document.getDouble("lat");
-                            longitude = document.getDouble("lon");
-                            link = document.getString("link");
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        Double latitude, longitude;
+                        String title, link;
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                                title = document.getString("title");
+                                latitude = document.getDouble("lat");
+                                longitude = document.getDouble("lon");
+                                link = document.getString("link");
 
-                            if (latitude != null && longitude != null){
-                                Pin pin = new Pin(latitude, longitude, title, link);
-                                MapFragmentDirections.ActionMapFragmentToPinInfoFragment action =
-                                        MapFragmentDirections.
-                                                actionMapFragmentToPinInfoFragment(pin);
-                                Navigation.findNavController(requireView()).navigate(action);
+                                if (latitude != null && longitude != null) {
+                                    Pin pin = new Pin(latitude, longitude, title, link);
+                                    MapFragmentDirections.ActionMapFragmentToPinInfoFragment action =
+                                            MapFragmentDirections.
+                                                    actionMapFragmentToPinInfoFragment(pin);
+                                    Navigation.findNavController(requireView()).navigate(action);
+                                }
+
+                            } else {
+                                Log.d(TAG, "No such document");
                             }
-
                         } else {
-                            Log.d(TAG, "No such document");
+                            Log.d(TAG, "get failed with ", task.getException());
                         }
-                    } else {
-                        Log.d(TAG, "get failed with ", task.getException());
                     }
-                }
-            });
+                });
+            }
+        }else{
+            Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                    "You are offline", Snackbar.LENGTH_SHORT).show();
         }
-
         return false;
     }
 

@@ -1,7 +1,12 @@
 package com.blackbox.pinspot.ui.main;
 
+import static com.blackbox.pinspot.util.Constants.SHARED_PREFERENCES_FILE_NAME;
+import static com.blackbox.pinspot.util.Constants.SHARED_PREFERENCES_SKIP;
+
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,19 +88,24 @@ public class FavPlacesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        /*Pin pin = new Pin(45.561356, 8.983443, "title", "pippo", 10);
-        pinList.add(pin);*/
         SharedPreferences sharedPref = requireActivity().getSharedPreferences(
-                "settings", Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
-        Boolean skipSettings = sharedPref.getBoolean("skip", false);
+                SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+
+        Boolean skipSettings = sharedPref.getBoolean(SHARED_PREFERENCES_SKIP, false);
         if (skipSettings == false) {
             mAdapter = new PinRecyclerViewAdapter(requireContext(), pinList, requireActivity().getApplication(),
                     new PinRecyclerViewAdapter.OnItemClickListener() {
                         @Override
                         public void onPinItemClick(Pin pin) {
-                            FavPlacesFragmentDirections.ActionFavPlacesFragmentToPinInfoFragment action =
-                                    FavPlacesFragmentDirections.actionFavPlacesFragmentToPinInfoFragment(pin);
-                            Navigation.findNavController(view).navigate(action);
+                            if(isOnline()==true){
+                                FavPlacesFragmentDirections.ActionFavPlacesFragmentToPinInfoFragment action =
+                                        FavPlacesFragmentDirections.actionFavPlacesFragmentToPinInfoFragment(pin);
+                                Navigation.findNavController(view).navigate(action);
+                            }else {
+                                Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                        "You are offline", Snackbar.LENGTH_SHORT).show();
+                            }
+
                         }
 
                         @Override
@@ -114,6 +124,15 @@ public class FavPlacesFragment extends Fragment {
             });
         }else{
             binding.LogInTxt.setVisibility(View.VISIBLE);
+        }
+    }
+    public boolean isOnline() {
+        ConnectivityManager cm = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

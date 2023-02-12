@@ -155,8 +155,8 @@ public class InsertPinActivity extends AppCompatActivity {
                     }
                     else
                     {
-                        // Just in case the user ended up not taking a photo
-                        Toast.makeText(this,"Operation cancelled", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(this.findViewById(android.R.id.content),
+                                "Operation cancelled", Snackbar.LENGTH_SHORT).show();
                     }
 
 
@@ -168,7 +168,8 @@ public class InsertPinActivity extends AppCompatActivity {
                     if(result != null){
                         binding.uploadPinButton.setEnabled(true);
                     }else{
-                        Toast.makeText(this,"Operation cancelled", Toast.LENGTH_SHORT).show();
+                        Snackbar.make(this.findViewById(android.R.id.content),
+                                "Operation cancelled", Snackbar.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -193,7 +194,9 @@ public class InsertPinActivity extends AppCompatActivity {
                     // TODO Change method to upload Pin and then link it to the photo
                     //uploadPin();
                 } else {
-                    Toast.makeText(InsertPinActivity.this, "Choose a title for the new pin", Toast.LENGTH_SHORT).show();
+                    //TODO
+                    Snackbar.make(view,
+                            "Choose a title for the new pin", Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
@@ -231,8 +234,10 @@ public class InsertPinActivity extends AppCompatActivity {
                     openLocalPhoto.launch("image/*");
 
                 }else{
-                    Toast.makeText(InsertPinActivity.this,"Read permission not granted",
-                            Toast.LENGTH_SHORT).show();
+                    //TODO
+                    Snackbar.make(view,
+                            "Read permission not granted", Snackbar.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -258,10 +263,13 @@ public class InsertPinActivity extends AppCompatActivity {
         pinViewModel.uploadImagePin(data, randomPhotoFileName).observe(this, result -> {
             if (result.isSuccess()){
                 uploadPin();
-                Toast.makeText(InsertPinActivity.this,"Upload completed", Toast.LENGTH_SHORT).show();
+                //TODO
+                Snackbar.make(this.findViewById(android.R.id.content),
+                        "Upload completed", Snackbar.LENGTH_SHORT).show();
             } else {
                 binding.uploadProgressBar.setVisibility(View.GONE);
-                Toast.makeText(InsertPinActivity.this, "Photo upload failed", Toast.LENGTH_SHORT).show();
+                Snackbar.make(this.findViewById(android.R.id.content),
+                        "Photo upload failed", Snackbar.LENGTH_SHORT).show();
             }
         });
 
@@ -279,11 +287,13 @@ public class InsertPinActivity extends AppCompatActivity {
             pinViewModel.uploadPin(pin).observe(this, result -> {
                 if (result.isSuccess()){
                     binding.uploadProgressBar.setVisibility(View.GONE);
-                    Toast.makeText(InsertPinActivity.this,"Upload completed", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(this.findViewById(android.R.id.content),
+                            "Upload completed", Snackbar.LENGTH_SHORT).show();
                     InsertPinActivity.this.finish();
                 } else {
                     binding.uploadProgressBar.setVisibility(View.GONE);
-                    Toast.makeText(InsertPinActivity.this, "Pin upload failed", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(this.findViewById(android.R.id.content),
+                            "Pin upload failed", Snackbar.LENGTH_SHORT).show();
                 }
             });
         }
@@ -370,13 +380,14 @@ public class InsertPinActivity extends AppCompatActivity {
             bmp.compress(Bitmap.CompressFormat.JPEG,100, outputStream);
             Objects.requireNonNull(outputStream);
             outputStream.close();
-            Toast.makeText(this,"Image saved", Toast.LENGTH_SHORT).show();
+            Snackbar.make(this.findViewById(android.R.id.content),
+                    "Image saved", Snackbar.LENGTH_SHORT).show();
             return true;
 
         }
         catch (Exception e){
-
-            Toast.makeText(this,"Image not saved: \n" + e, Toast.LENGTH_SHORT).show();
+            Snackbar.make(this.findViewById(android.R.id.content),
+                    "Image not saved: \n" + e, Snackbar.LENGTH_SHORT).show();
             e.printStackTrace();
 
         }
