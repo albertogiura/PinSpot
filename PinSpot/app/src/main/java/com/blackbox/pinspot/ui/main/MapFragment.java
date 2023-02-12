@@ -4,6 +4,9 @@ import static android.content.ContentValues.TAG;
 
 import static com.blackbox.pinspot.util.Constants.LAST_LAT;
 import static com.blackbox.pinspot.util.Constants.LAST_LON;
+import static com.blackbox.pinspot.util.Constants.PLACES_API_KEK;
+import static com.blackbox.pinspot.util.Constants.SHARED_PREFERENCES_FILE_NAME;
+import static com.blackbox.pinspot.util.Constants.SHARED_PREFERENCES_SKIP;
 
 import android.Manifest;
 import android.app.Activity;
@@ -100,16 +103,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             Manifest.permission.ACCESS_COARSE_LOCATION
     };
     private FusedLocationProviderClient fusedLocationClient;
-    /*private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
-    private static final int DEFAULT_ZOOM = 20;
-    private Location lastKnownLocation;*/
+
     private LatLng mypos = new LatLng(0,0);
     private ArrayList<Marker> markers = new ArrayList<Marker>();
 
     private GoogleMap googleMap;
 
     public MapFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -123,7 +123,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
         if (pinRepository != null) {
             // This is the way to create a ViewModel with custom parameters
-            // (see NewsViewModelFactory class for the implementation details)
+
             pinViewModel = new ViewModelProvider(
                     requireActivity(),
                     new PinViewModelFactory(pinRepository)).get(PinViewModel.class);
@@ -137,15 +137,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-
-        Toast.makeText(requireActivity(),
-                "connessione: "+Boolean.toString(isOnline()) ,
-                Toast.LENGTH_SHORT).show();
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity());
-
-        //fragmentMapBinding.mapv.getMapAsync(this);
 
         multiplePermissionsContract = new ActivityResultContracts.RequestMultiplePermissions();
 
@@ -186,19 +179,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         mapView.onResume();
         mapView.getMapAsync(this);
 
-        /*fragmentMapBinding.mapv.onCreate(savedInstanceState);
-        fragmentMapBinding.mapv.onResume();
-        fragmentMapBinding.mapv.getMapAsync(this);*/
+
         ActivityResultLauncher<Intent> insertPinActivityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
-                        //if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes
-                        Toast.makeText(requireActivity(),
-                                " yeeeeee" ,
-                                Toast.LENGTH_SHORT).show();
+
                         googleMap.clear();
                         getDeviceLocation(googleMap);
 
@@ -211,24 +198,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 @Override
                 public void onClick(View v) {
                     SharedPreferences sharedPref = requireActivity().getSharedPreferences(
-                            "settings", Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
-                    Boolean skipSettings = sharedPref.getBoolean("skip", false);
+                            SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+                    Boolean skipSettings = sharedPref.getBoolean(SHARED_PREFERENCES_SKIP, false);
                     if (skipSettings == false) {
 
-                        //TODO Pass forward current latitude and longitude to the InsertPinActivity
                         getDeviceLocation(googleMap);
-
-
                         Intent intent = new Intent(requireContext(), InsertPinActivity.class);
                         intent.putExtra("latitude", mypos.latitude);
                         intent.putExtra("longitude", mypos.longitude);
-                        //startActivity(intent);
+
                         insertPinActivityResultLauncher.launch(intent);
 
                     }else{
                         Snackbar.make(v,
-                                "Vai al login",
-                                Snackbar.LENGTH_SHORT).setAction("vai", new MyGoToLoginAction())
+                                "To use this function you need to be logged in the app",
+                                Snackbar.LENGTH_SHORT).setAction("Go to", new MyGoToLoginAction())
                                 .show();
 
                     }
@@ -252,7 +236,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 });
 
         //COSTANTE AGGIUNGERECOSTANTI IMBECILLI SE NON L'ABBBIAMO ANCORA FATTO
-        Places.initialize(requireContext(), "AIzaSyBVzu-lEm7gs-V1AElIWVgwHlNXdaeuVyM");
+        Places.initialize(requireContext(), PLACES_API_KEK);
         binding.searchButton.setOnClickListener(v -> {
             List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
 
@@ -270,18 +254,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         this.googleMap = googleMap;
         googleMap.setOnMarkerClickListener(this);
         googleMap.getUiSettings().setCompassEnabled(false);
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                /*MarkerOptions marker = new MarkerOptions().position(
-                                latLng)
-                        .title("Hello Maps ");
-                marker.icon(BitmapDescriptorFactory
-                        .defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-                googleMap.addMarker(marker);*/
-            }
 
-        });
 
         if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -301,16 +274,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         googleMap.setMaxZoomPreference(20.0f);
         googleMap.setMinZoomPreference(13.5f);
 
-        /*googleMap.setOnCameraChangeListener(new GoogleMap.OnCameraChangeListener() {
-            @Override public void onCameraChange(CameraPosition cameraPosition) {
-                // camera change can occur programmatically.
-                if (isResumed()) {
-                    Toast.makeText(requireActivity(),
-                            " MISTOMUOVENDO" ,
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        });*/
+
 
         googleMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
@@ -320,9 +284,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                 if(((currCameraLat - lastUpdateLat)>= 0.01) || ((currCameraLon - lastUpdateLon)>= 0.01)){
                     lastUpdateLat = currCameraLat;
                     lastUpdateLon = currCameraLon;
-                    Toast.makeText(requireActivity(),
-                            " MISTOMUOVENDO" ,
-                            Toast.LENGTH_SHORT).show();
+
                     if (isResumed()) {
                         if (googleMap != null) {
                             for (int i = 0; i < markers.size(); ++i)
@@ -343,67 +305,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         {
             @Override
             public boolean onMyLocationButtonClick() {
-                Toast.makeText(requireActivity(),
-                        " bottonecliccato" ,
-                        Toast.LENGTH_SHORT).show();
+
                 googleMap.clear();
                 updatePin(googleMap, startLat, startLon);
-                // Return false so that we don't consume the event and the default behavior still occurs
-                // (the camera animates to the user's current position).
+
                 return false;
             }
         });
-
-        /*markerlist.add(new myMarker(45.01, 9, "pin1", "id1"));
-        markerlist.add(new myMarker(45.02, 9, "pin2", "id2"));
-        markerlist.add(new myMarker(45.03, 9, "pin3", "id3"));
-        int size =  markerlist.size();
-        for(int i =0 ;i<size;++i) {
-            //POSSIBILE INIZIO METODO ISTANZIAZIONE MARKER
-
-            LatLng markerpos = new LatLng(markerlist.get(i).getLat(), markerlist.get(i).getLon());
-            marker = googleMap.addMarker(new MarkerOptions()
-                    .position(markerpos)
-                    .title(markerlist.get(i).getTitle())
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))//cambio colore IMPORT NECESSARIO
-                    //BitmapDescriptorFactory.fromResource(R.drawable.arrow) cosi possiamo mettere la mappa
-                    .alpha(0.9f)//cambio opacità
-                    .flat(true)//In teoria dovremmo averlo così ma bho non cambia nulla a prima vista
-            );
-            //marker.setTag(i);*/
-
-
-
-        //markerlist.add(new myMarker(45.01, 9, "pin1", "id1"));
-
-        /*int size = markerlist.size();
-        String s = "I risultati sono: "+Integer.toString(size);
-        Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show();
-
-        for(int i = 0;i < size;++i) {
-            LatLng markerpos = new LatLng(markerlist.get(i).getLat(), markerlist.get(i).getLon());
-            marker = googleMap.addMarker(new MarkerOptions()
-                    .position(markerpos)
-                    .title(markerlist.get(i).getTitle())
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))//cambio colore IMPORT NECESSARIO
-                    //BitmapDescriptorFactory.fromResource(R.drawable.arrow) cosi possiamo mettere la mappa
-                    .alpha(0.9f)//cambio opacità
-                    .flat(true)//In teoria dovremmo averlo così ma bho non cambia nulla a prima vista
-            );
-            marker.setTag(markerlist.get(i).getIdPin());
-        }*/
-
-
-        /*LatLng markerpos = new LatLng(45.01, 9);
-        marker = googleMap.addMarker(new MarkerOptions()
-                .position(markerpos)
-                .title("sono un test")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))//cambio colore IMPORT NECESSARIO
-                //BitmapDescriptorFactory.fromResource(R.drawable.arrow) cosi possiamo mettere la mappa
-                .alpha(0.9f)//cambio opacità
-                .flat(true)//In teoria dovremmo averlo così ma bho non cambia nulla a prima vista
-        );*/
-
     }
 
     @Override
@@ -411,11 +319,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         lastSavedLat = googleMap.getCameraPosition().target.latitude;
         lastSavedLon = googleMap.getCameraPosition().target.longitude;
         if (marker.getTag() == null){
-            Toast.makeText(requireActivity(), "Vuoto", Toast.LENGTH_SHORT).show();
+            Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                    getString(R.string.unexpected_error), Snackbar.LENGTH_SHORT).show();
+
         } else {
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+            // TODO da cambiare pins4
             DocumentReference docRef = db.collection("pins4").document(marker.getTag().toString());
 
             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -487,27 +397,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                             }
                         });
 
-                /*Task<Location> locationResult = fusedLocationClient.getLastLocation();
-                locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        if (task.isSuccessful()) {
-                            // Set the map's camera position to the current location of the device.
-                            lastKnownLocation = task.getResult();
-                            if (lastKnownLocation != null) {
-                                fragmentMapBinding.mapv.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                        new LatLng(lastKnownLocation.getLatitude(),
-                                                lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-                            }
-                        } else {
-                            Log.d(TAG, "Current location is null. Using defaults.");
-                            Log.e(TAG, "Exception: %s", task.getException());
-                            map.moveCamera(CameraUpdateFactory
-                                    .newLatLngZoom(defaultLocation, DEFAULT_ZOOM));
-                            map.getUiSettings().setMyLocationButtonEnabled(false);
-                        }
-                    }
-                });*/
+
             } else {
                 multiplePermissionLauncher.launch(PERMISSIONS);
             }
@@ -562,9 +452,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                         }
                         int size = matchingDocs.size();
 
-                        String s = "I risultati sono: "+Integer.toString(size);
-                        Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show();
-
                         for(int i = 0 ;i<size;++i){
                             double lat =  matchingDocs.get(i).getDouble("lat");
                             double lon =  matchingDocs.get(i).getDouble("lon");
@@ -576,7 +463,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                                     .position(new LatLng(lat, lon))
                                     .title(title)
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))//cambio colore IMPORT NECESSARIO
-                                    //BitmapDescriptorFactory.fromResource(R.drawable.arrow) cosi possiamo mettere la mappa
                                     .alpha(0.9f)//cambio opacità
                                     .flat(true)//In teoria dovremmo averlo così ma bho non cambia nulla a prima vista
                             );
@@ -600,9 +486,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public void onPause() {
         super.onPause();
-        Toast.makeText(requireActivity(),
-                " pausa",
-                Toast.LENGTH_SHORT).show();
         mapViewModel.setLastLat(googleMap.getCameraPosition().target.latitude);
         mapViewModel.setLastLon(googleMap.getCameraPosition().target.longitude);
     }

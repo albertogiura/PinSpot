@@ -18,9 +18,5 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //binding = ActivityLoginBinding.inflate(getLayoutInflater());
-        /*NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().
-                findFragmentById(R.id.welcome_nav_graph);
-        NavController navController = navHostFragment.getNavController();*/
     }
 }

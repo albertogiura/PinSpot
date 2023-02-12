@@ -1,5 +1,9 @@
 package com.blackbox.pinspot.ui.main;
 
+import static com.blackbox.pinspot.util.Constants.SHARED_PREFERENCES_CELSIUS;
+import static com.blackbox.pinspot.util.Constants.SHARED_PREFERENCES_FILE_NAME;
+import static com.blackbox.pinspot.util.Constants.SHARED_PREFERENCES_SKIP;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -56,26 +60,21 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         SharedPreferences sharedPref = requireActivity().getSharedPreferences(
-                "settings", Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
-        Boolean skipSettings = sharedPref.getBoolean("skip", false);
-        Toast.makeText(requireActivity(),
-                Boolean.toString(skipSettings) ,
-                Toast.LENGTH_SHORT).show();
+                SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
+        Boolean skipSettings = sharedPref.getBoolean(SHARED_PREFERENCES_SKIP, false);
+
         if(skipSettings==false) {
             binding.textViewUserEmail.setText(userViewModel.getLoggedUser().getEmail());
-            //binding.textViewUserId.setText(userViewModel.getLoggedUser().getIdToken());
+
 
             binding.buttonUserLogout.setOnClickListener(v -> {
                 userViewModel.logout().observe(getViewLifecycleOwner(), result -> {
                     if (result.isSuccess()) {
-                    /*Snackbar.make(v,
-                    "Logout completed successfully",
-                            Snackbar.LENGTH_SHORT).show();*/
+
                         Intent intent = new Intent(requireContext(), LoginActivity.class);
                         startActivity(intent);
                         requireActivity().finish();
-                    /*Navigation.findNavController(view).navigate(
-                    R.id.action_fragment_settings_to_welcomeActivity);*/
+
                     } else {
                         Snackbar.make(v,
                                 this.getString(R.string.unexpected_error),
@@ -84,7 +83,7 @@ public class ProfileFragment extends Fragment {
                 });
             });
         }else{
-           binding.textViewUserEmail.setText("VaI aL LOgIn plS");
+           binding.textViewUserEmail.setText("To use this function you need to be logged in the app");
            binding.buttonUserLogout.setText("Log In");
 
            binding.buttonUserLogout.setOnClickListener(v -> {
@@ -92,24 +91,20 @@ public class ProfileFragment extends Fragment {
            });
         }
 
-        Boolean celsiusSettings = sharedPref.getBoolean("celsius", true);
-        Toast.makeText(requireActivity(),
-                Boolean.toString(celsiusSettings) ,
-                Toast.LENGTH_SHORT).show();
+        Boolean celsiusSettings = sharedPref.getBoolean(SHARED_PREFERENCES_CELSIUS, true);
+
         binding.switchDegree.setChecked(celsiusSettings);
 
         binding.switchDegree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 Context context = getActivity();
-                //TODO ATTENZIONE COSTANTE
+
                 SharedPreferences sharedPref = context.getSharedPreferences(
-                        "settings", Context.MODE_PRIVATE); //DAMETTEREINUNACOSTANTE
+                        SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPref.edit();
-                editor.putBoolean("celsius", isChecked);
+                editor.putBoolean(SHARED_PREFERENCES_CELSIUS, isChecked);
                 editor.apply();
-                Toast.makeText(requireActivity(),
-                        Boolean.toString(isChecked) ,
-                        Toast.LENGTH_SHORT).show();
+
             }
         });
     }

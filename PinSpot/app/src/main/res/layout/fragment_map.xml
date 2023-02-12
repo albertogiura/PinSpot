@@ -18,6 +18,7 @@
         android:contentDescription="@string/app_name"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        style="@style/Button"
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +26,6 @@
         android:layout_margin="16dp"
         android:contentDescription="@string/login"
         android:src="@drawable/spot_place_foreground"
-        android:backgroundTint="@color/primaryColor"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,13 +37,14 @@
         app:tint="@color/white"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        style="@style/ButtonLigth"
         android:id="@+id/searchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
         android:contentDescription="@string/app_name"
         android:src="?android:attr/actionModeWebSearchDrawable"
-        app:backgroundTint="@color/primaryLightColor"
+
         app:layout_constraintBottom_toBottomOf="@+id/mapv"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.045"

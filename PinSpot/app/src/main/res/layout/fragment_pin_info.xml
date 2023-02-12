@@ -9,9 +9,10 @@
     tools:context=".ui.main.PinInfoFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        style="@style/SecondaryBackgroundColor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primaryLightColor">
+        >
 
         <View
             android:id="@+id/divider"
@@ -47,38 +48,39 @@
             app:srcCompat="@drawable/placeholder_pin_photo" />
 
         <TextView
+            style="@style/TextBlack"
             android:id="@+id/PinTitle_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="60dp"
             android:text="@string/default_pin_title"
-            android:textColor="@color/black"
+
             android:textSize="35sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/pinPhotoImageView" />
 
         <TextView
+            style="@style/TextBlack"
             android:id="@+id/textViewWeatherDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="36dp"
             android:text="@string/weather"
-            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/addPinToFav_fab"
             app:layout_constraintTop_toBottomOf="@+id/PinTitle_textView" />
 
         <TextView
+            style="@style/TextBlack"
             android:id="@+id/textViewTemperature"
             android:layout_width="72dp"
             android:layout_height="32dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="36dp"
             android:text="@string/temperature"
-            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/PinTitle_textView"

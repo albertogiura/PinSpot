@@ -36,10 +36,11 @@
                     android:src="@drawable/undraw_active_options_re_8rj3" />
 
                 <View
+                    style="@style/Separator"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp"
-                    android:background="@color/primaryColor" />
+                    />
 
             </LinearLayout>
 
@@ -49,10 +50,10 @@
                 android:orientation="vertical">
 
                 <TextView
+                    style="@style/TextColored"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/email_two_points"
-                    android:textColor="@color/primaryColor"
                     android:textSize="30sp"
                     android:textStyle="bold" />
 
@@ -66,10 +67,11 @@
                     android:textStyle="bold" />
 
                 <View
+                    style="@style/Separator"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp"
-                    android:background="@color/primaryColor" />
+                     />
 
             </LinearLayout>
 
@@ -139,10 +141,11 @@
 
 
                 <View
+                    style="@style/Separator"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp"
-                    android:background="@color/primaryColor" />
+                     />
 
             </LinearLayout>
 
@@ -167,10 +170,11 @@
                     app:layout_constraintVertical_bias="0.124" />
 
                 <View
+                    style="@style/Separator"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp"
-                    android:background="@color/primaryColor" />
+                   />
 
             </LinearLayout>
 

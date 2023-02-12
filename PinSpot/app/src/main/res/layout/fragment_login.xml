@@ -57,12 +57,12 @@
 
 
                     <TextView
+                        style="@style/TextDark"
                         android:id="@+id/loginText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/login"
                         android:textAlignment="center"
-                        android:textColor="@color/primaryDarkColor"
                         android:textSize="36sp"
                         android:textStyle="bold" />
 
@@ -96,15 +96,16 @@
                         android:textColorHint="@color/white" />
 
                     <Button
+                        style="@style/ButtonDark"
                         android:id="@+id/button_login"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
                         android:layout_marginTop="30dp"
-                        android:backgroundTint="@color/primaryDarkColor"
                         android:text="@string/login"
                         android:textSize="18sp"
                         app:cornerRadius="20dp" />
                     <Button
+                        style="@style/TextBlack"
                         android:id="@+id/button_forgot_login_password"
                         android:layout_width="262dp"
                         android:layout_height="57dp"
@@ -112,7 +113,6 @@
                         android:inputType="textCapSentences"
                         android:text="@string/forgot_password"
                         android:layout_gravity="center"
-                        android:textColor="#000000"
                         app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -126,10 +126,10 @@
             </androidx.cardview.widget.CardView>
 
             <Button
+                style="@style/ButtonDark"
                 android:id="@+id/button_open_signup"
                 android:layout_width="250dp"
                 android:layout_height="50dp"
-                android:backgroundTint="@color/primaryDarkColor"
                 android:layout_gravity="center"
                 android:padding="8dp"
                 android:text="@string/invite_to_signup"
@@ -159,13 +159,13 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
+                style="@style/ButtonDark"
                 android:id="@+id/skipButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="-70dp"
                 android:layout_gravity="end"
-                android:backgroundTint="@color/primaryDarkColor"
                 android:text="@string/not_now"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"

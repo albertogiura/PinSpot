@@ -2,6 +2,8 @@ package com.blackbox.pinspot.ui.main;
 
 import static android.content.ContentValues.TAG;
 
+import static com.blackbox.pinspot.util.Constants.DBIMAGES;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -71,7 +73,7 @@ public class InsertPinActivity extends AppCompatActivity {
 
     // Firebase Storage
     // TODO Move DBIMAGES into constants class
-    private static final String DBIMAGES = "gs://pinspot-demo.appspot.com/";
+
     private FirebaseStorage storage = FirebaseStorage.getInstance(DBIMAGES);
     private StorageReference storageRef = storage.getReference();
 
@@ -171,14 +173,6 @@ public class InsertPinActivity extends AppCompatActivity {
                 }
         );
 
-        /*binding.takePicButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                takePicture();
-            }
-        });*/
-
         binding.takePicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -188,17 +182,7 @@ public class InsertPinActivity extends AppCompatActivity {
         });
 
 
-        /*
-        mTakePicture = registerForActivityResult(
-                new ActivityResultContracts.TakePicture(),
-                new ActivityResultCallback<Boolean>() {
-                    @Override
-                    public void onActivityResult(Boolean result) {
 
-
-                    }
-                });
-         */
 
         binding.uploadPinButton.setOnClickListener(new View.OnClickListener() {
             @Override

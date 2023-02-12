@@ -2,6 +2,8 @@ package com.blackbox.pinspot.ui.welcome;
 
 import static com.blackbox.pinspot.util.Constants.INVALID_CREDENTIALS_ERROR;
 import static com.blackbox.pinspot.util.Constants.INVALID_USER_ERROR;
+import static com.blackbox.pinspot.util.Constants.SHARED_PREFERENCES_FILE_NAME;
+import static com.blackbox.pinspot.util.Constants.SHARED_PREFERENCES_SKIP;
 
 import android.app.Activity;
 import android.content.Context;
@@ -96,7 +98,7 @@ public class LoginFragment extends Fragment {
 
         activityResultLauncher = registerForActivityResult(startIntentSenderForResult, activityResult -> {
             if (activityResult.getResultCode() == Activity.RESULT_OK) {
-                Log.d(TAG, "result.getResultCode() == Activity.RESULT_OK");
+
                 try {
                     SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(activityResult.getData());
                     String idToken = credential.getGoogleIdToken();
@@ -142,10 +144,10 @@ public class LoginFragment extends Fragment {
         }
         binding.skipButton.setOnClickListener(v -> {
             SharedPreferences sharedPref = requireActivity().getSharedPreferences(
-                    "settings", Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
+                    SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
 
             SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putBoolean("skip", true);
+            editor.putBoolean(SHARED_PREFERENCES_SKIP, true);
             editor.apply();
             Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_mainActivity);
             //startActivityBasedOnCondition(MainActivity.class, R.id.action_loginFragment_to_mainActivity);
@@ -167,10 +169,10 @@ public class LoginFragment extends Fragment {
                                 userViewModel.setAuthenticationError(false);
                                 binding.progressBar.setVisibility(View.VISIBLE);
                                 SharedPreferences sharedPref = requireActivity().getSharedPreferences(
-                                        "settings", Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
+                                        SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
 
                                 SharedPreferences.Editor editor = sharedPref.edit();
-                                editor.putBoolean("skip", false);
+                                editor.putBoolean(SHARED_PREFERENCES_SKIP, false);
                                 editor.apply();
                                 startActivityBasedOnCondition(MainActivity.class, R.id.action_loginFragment_to_mainActivity);
                             } else {
@@ -195,12 +197,11 @@ public class LoginFragment extends Fragment {
                 .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
                     @Override
                     public void onSuccess(BeginSignInResult result) {
-                        Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
                         SharedPreferences sharedPref = requireActivity().getSharedPreferences(
-                                "settings", Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
+                                SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
 
                         SharedPreferences.Editor editor = sharedPref.edit();
-                        editor.putBoolean("skip", false);
+                        editor.putBoolean(SHARED_PREFERENCES_SKIP, false);
                         editor.apply();
                         IntentSenderRequest intentSenderRequest =
                                 new IntentSenderRequest.Builder(result.getPendingIntent()).build();

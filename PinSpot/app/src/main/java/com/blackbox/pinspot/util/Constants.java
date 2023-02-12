@@ -3,10 +3,13 @@ package com.blackbox.pinspot.util;
 public class Constants {
 
     public static final int STORAGE_REQUEST_CODE = 1000;
+    public   static final String DBIMAGES = "gs://pinspot-demo.appspot.com/";
 
     // OpenWeatherMap.org API related constants
     public static final String OPENWEATHERMAP_API_BASE_URL = "https://api.openweathermap.org/data/2.5/";
 
+    //places api key
+    public static final String PLACES_API_KEK = "AIzaSyBVzu-lEm7gs-V1AElIWVgwHlNXdaeuVyM";
 
     // Costants fot onSaveIstanceState
     public static final String LAST_LAT = "LAST_LAT";
@@ -23,19 +26,9 @@ public class Constants {
     public static final String WEAK_PASSWORD_ERROR = "passwordIsWeak";
 
     // Constants for SharedPreferences
-    public static final String SHARED_PREFERENCES_FILE_NAME = "com.blackbox.pinspot.preferences";
-    public static final String SHARED_PREFERENCES_COUNTRY_OF_INTEREST = "country_of_interest";
-    public static final String SHARED_PREFERENCES_TOPICS_OF_INTEREST = "topics_of_interest";
-    public static final String SHARED_PREFERENCES_FIRST_LOADING = "first_loading";
-
-    // Constants for EncryptedSharedPreferences
-    public static final String ENCRYPTED_SHARED_PREFERENCES_FILE_NAME = "com.blackbox.pinspot.encrypted_preferences";
-    public static final String EMAIL_ADDRESS = "email_address";
-    public static final String PASSWORD = "password";
-    public static final String ID_TOKEN = "google_token";
-
-    // Constants for encrypted files
-    public static final String ENCRYPTED_DATA_FILE_NAME = "com.blackbox.pinspot.encrypted_file.txt";
+    public static final String SHARED_PREFERENCES_FILE_NAME = "settings";
+    public static final String SHARED_PREFERENCES_SKIP = "skip";
+    public static final String SHARED_PREFERENCES_CELSIUS = "celsius";
 
     public static final int MINIMUM_PASSWORD_LENGTH = 6;
 

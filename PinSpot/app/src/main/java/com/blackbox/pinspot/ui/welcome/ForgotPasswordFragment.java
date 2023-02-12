@@ -18,6 +18,7 @@ import com.blackbox.pinspot.databinding.FragmentForgotPasswordBinding;
 import com.blackbox.pinspot.databinding.FragmentLoginBinding;
 import com.blackbox.pinspot.databinding.FragmentSignUpBinding;
 import com.blackbox.pinspot.util.ServiceLocator;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
@@ -66,13 +67,20 @@ public class ForgotPasswordFragment extends Fragment {
                 if (isEmailOk(emailAddress)) {
                     userViewModel.forgotPassword(emailAddress).observe(getViewLifecycleOwner(), result -> {
                         if (result.isSuccess()) {
-                            Toast.makeText(requireContext(), "Password recovery email sent", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                    "Password recovery email sent",
+                                    Snackbar.LENGTH_SHORT).show();
+
                         } else {
-                            Toast.makeText(requireContext(), "Error. Password recovery email sent not sent", Toast.LENGTH_SHORT).show();
+                            Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                    "Error. Password recovery email sent not sent",
+                                    Snackbar.LENGTH_SHORT).show();
                         }
                     });
                 } else {
-                    Toast.makeText(requireContext(), "This is not a valid email address for recovery", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                            "This is not a valid email address for recovery",
+                            Snackbar.LENGTH_SHORT).show();
                 }
             }
         });
