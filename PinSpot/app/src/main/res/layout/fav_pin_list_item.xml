@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
+        style="@style/ButtonDark"
         android:id="@+id/textview_fav_pin_title"
         android:layout_width="240dp"
         android:layout_height="28dp"
@@ -13,7 +14,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/edit_text_bg"
-        android:backgroundTint="@color/primaryDarkColor"
+
         android:gravity="center"
         android:textAppearance="?attr/textAppearanceTitleMedium"
         android:textColor="@color/white"

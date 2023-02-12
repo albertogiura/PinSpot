@@ -126,7 +126,6 @@
             </androidx.cardview.widget.CardView>
 
             <Button
-                style="@style/ButtonDark"
                 android:id="@+id/button_open_signup"
                 android:layout_width="250dp"
                 android:layout_height="50dp"
@@ -135,7 +134,8 @@
                 android:text="@string/invite_to_signup"
                 android:textAlignment="center"
                 android:textSize="14sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/others"
@@ -159,7 +159,6 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
-                style="@style/ButtonDark"
                 android:id="@+id/skipButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -172,7 +171,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.996"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/white"/>
 
         </LinearLayout>
     </ScrollView>
