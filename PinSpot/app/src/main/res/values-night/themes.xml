@@ -57,8 +57,10 @@
         <item name="android:backgroundTint">@color/primaryDarkColor</item>
         <item name="android:textColor">@color/white</item>
     </style>
-
+    <style name="PrimaryBackgroundColor">
+        <item name="android:background">@color/primaryDarkColor</item>
+    </style>
     <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
-        <item name="android:color">@color/primaryDarkColor</item>
+        <item name="android:color">@color/primaryLightColor</item>
     </style>
 </resources>

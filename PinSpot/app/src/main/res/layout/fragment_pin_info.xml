@@ -100,7 +100,8 @@
             android:src="@drawable/star_foreground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:maxImageSize="48dp" />
+            app:maxImageSize="48dp"
+            app:tint="@color/black"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/closePinInfo_button"
