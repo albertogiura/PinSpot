@@ -1,5 +1,7 @@
 package com.blackbox.pinspot.util;
 
+import static com.blackbox.pinspot.util.Constants.WEATHER_API_KEY;
+
 import android.app.Application;
 
 import com.blackbox.pinspot.data.database.PinRoomDatabase;
@@ -7,8 +9,8 @@ import com.blackbox.pinspot.data.repository.pin.IPinRepository;
 import com.blackbox.pinspot.data.repository.pin.PinRepository;
 import com.blackbox.pinspot.data.repository.user.IUserRepository;
 import com.blackbox.pinspot.data.repository.user.UserRepository;
-import com.blackbox.pinspot.data.repository.weather.IWeatherRepositoryWithLiveData;
-import com.blackbox.pinspot.data.repository.weather.WeatherRepositoryWithLiveData;
+import com.blackbox.pinspot.data.repository.weather.IWeatherRepository;
+import com.blackbox.pinspot.data.repository.weather.WeatherRepository;
 import com.blackbox.pinspot.data.service.WeatherApiService;
 import com.blackbox.pinspot.data.source.pin.BaseFavoritePinLocalDataSource;
 import com.blackbox.pinspot.data.source.pin.BasePinRemoteDataSource;
@@ -52,12 +54,12 @@ public class ServiceLocator {
         return retrofit.create(WeatherApiService.class);
     }
 
-    public IWeatherRepositoryWithLiveData getWeatherRepository() {
+    public IWeatherRepository getWeatherRepository() {
         // TODO Move API key
         BaseWeatherRemoteDataSource weatherRemoteDataSource =
-                new WeatherRemoteDataSource("4f6ec18ab9eb724adb869edca9cbbf63");
+                new WeatherRemoteDataSource(WEATHER_API_KEY);
 
-        return new WeatherRepositoryWithLiveData(weatherRemoteDataSource);
+        return new WeatherRepository(weatherRemoteDataSource);
     }
 
     public IPinRepository getPinRepository(Application application) {

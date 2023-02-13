@@ -28,7 +28,6 @@ public class FavoritePinLocalDataSource extends BaseFavoritePinLocalDataSource {
         PinRoomDatabase.databaseWriteExecutor.execute(() -> {
             pinDao.delete(pin);
             getFavoritePinList();
-            //pinCallback.onSuccessRemovingFavPin(pin);
         });
     }
 
@@ -37,7 +36,6 @@ public class FavoritePinLocalDataSource extends BaseFavoritePinLocalDataSource {
         PinRoomDatabase.databaseWriteExecutor.execute(() -> {
             pinDao.insert(pin);
             getFavoritePinList();
-            //pinCallback.onSuccessAddingFavPin();
         });
     }
 }

@@ -1,10 +1,9 @@
-package com.blackbox.pinspot.data.repository.user;
+package com.blackbox.pinspot.data.source.user;
 
 import com.blackbox.pinspot.model.User;
 
-import java.util.List;
 
-public interface UserResponseCallback {
+public interface UserCallback {
     void onSuccessFromAuthentication(User user);
     void onFailureFromAuthentication(String message);
     void onSuccessLogout();

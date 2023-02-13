@@ -1,7 +1,5 @@
 package com.blackbox.pinspot.model;
 
-import com.blackbox.pinspot.model.weather.WeatherApiResponse;
-
 public abstract class Result {
     private Result() {}
 

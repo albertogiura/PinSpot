@@ -1,6 +1,6 @@
 package com.blackbox.pinspot.data.service;
 
-import com.blackbox.pinspot.model.weather.WeatherApiResponse;
+import com.blackbox.pinspot.model.WeatherApiResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

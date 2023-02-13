@@ -96,7 +96,7 @@
             android:layout_marginTop="16dp"
 
             android:layout_marginEnd="16dp"
-            android:contentDescription="@string/spot_a_new_place"
+            android:contentDescription="@string/add_or_remove_pin_from_favorite_list"
             android:src="@drawable/star_foreground"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

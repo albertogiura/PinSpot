@@ -1,14 +1,13 @@
 package com.blackbox.pinspot.data.source.user;
 
-import com.blackbox.pinspot.data.repository.user.UserResponseCallback;
 import com.blackbox.pinspot.model.User;
 
 public abstract class BaseUserAuthRemoteDataSource {
 
-    protected UserResponseCallback userResponseCallback;
+    protected UserCallback userCallback;
 
-    public void setUserResponseCallback(UserResponseCallback userResponseCallback) {
-        this.userResponseCallback = userResponseCallback;
+    public void setUserResponseCallback(UserCallback userCallback) {
+        this.userCallback = userCallback;
     }
     public abstract User getLoggedUser();
     public abstract void logout();

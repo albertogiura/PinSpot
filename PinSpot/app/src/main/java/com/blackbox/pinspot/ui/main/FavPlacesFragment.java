@@ -18,14 +18,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.blackbox.pinspot.R;
 import com.blackbox.pinspot.adapter.PinRecyclerViewAdapter;
 import com.blackbox.pinspot.data.repository.pin.IPinRepository;
-import com.blackbox.pinspot.data.repository.weather.IWeatherRepositoryWithLiveData;
 import com.blackbox.pinspot.databinding.FragmentFavPlacesBinding;
-import com.blackbox.pinspot.databinding.FragmentProfileBinding;
 import com.blackbox.pinspot.model.Pin;
 import com.blackbox.pinspot.util.ServiceLocator;
 import com.google.android.material.snackbar.Snackbar;
@@ -62,8 +59,6 @@ public class FavPlacesFragment extends Fragment {
                 ServiceLocator.getInstance().getPinRepository(requireActivity().getApplication());
 
         if (pinRepository != null) {
-            // This is the way to create a ViewModel with custom parameters
-            // (see NewsViewModelFactory class for the implementation details)
             pinViewModel = new ViewModelProvider(
                     requireActivity(),
                     new PinViewModelFactory(pinRepository)).get(PinViewModel.class);
@@ -71,15 +66,12 @@ public class FavPlacesFragment extends Fragment {
             Snackbar.make(requireActivity().findViewById(android.R.id.content),
                     getString(R.string.unexpected_error), Snackbar.LENGTH_SHORT).show();
         }
-
-        //pinList = new ArrayList<>();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        //return inflater.inflate(R.layout.fragment_fav_places, container, false);
         binding = FragmentFavPlacesBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -117,7 +109,6 @@ public class FavPlacesFragment extends Fragment {
             binding.favPinRecyclerview.setLayoutManager(new LinearLayoutManager(requireContext()));
 
             pinViewModel.getFavPinList().observe(getViewLifecycleOwner(), pins -> {
-                //this.pinList = pinList;
                 pinList.clear();
                 pinList.addAll(pins);
                 mAdapter.notifyDataSetChanged();

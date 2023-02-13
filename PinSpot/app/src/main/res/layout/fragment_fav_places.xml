@@ -10,7 +10,7 @@
         android:id="@+id/LogInTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login_to_unblock_feature"
+        android:text="@string/login_to_unlock_feature"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

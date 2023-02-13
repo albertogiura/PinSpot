@@ -2,19 +2,24 @@ package com.blackbox.pinspot.util;
 
 public class Constants {
 
-    public static final int STORAGE_REQUEST_CODE = 1000;
-    public   static final String DBIMAGES = "gs://pinspot-demo.appspot.com/";
+    public static final String DBIMAGES = "gs://pinspot-demo.appspot.com/";
+
+    // Pin collection path on remote DB
+    public static final String PIN_COLLECTION = "pins4";
+
+    // Request code for InsertPin related permissions request
+    public static final int CAMERA_REQUEST_CODE = 1000;
 
     // OpenWeatherMap.org API related constants
     public static final String OPENWEATHERMAP_API_BASE_URL = "https://api.openweathermap.org/data/2.5/";
+    public static final String WEATHER_API_KEY = "4f6ec18ab9eb724adb869edca9cbbf63";
 
-    //places api key
-    public static final String PLACES_API_KEK = "AIzaSyBVzu-lEm7gs-V1AElIWVgwHlNXdaeuVyM";
+    // Places API key
+    public static final String PLACES_API_KEY = "AIzaSyBVzu-lEm7gs-V1AElIWVgwHlNXdaeuVyM";
 
-    // Costants fot onSaveIstanceState
+    // Constants for onSaveInstanceState
     public static final String LAST_LAT = "LAST_LAT";
     public static final String LAST_LON = "LAST_LON";
-
 
     // Constants for managing errors
     public static final String RETROFIT_ERROR = "retrofit_error";
@@ -30,10 +35,6 @@ public class Constants {
     public static final String SHARED_PREFERENCES_SKIP = "skip";
     public static final String SHARED_PREFERENCES_CELSIUS = "celsius";
 
+    // Login related constants
     public static final int MINIMUM_PASSWORD_LENGTH = 6;
-
-    // Constants for Firebase Realtime Database
-    public static final String FIREBASE_REALTIME_DATABASE = "https://pinspot-demo-default-rtdb.europe-west1.firebasedatabase.app/";
-    public static final String FIREBASE_USERS_COLLECTION = "users";
-    public static final String FIREBASE_FAVORITE_NEWS_COLLECTION = "favorite_news";
 }

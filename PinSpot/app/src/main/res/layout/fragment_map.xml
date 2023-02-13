@@ -4,12 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="80dp"
     tools:context=".ui.main.MapFragment">
 
-    <!--<TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="mappa" />-->
 
     <com.google.android.gms.maps.MapView
         android:layout_width="match_parent"
@@ -18,8 +15,8 @@
         android:contentDescription="@string/app_name"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        style="@style/Button"
         android:id="@+id/fab"
+        style="@style/Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
@@ -32,9 +29,9 @@
         app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.86"
+        app:layout_constraintVertical_bias="0.947"
         app:maxImageSize="48dp"
-        app:tint="@color/white"/>
+        app:tint="@color/white" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         style="@style/ButtonLigth"

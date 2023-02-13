@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +71,7 @@ public class ForgotPasswordFragment extends Fragment {
                             Snackbar.make(requireActivity().findViewById(android.R.id.content),
                                     "Password recovery email sent",
                                     Snackbar.LENGTH_SHORT).show();
+                            Navigation.findNavController(requireView()).navigateUp();
 
                         } else {
                             Snackbar.make(requireActivity().findViewById(android.R.id.content),
@@ -82,6 +84,13 @@ public class ForgotPasswordFragment extends Fragment {
                             "This is not a valid email address for recovery",
                             Snackbar.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        binding.buttonBackToLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(requireView()).navigateUp();
             }
         });
     }

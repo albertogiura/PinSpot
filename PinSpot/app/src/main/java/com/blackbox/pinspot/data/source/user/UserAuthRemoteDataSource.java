@@ -51,7 +51,7 @@ public class UserAuthRemoteDataSource extends BaseUserAuthRemoteDataSource {
                 if (firebaseAuth.getCurrentUser() == null) {
                     firebaseAuth.removeAuthStateListener(this);
                     Log.d(TAG, "User logged out");
-                    userResponseCallback.onSuccessLogout();
+                    userCallback.onSuccessLogout();
                 }
             }
         };
@@ -66,13 +66,13 @@ public class UserAuthRemoteDataSource extends BaseUserAuthRemoteDataSource {
                 FirebaseUser firebaseUser = mAuth.getCurrentUser();
                 if (firebaseUser != null) {
                     // Code to be executed if user has been correctly created on the Firebase Auth side
-                    userResponseCallback.onSuccessFromAuthentication(new User(
+                    userCallback.onSuccessFromAuthentication(new User(
                             firebaseUser.getDisplayName(), email, firebaseUser.getUid()));
                 } else {
-                    userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
+                    userCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
                 }
             } else {
-                userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
+                userCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
             }
         });
     }
@@ -84,13 +84,13 @@ public class UserAuthRemoteDataSource extends BaseUserAuthRemoteDataSource {
                 FirebaseUser firebaseUser = mAuth.getCurrentUser();
                 if (firebaseUser != null) {
                     // Code to be executed if user has been correctly created on the Firebase Auth side
-                    userResponseCallback.onSuccessFromAuthentication(new User(
+                    userCallback.onSuccessFromAuthentication(new User(
                             firebaseUser.getDisplayName(), email, firebaseUser.getUid()));
                 } else {
-                    userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
+                    userCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
                 }
             } else {
-                userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
+                userCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
             }
         });
     }
@@ -108,17 +108,17 @@ public class UserAuthRemoteDataSource extends BaseUserAuthRemoteDataSource {
                     FirebaseUser firebaseUser = mAuth.getCurrentUser();
                     if (firebaseUser != null) {
                         // Code to be executed if user has been correctly created on the Firebase Auth side
-                        userResponseCallback.onSuccessFromAuthentication(new User(
+                        userCallback.onSuccessFromAuthentication(new User(
                                 firebaseUser.getDisplayName(), firebaseUser.getEmail(),
                                 firebaseUser.getUid()));
                     } else {
-                        userResponseCallback.onFailureFromAuthentication(
+                        userCallback.onFailureFromAuthentication(
                                 getErrorMessage(task.getException()));
                     }
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.getException());
-                    userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
+                    userCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
                 }
             });
         }
@@ -132,7 +132,7 @@ public class UserAuthRemoteDataSource extends BaseUserAuthRemoteDataSource {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                userResponseCallback.onSuccessForgotPassword();
+                                userCallback.onSuccessForgotPassword();
                             }
                         }
                     });

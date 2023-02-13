@@ -12,7 +12,7 @@
         android:title="Map"/>
 
     <item
-        android:id="@+id/profileFragment"
+        android:id="@+id/settingsFragment"
         android:enabled="true"
         android:icon="@drawable/settings_foreground"
         android:title="Settings" />

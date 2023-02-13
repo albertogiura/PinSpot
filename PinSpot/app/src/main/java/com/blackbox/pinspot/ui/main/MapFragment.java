@@ -4,7 +4,8 @@ import static android.content.ContentValues.TAG;
 
 import static com.blackbox.pinspot.util.Constants.LAST_LAT;
 import static com.blackbox.pinspot.util.Constants.LAST_LON;
-import static com.blackbox.pinspot.util.Constants.PLACES_API_KEK;
+import static com.blackbox.pinspot.util.Constants.PIN_COLLECTION;
+import static com.blackbox.pinspot.util.Constants.PLACES_API_KEY;
 import static com.blackbox.pinspot.util.Constants.SHARED_PREFERENCES_FILE_NAME;
 import static com.blackbox.pinspot.util.Constants.SHARED_PREFERENCES_SKIP;
 
@@ -80,9 +81,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         @Override
         public void onClick(View v) {
             Navigation.findNavController(v).navigate(R.id.action_mapFragment_to_loginActivity);
-            // Code to undo the user's last action
         }
     }
+
     Double startLat = 0.0;
     Double startLon = 0.0;
     Double currCameraLat = 0.0;
@@ -202,12 +203,21 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                     Boolean skipSettings = sharedPref.getBoolean(SHARED_PREFERENCES_SKIP, false);
                     if (skipSettings == false) {
 
-                        getDeviceLocation(googleMap);
-                        Intent intent = new Intent(requireContext(), InsertPinActivity.class);
-                        intent.putExtra("latitude", mypos.latitude);
-                        intent.putExtra("longitude", mypos.longitude);
+                        if (hasLocationPermissions()) {
+                            getDeviceLocation(googleMap);
+                            Intent intent = new Intent(requireContext(), InsertPinActivity.class);
+                            intent.putExtra("latitude", mypos.latitude);
+                            intent.putExtra("longitude", mypos.longitude);
 
-                        insertPinActivityResultLauncher.launch(intent);
+                            insertPinActivityResultLauncher.launch(intent);
+                        } else {
+                            Snackbar.make(v,
+                                            "To accomplish this action, you will need to grant " +
+                                                    "location permission first and then try again",
+                                            Snackbar.LENGTH_SHORT)
+                                    .show();
+                            multiplePermissionLauncher.launch(PERMISSIONS);
+                        }
 
                     }else{
                         Snackbar.make(v,
@@ -235,8 +245,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                     }
                 });
 
-        //COSTANTE AGGIUNGERECOSTANTI IMBECILLI SE NON L'ABBBIAMO ANCORA FATTO
-        Places.initialize(requireContext(), PLACES_API_KEK);
+        Places.initialize(requireContext(), PLACES_API_KEY);
         binding.searchButton.setOnClickListener(v -> {
             List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
 
@@ -301,6 +310,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
             }
         });
+
         googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener()
         {
             @Override
@@ -327,8 +337,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             } else {
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                // TODO da cambiare pins4
-                DocumentReference docRef = db.collection("pins4").document(marker.getTag().toString());
+
+                DocumentReference docRef = db.collection(PIN_COLLECTION).document(marker.getTag().toString());
 
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -414,7 +424,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     public void updatePin(GoogleMap map, Double radiusLat, Double radiusLon){
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        //final GeoLocation center = new GeoLocation(45.830308, 8.645078);
+
         final GeoLocation center = new GeoLocation(radiusLat, radiusLon);
         final double radiusInM = 10 * 1000;
 
@@ -425,7 +435,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         List<GeoQueryBounds> bounds = GeoFireUtils.getGeoHashQueryBounds(center, radiusInM);
         final List<Task<QuerySnapshot>> tasks = new ArrayList<>();
         for (GeoQueryBounds b : bounds) {
-            Query q = db.collection("pins4")
+            Query q = db.collection(PIN_COLLECTION)
                     .orderBy("geoHash")
                     .startAt(b.startHash)
                     .endAt(b.endHash);
@@ -467,9 +477,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                             marker = map.addMarker(new MarkerOptions()
                                     .position(new LatLng(lat, lon))
                                     .title(title)
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))//cambio colore IMPORT NECESSARIO
-                                    .alpha(0.9f)//cambio opacità
-                                    .flat(true)//In teoria dovremmo averlo così ma bho non cambia nulla a prima vista
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)) // Color change
+                                    .alpha(0.9f) // Opacity change
+                                    .flat(true)
                             );
                             marker.setTag(idpin);
                             markers.add(marker);
@@ -486,6 +496,13 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         } else {
             return false;
         }
+    }
+
+    private boolean hasLocationPermissions() {
+        return ActivityCompat.checkSelfPermission(requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(requireContext(),
+                        Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
     }
 
     @Override

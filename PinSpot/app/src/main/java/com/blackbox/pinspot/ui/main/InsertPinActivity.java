@@ -1,12 +1,10 @@
 package com.blackbox.pinspot.ui.main;
 
-import static android.content.ContentValues.TAG;
-
+import static com.blackbox.pinspot.util.Constants.CAMERA_REQUEST_CODE;
 import static com.blackbox.pinspot.util.Constants.DBIMAGES;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -14,6 +12,7 @@ import androidx.core.content.FileProvider;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
+import android.app.Application;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
@@ -26,23 +25,15 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.blackbox.pinspot.R;
 import com.blackbox.pinspot.data.repository.pin.IPinRepository;
 import com.blackbox.pinspot.databinding.ActivityInsertPinBinding;
 import com.blackbox.pinspot.model.Pin;
 import com.blackbox.pinspot.util.ServiceLocator;
-import com.firebase.geofire.GeoFireUtils;
-import com.firebase.geofire.GeoLocation;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -50,12 +41,11 @@ import java.io.OutputStream;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.function.ToIntBiFunction;
+
 
 public class InsertPinActivity extends AppCompatActivity {
 
     private static final String TAG = InsertPinActivity.class.getSimpleName();
-    private static final int CAMERA_REQUEST_CODE = 1000;
 
     private ActivityInsertPinBinding binding;
     private String currentPhotoPath = "";
@@ -65,15 +55,12 @@ public class InsertPinActivity extends AppCompatActivity {
 
     private ActivityResultLauncher<String[]> multiplePermissionLauncher;
     private ActivityResultContracts.RequestMultiplePermissions multiplePermissionsContract;
-    private ActivityResultLauncher<Intent> activityResultLauncher;
     private int opCode = 0;
 
     private ActivityResultLauncher<Uri> mTakePicture;
     Uri tempImageUri;
 
     // Firebase Storage
-    // TODO Move DBIMAGES into constants class
-
     private FirebaseStorage storage = FirebaseStorage.getInstance(DBIMAGES);
     private StorageReference storageRef = storage.getReference();
 
@@ -136,7 +123,6 @@ public class InsertPinActivity extends AppCompatActivity {
         });
 
         tempImageUri = initTempUri();
-        //registerTakePictureLauncher();
 
         mTakePicture = registerForActivityResult(new ActivityResultContracts.TakePicture(),
                 result -> {
@@ -157,6 +143,7 @@ public class InsertPinActivity extends AppCompatActivity {
                     {
                         Snackbar.make(this.findViewById(android.R.id.content),
                                 "Operation cancelled", Snackbar.LENGTH_SHORT).show();
+                        binding.imageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.placeholder_pin_photo));
                     }
 
 
@@ -170,6 +157,7 @@ public class InsertPinActivity extends AppCompatActivity {
                     }else{
                         Snackbar.make(this.findViewById(android.R.id.content),
                                 "Operation cancelled", Snackbar.LENGTH_SHORT).show();
+                        binding.imageView.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.placeholder_pin_photo));
                     }
                 }
         );
@@ -191,8 +179,6 @@ public class InsertPinActivity extends AppCompatActivity {
                 if (binding.newPinTitleEdt.length() > 0){
                     binding.uploadProgressBar.setVisibility(View.VISIBLE);
                     uploadPicture();
-                    // TODO Change method to upload Pin and then link it to the photo
-                    //uploadPin();
                 } else {
                     //TODO
                     Snackbar.make(view,
@@ -226,8 +212,6 @@ public class InsertPinActivity extends AppCompatActivity {
 
                 }
 
-
-                // TODO Determine if read permission need to be asked explicitly in order to support older Android builds
                 if(ContextCompat.checkSelfPermission(InsertPinActivity.this,
                         Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED){
 
@@ -245,8 +229,6 @@ public class InsertPinActivity extends AppCompatActivity {
         binding.closePinInfoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(InsertPinActivity.this, MainActivity.class);
-                startActivity(intent);*/
                 InsertPinActivity.this.finish();
             }
         });
@@ -254,7 +236,6 @@ public class InsertPinActivity extends AppCompatActivity {
     }
 
     private void uploadPicture(){
-        // uploading everest picture to storage DB
         Bitmap bitmap = ((BitmapDrawable) binding.imageView.getDrawable()).getBitmap();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -310,18 +291,6 @@ public class InsertPinActivity extends AppCompatActivity {
         return FileProvider.getUriForFile(getApplicationContext(), "com.blackbox.pinspot.fileprovider", tempImage);
     }
 
-    /*private void registerTakePictureLauncher(){
-
-
-        binding.takePicButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                mTakePicture.launch(tempImageUri);
-            }
-        });
-    }*/
-
     private void takePicture() {
         // Using a boolean variable to determine if permissions have been granted
         boolean multiplePermissionsStatus =
@@ -334,12 +303,9 @@ public class InsertPinActivity extends AppCompatActivity {
             Log.d(TAG, "All permissions needed to take a picture have been granted");
             // If all permissions have been granted, execute the following logic
 
-            mTakePicture.launch(tempImageUri); // Call smartphone camera with the file path that has to be used to save the picture
+            mTakePicture.launch(tempImageUri);
+            // Call smartphone camera with the file path that has to be used to save the picture
 
-            /*mTakePicture = registerForActivityResult(new ActivityResultContracts.TakePicture(),
-                    result -> {
-                        binding.imageView.setImageURI(tempImageUri);
-                    });*/
 
         } else {
             Log.d(TAG, "One or more permissions have not been granted");
@@ -374,9 +340,6 @@ public class InsertPinActivity extends AppCompatActivity {
         try {
             // Put bitmap image into the file without losing quality
             OutputStream outputStream = resolver.openOutputStream(Objects.requireNonNull(imageUri));
-            //Bitmap bmp = BitmapFactory.decodeFile(String.valueOf(imgPath));
-            //BitmapDrawable drawable = (BitmapDrawable) binding.imageView.getDrawable();
-            //Bitmap bmp = drawable.getBitmap();
             bmp.compress(Bitmap.CompressFormat.JPEG,100, outputStream);
             Objects.requireNonNull(outputStream);
             outputStream.close();

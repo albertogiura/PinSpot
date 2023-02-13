@@ -14,8 +14,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.favPlacesFragment, R.id.mapFragment,
-                R.id.profileFragment).build();
+                R.id.settingsFragment).build();
 
         NavigationUI.setupWithNavController(bottomNav, navController);
 

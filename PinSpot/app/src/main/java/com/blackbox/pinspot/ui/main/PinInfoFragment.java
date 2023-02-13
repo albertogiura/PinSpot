@@ -1,7 +1,6 @@
 package com.blackbox.pinspot.ui.main;
 
-import static android.content.ContentValues.TAG;
-
+import static com.blackbox.pinspot.util.Constants.DBIMAGES;
 import static com.blackbox.pinspot.util.Constants.SHARED_PREFERENCES_CELSIUS;
 import static com.blackbox.pinspot.util.Constants.SHARED_PREFERENCES_FILE_NAME;
 import static com.blackbox.pinspot.util.Constants.SHARED_PREFERENCES_SKIP;
@@ -16,36 +15,26 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.blackbox.pinspot.R;
 import com.blackbox.pinspot.data.repository.pin.IPinRepository;
-import com.blackbox.pinspot.data.repository.weather.IWeatherRepositoryWithLiveData;
+import com.blackbox.pinspot.data.repository.weather.IWeatherRepository;
 import com.blackbox.pinspot.databinding.FragmentPinInfoBinding;
 import com.blackbox.pinspot.model.Pin;
 import com.blackbox.pinspot.model.Result;
-import com.blackbox.pinspot.model.weather.WeatherApiResponse;
+import com.blackbox.pinspot.model.WeatherApiResponse;
 import com.blackbox.pinspot.util.GlideApp;
 import com.blackbox.pinspot.util.ServiceLocator;
-import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -63,22 +52,16 @@ public class PinInfoFragment extends Fragment {
         @Override
         public void onClick(View v) {
             Navigation.findNavController(v).navigate(R.id.action_pinInfoFragment_to_loginActivity);
-            // Code to undo the user's last action
         }
     }
     private List<Pin> pinList = new ArrayList<>();
     private WeatherViewModel weatherViewModel;
     private PinViewModel pinViewModel;
-    private boolean isFirstLoading = true;
 
 
-
-    //TODO Move constant
-    private static final String DBIMAGES = "gs://pinspot-demo.appspot.com/";
     private FirebaseStorage storage = FirebaseStorage.getInstance(DBIMAGES);
 
     private FragmentPinInfoBinding binding;
-    //private String apikey = "4f6ec18ab9eb724adb869edca9cbbf63";
 
     public PinInfoFragment() {
         // Required empty public constructor
@@ -93,7 +76,7 @@ public class PinInfoFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
 
-        IWeatherRepositoryWithLiveData weatherRepositoryWithLiveData =
+        IWeatherRepository weatherRepositoryWithLiveData =
                 ServiceLocator.getInstance().getWeatherRepository();
 
         if (weatherRepositoryWithLiveData != null) {
@@ -169,7 +152,7 @@ public class PinInfoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 SharedPreferences sharedPref = requireActivity().getSharedPreferences(
-                        SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE); //TODO DAMETTEREINUNACOSTANTE
+                        SHARED_PREFERENCES_FILE_NAME, Context.MODE_PRIVATE);
                 Boolean skipSettings = sharedPref.getBoolean(SHARED_PREFERENCES_SKIP, false);
                 if (skipSettings == false) {
                 if (pin != null){
@@ -184,7 +167,7 @@ public class PinInfoFragment extends Fragment {
                                         R.drawable.not_starred_fav_pin_foreground));
                     } else {
                         pinViewModel.insert(pin);
-                        Snackbar.make(v, "Pin added from favorite list",
+                        Snackbar.make(v, "Pin added to favorite list",
                                         Snackbar.LENGTH_SHORT)
                                 .show();
                         binding.addPinToFavFab.setImageDrawable(
@@ -227,7 +210,7 @@ public class PinInfoFragment extends Fragment {
 
 
 
-            weatherViewModel.getPinWeather(latitude, longitude, isFirstLoading).observe(getViewLifecycleOwner(),
+            weatherViewModel.getPinWeather(latitude, longitude).observe(getViewLifecycleOwner(),
                     result -> {
                         if (result.isSuccess()){
                             WeatherApiResponse weatherApiResponse = ((Result.WeatherResponseSuccess) result).getData();

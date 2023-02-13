@@ -6,9 +6,8 @@ import static com.blackbox.pinspot.util.Constants.RETROFIT_ERROR;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.blackbox.pinspot.data.repository.weather.WeatherRepositoryWithLiveData;
 import com.blackbox.pinspot.data.service.WeatherApiService;
-import com.blackbox.pinspot.model.weather.WeatherApiResponse;
+import com.blackbox.pinspot.model.WeatherApiResponse;
 import com.blackbox.pinspot.ui.main.PinInfoFragment;
 import com.blackbox.pinspot.util.ServiceLocator;
 

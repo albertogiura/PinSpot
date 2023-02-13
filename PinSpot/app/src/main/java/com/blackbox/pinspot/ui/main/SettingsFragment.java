@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,19 +21,19 @@ import androidx.navigation.Navigation;
 
 import com.blackbox.pinspot.R;
 import com.blackbox.pinspot.data.repository.user.IUserRepository;
-import com.blackbox.pinspot.databinding.FragmentProfileBinding;
+import com.blackbox.pinspot.databinding.FragmentSettingsBinding;
 import com.blackbox.pinspot.ui.welcome.LoginActivity;
 import com.blackbox.pinspot.ui.welcome.UserViewModel;
 import com.blackbox.pinspot.ui.welcome.UserViewModelFactory;
 import com.blackbox.pinspot.util.ServiceLocator;
 import com.google.android.material.snackbar.Snackbar;
 
-public class ProfileFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
     private UserViewModel userViewModel;
-    private FragmentProfileBinding binding;
+    private FragmentSettingsBinding binding;
 
-    public ProfileFragment() {
+    public SettingsFragment() {
         // Required empty public constructor
     }
 
@@ -52,7 +51,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentProfileBinding.inflate(inflater, container, false);
+        binding = FragmentSettingsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

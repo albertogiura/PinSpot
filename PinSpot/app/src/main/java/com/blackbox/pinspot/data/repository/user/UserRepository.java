@@ -3,11 +3,12 @@ package com.blackbox.pinspot.data.repository.user;
 import androidx.lifecycle.MutableLiveData;
 
 import com.blackbox.pinspot.data.source.user.BaseUserAuthRemoteDataSource;
+import com.blackbox.pinspot.data.source.user.UserCallback;
 import com.blackbox.pinspot.model.Result;
 import com.blackbox.pinspot.model.User;
 
 
-public class UserRepository implements IUserRepository, UserResponseCallback {
+public class UserRepository implements IUserRepository, UserCallback {
 
     private static final String TAG = UserRepository.class.getSimpleName();
 
@@ -89,21 +90,14 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
 
     @Override
     public void onSuccessLogout() {
-        // TODO
-        // Svuota database locale dopo la disconnessione dell'account
-        // Solo scopo di test ora eseguo direttamente la callback, dopo andrà aggiunta la pulizia effettiva
-        onSuccessCleaning();
+        Result.UserResponseSuccess result = new Result.UserResponseSuccess(null);
+        userMutableLiveData.postValue(result);
     }
 
     @Override
     public void onSuccessForgotPassword() {
         Result.UserResponseSuccess result = new Result.UserResponseSuccess(null);
         forgotPasswordMutableLiveData.postValue(result);
-    }
-
-    public void onSuccessCleaning() {
-        Result.UserResponseSuccess result = new Result.UserResponseSuccess(null);
-        userMutableLiveData.postValue(result);
     }
 
 }

@@ -2,6 +2,9 @@ package com.blackbox.pinspot.data.source.pin;
 
 import static android.content.ContentValues.TAG;
 
+import static com.blackbox.pinspot.util.Constants.DBIMAGES;
+import static com.blackbox.pinspot.util.Constants.PIN_COLLECTION;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -26,8 +29,7 @@ import com.google.firebase.storage.UploadTask;
 public class PinRemoteDataSource extends BasePinRemoteDataSource {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    //TODO Move into a constant
-    private static final String DBIMAGES = "gs://pinspot-demo.appspot.com/";
+
     private FirebaseStorage storage = FirebaseStorage.getInstance(DBIMAGES);
     private StorageReference storageRef = storage.getReference();
 
@@ -54,7 +56,7 @@ public class PinRemoteDataSource extends BasePinRemoteDataSource {
 
     @Override
     public void uploadPin(Pin pin) {
-        db.collection("pins4")
+        db.collection(PIN_COLLECTION)
                 .add(pin)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override

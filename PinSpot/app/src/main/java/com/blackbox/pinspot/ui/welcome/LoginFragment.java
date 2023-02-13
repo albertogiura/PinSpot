@@ -158,7 +158,6 @@ public class LoginFragment extends Fragment {
             editor.putBoolean(SHARED_PREFERENCES_SKIP, true);
             editor.apply();
             Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_mainActivity);
-            //startActivityBasedOnCondition(MainActivity.class, R.id.action_loginFragment_to_mainActivity);
         });
 
         binding.buttonLogin.setOnClickListener(v -> {

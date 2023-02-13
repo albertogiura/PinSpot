@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/profileFragment">
+    app:startDestination="@id/mapFragment">
 
     <fragment
         android:id="@+id/mapFragment"
@@ -21,10 +21,10 @@
             app:destination="@id/loginActivity" />
     </fragment>
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.blackbox.pinspot.ui.main.ProfileFragment"
-        android:label="fragment_profile"
-        tools:layout="@layout/fragment_profile" >
+        android:id="@+id/settingsFragment"
+        android:name="com.blackbox.pinspot.ui.main.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
         <action
             android:id="@+id/action_profileFragment_to_loginActivity"
             app:destination="@id/loginActivity" />
