@@ -98,8 +98,7 @@ public class UserAuthRemoteDataSource extends BaseUserAuthRemoteDataSource {
     @Override
     public void signInWithGoogle(String idToken) {
         if (idToken !=  null) {
-            // Got an ID token from Google. Use it to authenticate
-            // with Firebase.
+            // Got an ID token from Google. Use it to authenticate with Firebase.
             AuthCredential firebaseCredential = GoogleAuthProvider.getCredential(idToken, null);
             mAuth.signInWithCredential(firebaseCredential).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {

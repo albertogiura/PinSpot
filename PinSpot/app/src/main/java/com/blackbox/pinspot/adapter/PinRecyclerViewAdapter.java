@@ -1,5 +1,7 @@
 package com.blackbox.pinspot.adapter;
 
+import static com.blackbox.pinspot.util.Constants.DBIMAGES;
+
 import android.app.Application;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -26,7 +28,7 @@ public class PinRecyclerViewAdapter extends RecyclerView.Adapter<PinRecyclerView
     private final List<Pin> pinList;
     private final Application application;
     private final OnItemClickListener onItemClickListener;
-    private static final String DBIMAGES = "gs://pinspot-demo.appspot.com/";
+
     private FirebaseStorage storage = FirebaseStorage.getInstance(DBIMAGES);
 
     public PinRecyclerViewAdapter(Context context, List<Pin> pinList, Application application,
@@ -64,8 +66,6 @@ public class PinRecyclerViewAdapter extends RecyclerView.Adapter<PinRecyclerView
 
         private final PinRecyclerViewAdapter mAdapter;
         private final TextView textview_fav_pin_title;
-        /*private final TextView textview_fav_pin_lat;
-        private final TextView textview_fav_pin_lng;*/
         private final ImageView imageView_PinPreviewImage;
         private final ImageView imageview_favorite_pin;
 
@@ -73,25 +73,14 @@ public class PinRecyclerViewAdapter extends RecyclerView.Adapter<PinRecyclerView
             super(itemView);
             this.mAdapter = mAdapter;
             textview_fav_pin_title = itemView.findViewById(R.id.textview_fav_pin_title);
-            /*textview_fav_pin_lat = itemView.findViewById(R.id.textview_fav_pin_lat);
-            textview_fav_pin_lng = itemView.findViewById(R.id.textview_fav_pin_lng);*/
             imageview_favorite_pin = itemView.findViewById(R.id.imageview_favorite_pin);
             imageView_PinPreviewImage = itemView.findViewById(R.id.imageView_PinPreviewImage);
-            /*textViewTitle = itemView.findViewById(R.id.textview_title);
-            textViewDate = itemView.findViewById(R.id.textview_date);
-            imageViewNewsCoverImage = itemView.findViewById(R.id.imageview_news_cover_image);
-            imageView_PinPreviewImage = itemView.findViewById(R.id.imageview_favorite_news);*/
             itemView.setOnClickListener(this);
             imageview_favorite_pin.setOnClickListener(this);
         }
 
         public void bind(Pin pin) {
             textview_fav_pin_title.setText(pin.getTitle());
-            /*textview_fav_pin_lat.setText(String.valueOf(pin.getLat()));
-            textview_fav_pin_lng.setText(String.valueOf(pin.getLon()));*/
-
-            //textViewDate.setText(DateTimeUtil.getDate(news.getDate()));
-            //setImageViewFavoriteNews(newsList.get(getAdapterPosition()).isFavorite());
 
             StorageReference storageReference = storage.getReference().child("pinPhotos/"+pin.getLink()+".jpeg");
             GlideApp.with(imageView_PinPreviewImage.getContext())
@@ -104,7 +93,6 @@ public class PinRecyclerViewAdapter extends RecyclerView.Adapter<PinRecyclerView
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.imageview_favorite_pin) {
-                //setImageViewFavoritePin(!pinList.get(getAdapterPosition()).isFavorite());
                 onItemClickListener.onFavoriteButtonPressed(getAdapterPosition());
             } else {
                 onItemClickListener.onPinItemClick(pinList.get(getAdapterPosition()));

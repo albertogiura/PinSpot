@@ -169,8 +169,6 @@ public class InsertPinActivity extends AppCompatActivity {
         });
 
 
-
-
         binding.uploadPinButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -198,7 +196,6 @@ public class InsertPinActivity extends AppCompatActivity {
                 if (multiplePermissionsStatus) {
                     Log.d(TAG, "All permissions needed to take a picture have been granted");
                     // If all permissions have been granted, execute the following logic
-
                     openLocalPhoto.launch("image/*");
 
 
@@ -301,9 +298,8 @@ public class InsertPinActivity extends AppCompatActivity {
             Log.d(TAG, "All permissions needed to take a picture have been granted");
             // If all permissions have been granted, execute the following logic
 
-            mTakePicture.launch(tempImageUri);
             // Call smartphone camera with the file path that has to be used to save the picture
-
+            mTakePicture.launch(tempImageUri);
 
         } else {
             Log.d(TAG, "One or more permissions have not been granted");

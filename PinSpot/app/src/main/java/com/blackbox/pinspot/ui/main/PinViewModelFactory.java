@@ -8,7 +8,7 @@ import com.blackbox.pinspot.data.repository.pin.IPinRepository;
 import com.blackbox.pinspot.data.repository.pin.PinRepository;
 
 public class PinViewModelFactory implements ViewModelProvider.Factory{
-    //private final INewsRepositoryWithLiveData iNewsRepositoryWithLiveData;
+
     private final IPinRepository iPinRepository;
 
     public PinViewModelFactory(IPinRepository iPinRepository) {

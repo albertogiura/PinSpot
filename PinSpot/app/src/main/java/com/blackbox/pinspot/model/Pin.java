@@ -34,10 +34,7 @@ public class Pin implements Parcelable {
     public double lon;
 
     public Pin() {
-       /* this.position = new LatitudeLongitude(0.0, 0.0);
-        this.title = "";
-        this.link = "";
-        this.likes = 0;*/
+
     }
 
 

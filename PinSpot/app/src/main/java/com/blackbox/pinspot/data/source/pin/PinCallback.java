@@ -13,6 +13,4 @@ public interface PinCallback {
     void onSuccessUploadingPin();
     void onFailureUploadingPin(String error);
     void onSuccessRetrievingFavPinList(List<Pin> pinList);
-    //void onSuccessRemovingFavPin();
-    //void onSuccessAddingFavPin();
 }

@@ -53,6 +53,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 public class LoginFragment extends Fragment {
 
     private static final String TAG = LoginFragment.class.getSimpleName();
+    // Just for debug purposes
     private static final boolean USE_NAVIGATION_COMPONENT = true;
     private FragmentLoginBinding binding;
 
@@ -270,8 +271,6 @@ public class LoginFragment extends Fragment {
 
 
     private boolean isEmailOk(String email) {
-        // Check if the email is valid through the use of this library:
-        // https://commons.apache.org/proper/commons-validator/
         if (!EmailValidator.getInstance().isValid((email))) {
             binding.edtEmail.setError(getString(R.string.error_email));
             return false;

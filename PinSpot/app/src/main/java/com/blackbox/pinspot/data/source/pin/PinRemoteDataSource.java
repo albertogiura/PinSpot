@@ -39,7 +39,7 @@ public class PinRemoteDataSource extends BasePinRemoteDataSource {
     @Override
     public void uploadPinImage(byte[] data, String photoName) {
         StorageReference takenPhotoRef = storageRef.child("pinPhotos/"+photoName+".jpeg");
-        UploadTask uploadTask = takenPhotoRef.putBytes(data); // uploading here
+        UploadTask uploadTask = takenPhotoRef.putBytes(data); // Uploading here
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception exception) {

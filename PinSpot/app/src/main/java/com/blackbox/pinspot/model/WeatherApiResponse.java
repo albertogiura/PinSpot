@@ -3,6 +3,8 @@ package com.blackbox.pinspot.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+// This class represents the Weather API response to be converted using Gson
+
 public class WeatherApiResponse {
 
     public WeatherApiResponse() {}

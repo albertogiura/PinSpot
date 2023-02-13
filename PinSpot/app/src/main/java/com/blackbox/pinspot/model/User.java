@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import com.google.firebase.database.Exclude;
 
-// Definisco la struttura di un Utente attraverso questa classe
+// This class defines the User model
 
 public class User implements Parcelable {
     private String name;

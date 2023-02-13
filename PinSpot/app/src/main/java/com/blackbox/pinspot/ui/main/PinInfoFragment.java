@@ -206,10 +206,6 @@ public class PinInfoFragment extends Fragment {
             Double latitude = pin.getLat();
             Double longitude = pin.getLon();
 
-
-
-
-
             weatherViewModel.getPinWeather(latitude, longitude).observe(getViewLifecycleOwner(),
                     result -> {
                         if (result.isSuccess()){
@@ -240,8 +236,6 @@ public class PinInfoFragment extends Fragment {
         } else{
             binding.PinTitleTextView.setText("NULL");
         }
-
-
 
     }
 

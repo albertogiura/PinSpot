@@ -7,7 +7,7 @@ import com.blackbox.pinspot.data.source.weather.WeatherCallback;
 import com.blackbox.pinspot.model.Result;
 import com.blackbox.pinspot.model.WeatherApiResponse;
 
-public class WeatherRepository implements IWeatherRepository, WeatherCallback{
+public class WeatherRepository implements IWeatherRepository, WeatherCallback {
 
     private static final String TAG = WeatherRepository.class.getSimpleName();
 

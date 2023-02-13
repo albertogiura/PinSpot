@@ -14,5 +14,4 @@ public abstract class BaseFavoritePinLocalDataSource {
     public abstract void getFavoritePinList();
     public abstract void deleteFavoritePin(Pin pin);
     public abstract void insertPin(Pin pin);
-    //public abstract void deleteAll();
 }
