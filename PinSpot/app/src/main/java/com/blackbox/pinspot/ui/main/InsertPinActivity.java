@@ -80,7 +80,7 @@ public class InsertPinActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_insert_pin);
+
         binding = ActivityInsertPinBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
@@ -89,8 +89,6 @@ public class InsertPinActivity extends AppCompatActivity {
                 ServiceLocator.getInstance().getPinRepository(this.getApplication());
 
         if (pinRepository != null) {
-            // This is the way to create a ViewModel with custom parameters
-            // (see NewsViewModelFactory class for the implementation details)
             pinViewModel = new ViewModelProvider(
                     this,
                     new PinViewModelFactory(pinRepository)).get(PinViewModel.class);

@@ -28,7 +28,7 @@
     <string name="spot_a_new_place">Spot a new place</string>
     <string name="email_two_points">Email:</string>
     <string name="mail_example_com">mail@example.com</string>
-    <string name="temperature_setting">Temperature: F°</string>
+    <string name="temperature_setting">Scale of temperature: F°</string>
     <string name="celsius">C°</string>
     <string name="logout">Logout</string>
     <string name="register_now">Register Now</string>

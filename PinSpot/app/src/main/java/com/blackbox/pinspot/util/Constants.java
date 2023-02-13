@@ -2,10 +2,11 @@ package com.blackbox.pinspot.util;
 
 public class Constants {
 
+    // Firebase Storage
     public static final String DBIMAGES = "gs://pinspot-demo.appspot.com/";
 
     // Pin collection path on remote DB
-    public static final String PIN_COLLECTION = "pins4";
+    public static final String PIN_COLLECTION = "demo";
 
     // Request code for InsertPin related permissions request
     public static final int CAMERA_REQUEST_CODE = 1000;

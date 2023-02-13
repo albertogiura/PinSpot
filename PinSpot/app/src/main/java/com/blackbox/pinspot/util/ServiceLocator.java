@@ -55,7 +55,6 @@ public class ServiceLocator {
     }
 
     public IWeatherRepository getWeatherRepository() {
-        // TODO Move API key
         BaseWeatherRemoteDataSource weatherRemoteDataSource =
                 new WeatherRemoteDataSource(WEATHER_API_KEY);
 
