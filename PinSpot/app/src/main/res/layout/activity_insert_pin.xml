@@ -143,6 +143,7 @@
             android:layout_width="128dp"
             android:layout_height="74dp"
             android:layout_marginTop="32dp"
+            android:enabled="false"
             android:text="@string/spot_it"
             android:textColor="@color/white"
             android:textSize="18sp"
