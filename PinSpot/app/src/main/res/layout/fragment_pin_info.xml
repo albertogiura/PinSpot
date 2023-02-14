@@ -49,7 +49,7 @@
 
         <TextView
             android:id="@+id/PinTitle_textView"
-            android:layout_width="wrap_content"
+            android:layout_width="332dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="60dp"
