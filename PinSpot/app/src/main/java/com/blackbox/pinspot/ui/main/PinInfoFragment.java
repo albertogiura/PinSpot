@@ -80,8 +80,7 @@ public class PinInfoFragment extends Fragment {
                 ServiceLocator.getInstance().getWeatherRepository();
 
         if (weatherRepositoryWithLiveData != null) {
-            // This is the way to create a ViewModel with custom parameters
-            // (see NewsViewModelFactory class for the implementation details)
+
             weatherViewModel = new ViewModelProvider(
                     requireActivity(),
                     new WeatherViewModelFactory(weatherRepositoryWithLiveData)).get(WeatherViewModel.class);
@@ -94,8 +93,7 @@ public class PinInfoFragment extends Fragment {
                 ServiceLocator.getInstance().getPinRepository(requireActivity().getApplication());
 
         if (pinRepository != null) {
-            // This is the way to create a ViewModel with custom parameters
-            // (see NewsViewModelFactory class for the implementation details)
+            
             pinViewModel = new ViewModelProvider(
                     requireActivity(),
                     new PinViewModelFactory(pinRepository)).get(PinViewModel.class);

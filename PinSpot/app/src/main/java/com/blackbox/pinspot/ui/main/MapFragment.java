@@ -163,12 +163,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (savedInstanceState != null) {
 
-            lastSavedLat = mapViewModel.getLastLat();
-            lastSavedLon = mapViewModel.getLastLon();
-
-        }
+        lastSavedLat = mapViewModel.getLastLat();
+        lastSavedLon = mapViewModel.getLastLon();
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext());
 
