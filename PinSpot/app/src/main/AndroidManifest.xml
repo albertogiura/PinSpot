@@ -31,7 +31,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC0ID1-UstsT3NO6WE7pmUlrN0_LQ9HlPY" />
+            android:value="Insert Google Maps API key" />
         <activity
             android:name=".ui.welcome.LoginActivity"
             android:exported="true" >

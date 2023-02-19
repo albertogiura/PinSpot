@@ -3,7 +3,7 @@ package com.blackbox.pinspot.util;
 public class Constants {
 
     // Firebase Storage
-    public static final String DBIMAGES = "gs://pinspot-demo.appspot.com/";
+    public static final String DBIMAGES = "Insert Firebase Storage URL here";
 
     // Pin collection path on remote DB
     public static final String PIN_COLLECTION = "demo";
@@ -13,10 +13,10 @@ public class Constants {
 
     // OpenWeatherMap.org API related constants
     public static final String OPENWEATHERMAP_API_BASE_URL = "https://api.openweathermap.org/data/2.5/";
-    public static final String WEATHER_API_KEY = "4f6ec18ab9eb724adb869edca9cbbf63";
+    public static final String WEATHER_API_KEY = "Insert API key here";
 
     // Places API key
-    public static final String PLACES_API_KEY = "AIzaSyBVzu-lEm7gs-V1AElIWVgwHlNXdaeuVyM";
+    public static final String PLACES_API_KEY = "Insert API key here";
 
     // Constants for onSaveInstanceState
     public static final String LAST_LAT = "LAST_LAT";
